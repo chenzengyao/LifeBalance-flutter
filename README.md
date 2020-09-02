@@ -1,4 +1,4 @@
-# lifebalance
+## Life Balance (Flutter)
 
 Schedule Planner App
 
