@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "437985620456",
+    "firebase_url": "https://life-balance-database.firebaseio.com",
+    "project_id": "life-balance-database",
+    "storage_bucket": "life-balance-database.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:437985620456:android:7ddaf9b8cd420da374f45d",
+        "android_client_info": {
+          "package_name": "com.example.lifebalance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "437985620456-3lnsaalu8t9tdsnlod7k0ps4bpnt8pce.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkHqY7hnuCAF5j1DyeWcmkssXsaWzXvL8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "437985620456-3lnsaalu8t9tdsnlod7k0ps4bpnt8pce.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
