@@ -28,9 +28,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Baby Names',
       home: MyBottomNavigationBar()
-     // routes: {
-      // '/notification': (context) => NotificationPage(),
-    //  },
     );
   }
 }
