@@ -1,6 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class profile_page extends StatefulWidget {
+  //TODO The code below can display user email/username in the app bar
+  //TODO Subjected to removal
+  const profile_page({
+    Key key,
+    @required this.user
+}) : super(key: key);
+  final UserCredential user;
+
+
   @override
   _profile_pageState createState() => _profile_pageState();
 }
@@ -10,6 +20,7 @@ class _profile_pageState extends State<profile_page> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(title: new Text("Profile Page")),
+
         /* body: Container(
         padding: const EdgeInsets.all(32),
          child: Row(children: [
