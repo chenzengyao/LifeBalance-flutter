@@ -1,6 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:lifebalance/screens/calendar_page.dart';
+import 'package:lifebalance/screens/friends_page.dart';
+import 'package:lifebalance/screens/message_page.dart';
+import 'package:lifebalance/screens/notification_page.dart';
+import 'package:lifebalance/screens/profile_page.dart';
 
 //void main() => runApp(MyApp());
 void main() async {
@@ -21,7 +27,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Baby Names',
-      home: MyHomePage(),
+      home: MyBottomNavigationBar()
+     // routes: {
+      // '/notification': (context) => NotificationPage(),
+    //  },
     );
   }
 }
@@ -79,18 +88,15 @@ class _MyHomePageState extends State<MyHomePage> {
         child: ListTile(
           title: Text(record.name),
           trailing: Text(record.votes.toString()),
-            // onTap: () => record.reference.updateData({'votes': FieldValue.increment(1)}),
+          // onTap: () => record.reference.updateData({'votes': FieldValue.increment(1)}),
           onTap: () => FirebaseFirestore.instance.runTransaction((transaction) async {
+                final freshSnapshot = await transaction.get(record.reference);
 
-            final freshSnapshot = await transaction.get(record.reference);
+                final fresh = Record.fromSnapshot(freshSnapshot);
 
-            final fresh = Record.fromSnapshot(freshSnapshot);
-
-            await transaction
-
-                .update(record.reference, {'votes': fresh.votes + 1});
-
-          }),
+                await transaction
+                    .update(record.reference, {'votes': fresh.votes + 1});
+              }),
         ),
       ),
     );
@@ -113,6 +119,70 @@ class Record {
 
   @override
   String toString() => "Record<$name:$votes>";
+}
+
+class MyBottomNavigationBar extends StatefulWidget {
+  @override
+  _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
+}
+
+class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
+
+  int _currentIndex = 0;
+  final List<Widget> _children = [
+    profile_page(),
+    friends_page(),
+    calendar_page(),
+    message_page(),
+    notification_page()
+  ];
+
+  void onTappedBar(int index)
+  {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _children[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar
+        (
+        onTap: onTappedBar,
+        currentIndex: _currentIndex,
+
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle),
+              title: Text('Profile')
+          ),
+
+          BottomNavigationBarItem(
+              icon: Icon(Icons.supervisor_account),
+              title: new Text('Friends')
+          ),
+
+          BottomNavigationBarItem(
+              icon: Icon(Icons.date_range),
+              title: new Text('Calendar')
+          ),
+
+          BottomNavigationBarItem(
+              icon: Icon(Icons.mail_outline),
+              title: new Text('Messages')
+          ),
+
+          BottomNavigationBarItem(
+              icon: Icon(Icons.add_alert),
+              title: new Text('Notifications')
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 // import 'package:flutter/material.dart';
