@@ -53,17 +53,29 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
   }
-  Future<void> signUp() async {
-    final formState = _formKey.currentState;
-    if (formState.validate()) {
-      formState.save();
+  void signUp() async {
+    if(_formKey.currentState.validate()){
+      _formKey.currentState.save();
       try {
-        UserCredential user = await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(email: _email, password: _password);
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password);  //Create new user
+
+        // User user = FirebaseAuth.instance.currentUser;
+        // if (!user.emailVerified){
+        //   await user.sendEmailVerification();
+        // }
+
         Navigator.of(context).pop();
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
+
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password'){
+          print('The password provided is too weak');
+
+        } else if (e.code == 'email-already-in-use') {
+          print('The account already exists for that email.');
+        }
       } catch (e) {
-        print(e.message);
+        print(e.toString());
       }
     }
   }
