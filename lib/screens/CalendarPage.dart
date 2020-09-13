@@ -60,6 +60,9 @@ class _CalendarPageState extends State<CalendarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Calendar'),
+      ),
       body: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.max,
