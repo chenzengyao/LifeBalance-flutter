@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:lifebalance/screens/calendar_page.dart';
 import 'package:lifebalance/screens/friends_page.dart';
+import 'package:lifebalance/screens/login_page.dart';
 import 'package:lifebalance/screens/message_page.dart';
 import 'package:lifebalance/screens/notification_page.dart';
 import 'package:lifebalance/screens/profile_page.dart';
-import 'package:lifebalance/screens/welcome.dart';
 
 //void main() => runApp(MyApp());
 void main() async {
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: WelcomePage(), //MyBottomNavigationBar()
+      home: LoginPage(), //MyBottomNavigationBar()
     );
   }
 }

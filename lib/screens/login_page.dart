@@ -47,7 +47,16 @@ class _LoginPageState extends State<LoginPage> {
             RaisedButton(
               onPressed: signIn,
               child: Text('Sign in')
-            )
+            ),
+
+
+            FlatButton.icon(
+              onPressed: () {
+                Navigator.pushNamed(context, '/Calendar');
+              },
+              icon: Icon(Icons.arrow_right),
+              label: Text('See next screen'),
+            ),
           ],
         ),
       ),
