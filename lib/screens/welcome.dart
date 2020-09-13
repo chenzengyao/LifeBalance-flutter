@@ -14,7 +14,7 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My firebase app'),
+        title: Text('Life Balance App'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
