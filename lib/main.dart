@@ -2,11 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:lifebalance/screens/calendar_page.dart';
+import 'package:lifebalance/screens/CalendarPage.dart';
 import 'package:lifebalance/screens/friends_page.dart';
 import 'package:lifebalance/screens/message_page.dart';
 import 'package:lifebalance/screens/notification_page.dart';
 import 'package:lifebalance/screens/profile_page.dart';
+import 'package:lifebalance/screens/welcome.dart';
 
 //void main() => runApp(MyApp());
 void main() async {
@@ -26,8 +27,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Baby Names',
-      home: MyBottomNavigationBar()
+      title: 'Firebase Testing',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: WelcomePage(), //MyBottomNavigationBar()
     );
   }
 }
@@ -129,7 +133,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
   final List<Widget> _children = [
     profile_page(),
     friends_page(),
-    calendar_page(),
+    CalendarPage(),
     message_page(),
     notification_page()
   ];
