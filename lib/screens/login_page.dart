@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:lifebalance/screens/profile_page.dart';
+import 'package:lifebalance/screens/profile_page2.dart';
 
 class LoginPage extends StatefulWidget{
   @override
@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
       try {
         UserCredential user = await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: _email, password: _password);
-        Navigator.push(context, MaterialPageRoute(builder: (context) => profile_page(user: user)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => profile_page2(user: user)));
       } catch (e) {
         print(e.message);
       }
