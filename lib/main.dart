@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:lifebalance/screens/calendar_page.dart';
+import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
+import 'package:lifebalance/screens/CalendarPage.dart';
 import 'package:lifebalance/screens/friends_page.dart';
 import 'package:lifebalance/screens/login_page.dart';
 import 'package:lifebalance/screens/message_page.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginPage(), //MyBottomNavigationBar()
+      home: CalendarPage(), //MyBottomNavigationBar()
     );
   }
 }
@@ -133,7 +134,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
   final List<Widget> _children = [
     profile_page(),
     friends_page(),
-    calendar_page(),
+    CalendarPage(),
     message_page(),
     notification_page()
   ];
