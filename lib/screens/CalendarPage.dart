@@ -40,8 +40,14 @@ class _CalendarPageState extends State<CalendarPage> {
       {'name': 'Event B', 'isDone': true},
       {'name': 'Event C', 'isDone': false},
     ],
-    DateTime(2020, 6, 6): [
+    DateTime(2020, 6, 7): [
       {'name': 'Event A', 'isDone': false},
+    ],
+    DateTime(2020, 9, 13): [
+      {'name': 'Event A', 'isDone': false},
+    ],
+    DateTime(2020, 9, 19): [
+      {'name': 'IM3002 Quiz 1', 'isDone': false},
     ],
   };
 
@@ -60,8 +66,8 @@ class _CalendarPageState extends State<CalendarPage> {
           children: <Widget>[
             Container(
               child: Calendar(
-                startOnMonday: true,
-                weekDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                startOnMonday: false,
+                //weekDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
                 events: _events,
                 onRangeSelected: (range) =>
                     print("Range is ${range.from}, ${range.to}"),
@@ -69,7 +75,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 isExpandable: true,
                 eventDoneColor: Colors.green,
                 selectedColor: Colors.pink,
-                todayColor: Colors.yellow,
+                todayColor: Colors.red,
                 eventColor: Colors.grey,
                 dayOfWeekStyle: TextStyle(
                     color: Colors.black,

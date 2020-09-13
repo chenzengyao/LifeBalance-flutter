@@ -32,7 +32,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: CalendarPage(), //MyBottomNavigationBar()
+      //home: CalendarPage(), //MyBottomNavigationBar()
+      routes: {
+        '/': (context) => LoginPage(),
+        '/Calendar': (context) => CalendarPage(),
+        '/DataBaseTest': (context) => MyHomePage(),
+      }
     );
   }
 }
