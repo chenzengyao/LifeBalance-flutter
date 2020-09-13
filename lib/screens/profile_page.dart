@@ -7,9 +7,8 @@ class profile_page extends StatefulWidget {
   const profile_page({
     Key key,
     @required this.user
-}) : super(key: key);
+  }) : super(key: key);
   final UserCredential user;
-
 
   @override
   _profile_pageState createState() => _profile_pageState();
