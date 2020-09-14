@@ -6,10 +6,10 @@ import 'package:lifebalance/screens/friends_page.dart';
 import 'package:lifebalance/screens/message_page.dart';
 import 'package:lifebalance/screens/notification_page.dart';
 import 'package:lifebalance/screens/profile_page.dart';
-import 'package:lifebalance/screens/services/auth.dart';
-
 
 class profile_page2 extends StatefulWidget {
+
+  @override
   _profile_page2State createState() => _profile_page2State();
 }
 

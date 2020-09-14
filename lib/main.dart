@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:lifebalance/screens/services/auth.dart';
 import 'package:lifebalance/screens/services/user.dart';
 import 'package:lifebalance/screens/services/wrapper.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:lifebalance/screens/CalendarPage.dart';
 import 'package:lifebalance/screens/friends_page.dart';
 import 'package:lifebalance/screens/message_page.dart';
@@ -19,11 +19,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<User>.value(  //listen to stream, get user data from user.dart, no value if not signed in
+    return StreamProvider<User>.value(
       value: AuthService().user,
-        child: MaterialApp(
-          home: Wrapper(),        //access data from stream
-        ),
+      child: MaterialApp(
+        home: Wrapper(),
+      ),
     );
   }
 }

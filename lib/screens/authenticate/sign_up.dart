@@ -1,6 +1,6 @@
 import 'package:lifebalance/screens/services/auth.dart';
-import 'package:flutter/material.dart';
 import 'package:lifebalance/screens/services/constants.dart';
+import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
 
@@ -28,7 +28,7 @@ class _RegisterState extends State<Register> {
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
-        title: Text('Sign up to Life Balance'),
+        title: Text('Sign up to Brew Crew'),
         actions: <Widget>[
           FlatButton.icon(
             icon: Icon(Icons.person),
@@ -48,7 +48,7 @@ class _RegisterState extends State<Register> {
                 decoration: textInputDecoration.copyWith(hintText: 'Email'),
                 validator: (val) => val.isEmpty ? 'Enter an email' : null,
                 onChanged: (val) {
-                  setState(() => email = val); //store input email to val
+                  setState(() => email = val);
                 },
               ),
               SizedBox(height: 20.0),
@@ -57,7 +57,7 @@ class _RegisterState extends State<Register> {
                 obscureText: true,
                 validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
                 onChanged: (val) {
-                  setState(() => password = val); //store input password to val
+                  setState(() => password = val);
                 },
               ),
               SizedBox(height: 20.0),
