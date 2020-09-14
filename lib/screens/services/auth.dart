@@ -7,13 +7,13 @@ class AuthService {
 
   // create user obj based on firebase user
   User _userFromFirebaseUser(FirebaseUser user) {
-    return user != null ? User(uid: user.uid) : null;
+    return user != null ? User(uid: user.uid) : null;    //get user uid
   }
 
   // auth change user stream
+  //get information in the stream whenever user sign in/out based on user class
   Stream<User> get user {
     return _auth.onAuthStateChanged
-    //.map((FirebaseUser user) => _userFromFirebaseUser(user));
         .map(_userFromFirebaseUser);
   }
 
@@ -53,7 +53,7 @@ class AuthService {
     }
   }
 
-  // sign out
+  // sign out function (future -> async task, needs time to complete)
   Future signOut() async {
     try {
       return await _auth.signOut();

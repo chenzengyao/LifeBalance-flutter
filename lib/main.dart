@@ -12,17 +12,16 @@ import 'package:lifebalance/screens/message_page.dart';
 import 'package:lifebalance/screens/notification_page.dart';
 import 'package:lifebalance/screens/profile_page.dart';
 
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<User>.value(
+    return StreamProvider<User>.value(   //listen to stream, get user data from user.dart, no value if not signed in
       value: AuthService().user,
       child: MaterialApp(
-        home: Wrapper(),
+        home: Wrapper(),          //access data from stream
       ),
     );
   }

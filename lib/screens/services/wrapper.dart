@@ -5,6 +5,9 @@ import 'package:lifebalance/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+//Dynamic, shows which screens the user sees, either home screen (login success) or
+//authentication screen due to login failure, etc.
+
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

@@ -15,24 +15,23 @@ class _profile_pageState extends State<profile_page> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Scaffold(
-        backgroundColor: Colors.brown[50],
-        appBar: AppBar(
-          title: Text('Life Balance'),
-          backgroundColor: Colors.brown[400],
-          elevation: 0.0,
-          actions: <Widget>[
-            FlatButton.icon(
-              icon: Icon(Icons.person),
-              label: Text('Logout'),
-              onPressed: () async {
-                await _auth.signOut();    //return null value to user
-              },
-            ),
-          ],
-        ),
-
-        /* body: Container(
+        child: Scaffold(
+          backgroundColor: Colors.brown[50],
+          appBar: AppBar(
+             title: Text('Life Balance'),
+            backgroundColor: Colors.brown[400],
+            elevation: 0.0,
+            actions: <Widget>[
+              FlatButton.icon(
+                icon: Icon(Icons.person),
+                label: Text('Logout'),
+                onPressed: () async {
+                  await _auth.signOut(); //return null value to user
+                },
+              ),
+            ],
+          ),
+          /* body: Container(
         padding: const EdgeInsets.all(32),
          child: Row(children: [
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -45,8 +44,8 @@ class _profile_pageState extends State<profile_page> {
             ]),
           ]),*/
 
-        body: new Stack(
-          children: <Widget>[
+          body: new Stack(
+            children: <Widget>[
             Positioned(
                 width: 150.0,
                 top: MediaQuery.of(context).size.height / 20,
