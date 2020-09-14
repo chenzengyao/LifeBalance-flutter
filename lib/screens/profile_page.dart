@@ -1,26 +1,37 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lifebalance/screens/services/auth.dart';
 
 class profile_page extends StatefulWidget {
-  //TODO The code below can display user email/username in the app bar
-  //TODO Subjected to removal
-  const profile_page({
-    Key key,
-    @required this.user
-  }) : super(key: key);
-  final UserCredential user;
 
   @override
   _profile_pageState createState() => _profile_pageState();
 }
 
 class _profile_pageState extends State<profile_page> {
+
+  final AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: new AppBar(title: new Text("Profile Page")),
-
-        /* body: Container(
+    return Container(
+        child: Scaffold(
+          backgroundColor: Colors.brown[50],
+          appBar: AppBar(
+             title: Text('Life Balance'),
+            backgroundColor: Colors.brown[400],
+            elevation: 0.0,
+            actions: <Widget>[
+              FlatButton.icon(
+                icon: Icon(Icons.person),
+                label: Text('Logout'),
+                onPressed: () async {
+                  await _auth.signOut(); //return null value to user
+                },
+              ),
+            ],
+          ),
+          /* body: Container(
         padding: const EdgeInsets.all(32),
          child: Row(children: [
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -33,8 +44,8 @@ class _profile_pageState extends State<profile_page> {
             ]),
           ]),*/
 
-        body: new Stack(
-          children: <Widget>[
+          body: new Stack(
+            children: <Widget>[
             Positioned(
                 width: 150.0,
                 top: MediaQuery.of(context).size.height / 20,
@@ -52,6 +63,8 @@ class _profile_pageState extends State<profile_page> {
                           ])),
                 ]))
           ],
-        ));
+        ),
+    ),
+    );
   }
 }

@@ -6,16 +6,8 @@ import 'package:lifebalance/screens/friends_page.dart';
 import 'package:lifebalance/screens/message_page.dart';
 import 'package:lifebalance/screens/notification_page.dart';
 import 'package:lifebalance/screens/profile_page.dart';
-import 'package:lifebalance/screens/welcome.dart';
 
 class profile_page2 extends StatefulWidget {
-  //TODO The code below can display user email/username in the app bar
-  //TODO Subjected to removal
-  const profile_page2({
-    Key key,
-    @required this.user
-  }) : super(key: key);
-  final UserCredential user;
 
   @override
   _profile_page2State createState() => _profile_page2State();
