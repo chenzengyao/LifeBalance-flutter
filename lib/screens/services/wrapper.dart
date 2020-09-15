@@ -1,7 +1,6 @@
 import 'package:lifebalance/screens/profile_page2.dart';
 import 'package:lifebalance/screens/services/user.dart';
 import 'package:lifebalance/screens/authenticate/authenticate.dart';
-import 'package:lifebalance/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
