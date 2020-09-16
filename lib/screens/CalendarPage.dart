@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
+import 'package:lifebalance/screens/TaskPage.dart';
 
 class CalendarPage extends StatefulWidget {
   @override
@@ -62,6 +63,22 @@ class _CalendarPageState extends State<CalendarPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Calendar'),
+        //new - add task in app bar
+        actions: <Widget>[
+          FlatButton.icon(
+            icon: Icon(Icons.add),
+            label: Text('Add Task'),
+            onPressed: () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TaskPage(),
+                ),
+              );
+            },
+          ),
+        ],
+
       ),
       body: SafeArea(
         child: Column(
@@ -96,18 +113,20 @@ class _CalendarPageState extends State<CalendarPage> {
   Widget _buildEventList() {
     return Expanded(
       child: ListView.builder(
-        itemBuilder: (BuildContext context, int index) => Container(
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(width: 1.5, color: Colors.black12),
+        itemBuilder: (BuildContext context, int index) =>
+            Container(
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(width: 1.5, color: Colors.black12),
+                ),
+              ),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 0.0, vertical: 4.0),
+              child: ListTile(
+                title: Text(_selectedEvents[index]['name'].toString()),
+                onTap: () {},
+              ),
             ),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 4.0),
-          child: ListTile(
-            title: Text(_selectedEvents[index]['name'].toString()),
-            onTap: () {},
-          ),
-        ),
         itemCount: _selectedEvents.length,
       ),
     );
