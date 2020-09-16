@@ -56,6 +56,7 @@ class TaskPage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
+                          SizedBox(height: 20),
                           Expanded(
                               child: MyTextField(
                                 label: 'Start Time',

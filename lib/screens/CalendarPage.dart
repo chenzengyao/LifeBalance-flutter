@@ -80,6 +80,7 @@ class _CalendarPageState extends State<CalendarPage> {
         ],
 
       ),
+
       body: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -132,3 +133,6 @@ class _CalendarPageState extends State<CalendarPage> {
     );
   }
 }
+
+
+
