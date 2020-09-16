@@ -63,6 +63,9 @@ class _SignInState extends State<SignIn> {
                       borderSide: BorderSide(color: Color(0xFFE8E8E8)),
                       borderRadius: BorderRadius.circular(7.0)
                   ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color:Colors.grey[400])
+                  ),
                 ),
                 validator: (val) => val.isEmpty ? 'Enter an email' : null,
                 onChanged: (val) {
@@ -81,6 +84,9 @@ class _SignInState extends State<SignIn> {
                       borderSide: BorderSide(color: Color(0xFFE8E8E8)), 
                       borderRadius: BorderRadius.circular(7.0)
                   ),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color:Colors.grey[400])
+                  ),
                 ),
                 obscureText: true,
                 validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
@@ -88,7 +94,7 @@ class _SignInState extends State<SignIn> {
                   setState(() => password = val); //store input password to val
                 },
               ),
-              SizedBox(height: 25.0),
+              SizedBox(height: 35.0),
               Container(
                 width: 350.0,
                 height: 45.0,
