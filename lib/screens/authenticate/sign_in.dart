@@ -1,6 +1,6 @@
+import 'package:flutter/rendering.dart';
 import 'package:lifebalance/screens/services/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:lifebalance/screens/services/constants.dart';
 
 class SignIn extends StatefulWidget {
 
@@ -23,15 +23,25 @@ class _SignInState extends State<SignIn> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.brown[100],
+      resizeToAvoidBottomPadding: false,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.brown[400],
+        backgroundColor: Colors.white,
         elevation: 0.0,
-        title: Text('Sign in to Life Balance'),
+        toolbarHeight: 80.0,
+        title: Text('Sign In',
+        style: TextStyle (
+          color: Colors.black,
+          fontSize: 30.0,
+        )),
+        centerTitle: true,
         actions: <Widget>[
           FlatButton.icon(
             icon: Icon(Icons.person),
-            label: Text('Sign Up'),
+            label: Text('Sign Up',
+            style: TextStyle (
+              color: Color(0XFFF2994A),
+            ),),
             onPressed: () => widget.toggleView(),
           ),
         ],
@@ -42,9 +52,18 @@ class _SignInState extends State<SignIn> {
           key: _formKey,
           child: Column(
             children: <Widget>[
-              SizedBox(height: 20.0),
               TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: 'Email'),
+                decoration: InputDecoration(
+                  hintText: 'Email',
+                  hintStyle: TextStyle(color: Color(0xFFBDBDBD)),
+                  filled: true,
+                  fillColor: Color(0XFFF6F6F6),
+                  contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
+                  enabledBorder: OutlineInputBorder (
+                      borderSide: BorderSide(color: Color(0xFFE8E8E8)),
+                      borderRadius: BorderRadius.circular(7.0)
+                  ),
+                ),
                 validator: (val) => val.isEmpty ? 'Enter an email' : null,
                 onChanged: (val) {
                   setState(() => email = val);  //store input email to val
@@ -52,19 +71,35 @@ class _SignInState extends State<SignIn> {
               ),
               SizedBox(height: 20.0),
               TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: 'Password'),
+                decoration: InputDecoration(
+                  hintText: 'Password',
+                  hintStyle: TextStyle(color: Color(0xFFBDBDBD)),
+                  filled: true,
+                  fillColor: Color(0XFFF6F6F6),
+                  contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
+                  enabledBorder: OutlineInputBorder (
+                      borderSide: BorderSide(color: Color(0xFFE8E8E8)), 
+                      borderRadius: BorderRadius.circular(7.0)
+                  ),
+                ),
                 obscureText: true,
                 validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
                 onChanged: (val) {
                   setState(() => password = val); //store input password to val
                 },
               ),
-              SizedBox(height: 20.0),
-              RaisedButton(
-                  color: Colors.pink[400],
+              SizedBox(height: 25.0),
+              Container(
+                width: 350.0,
+                height: 45.0,
+                child: RaisedButton(
+                  color: Color(0xFF5E7A6C),
                   child: Text(
                     'Sign In',
                     style: TextStyle(color: Colors.white),
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
                   ),
                   onPressed: () async {
                     if(_formKey.currentState.validate()){
@@ -76,6 +111,7 @@ class _SignInState extends State<SignIn> {
                       }
                     }
                   }
+              ),
               ),
               SizedBox(height: 12.0),
               Text(
