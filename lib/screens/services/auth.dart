@@ -1,5 +1,5 @@
 import 'package:lifebalance/screens/services/database.dart';
-import 'file:///C:/Users/Marcus/AndroidStudioProjects/LifeBalance-flutter/lib/screens/models/user.dart';
+import 'package:lifebalance/screens/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {

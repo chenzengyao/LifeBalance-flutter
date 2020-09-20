@@ -1,5 +1,5 @@
 import 'package:lifebalance/screens/profile_page2.dart';
-import 'file:///C:/Users/Marcus/AndroidStudioProjects/LifeBalance-flutter/lib/screens/models/user.dart';
+import 'package:lifebalance/screens/models/user.dart';
 import 'package:lifebalance/screens/authenticate/authenticate.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
