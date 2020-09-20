@@ -55,7 +55,7 @@ class _profile_pageState extends State<profile_page> {
                       height: 100.0,
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage('images/avatar.png'),
+                              image: AssetImage('assets/images/avatar.png'),
                               fit: BoxFit.cover),
                           borderRadius: BorderRadius.all(Radius.circular(55.0)),
                           boxShadow: [

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:lifebalance/screens/Others/LandingPage.dart';
 import 'package:lifebalance/screens/services/auth.dart';
 import 'package:lifebalance/screens/services/user.dart';
 import 'package:lifebalance/screens/services/wrapper.dart';
@@ -11,6 +12,7 @@ import 'package:lifebalance/screens/friends_page.dart';
 import 'package:lifebalance/screens/message_page.dart';
 import 'package:lifebalance/screens/notification_page.dart';
 import 'package:lifebalance/screens/profile_page.dart';
+import 'package:lifebalance/screens/Others/LandingPageNew.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
     return StreamProvider<User>.value(   //listen to stream, get user data from user.dart, no value if not signed in
       value: AuthService().user,
       child: MaterialApp(
-        home: Wrapper(),          //access data from stream
+        home: LandingPageNew(),          //access data from stream
       ),
     );
   }
