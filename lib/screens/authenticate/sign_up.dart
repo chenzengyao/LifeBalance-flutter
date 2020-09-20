@@ -1,5 +1,6 @@
 import 'package:lifebalance/screens/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lifebalance/screens/services/loadingwidget.dart';
 
 class Register extends StatefulWidget {
 
@@ -14,6 +15,7 @@ class _RegisterState extends State<Register> {
 
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
+  bool loading = false;
   String error = '';
 
   // text field state
@@ -22,7 +24,7 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? LoadingWidget() : Scaffold(  //if loading = true (validating credentials), show widget, else if error, show scaffold (sign up screen)
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -108,10 +110,12 @@ class _RegisterState extends State<Register> {
                       ),
                       onPressed: () async {
                         if(_formKey.currentState.validate()){
+                          setState(() => loading = true);   //show loading widget when validating credentials
                           dynamic result = await _auth.registerWithEmailAndPassword(email, password);
                           if(result == null) {
                             setState(() {
                               error = 'Please supply a valid email';
+                              loading = false;              //show scaffold when validating fail
                             });
                           }
                         }

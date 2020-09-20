@@ -1,6 +1,7 @@
 import 'package:flutter/rendering.dart';
 import 'package:lifebalance/screens/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lifebalance/screens/services/loadingwidget.dart';
 
 class SignIn extends StatefulWidget {
 
@@ -15,6 +16,7 @@ class _SignInState extends State<SignIn> {
 
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
+  bool loading = false;   //show loading widget if true
   String error = '';
 
   // text field state
@@ -22,7 +24,7 @@ class _SignInState extends State<SignIn> {
   String password = '';
 
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? LoadingWidget() : Scaffold(    //if loading = true (validating credentials), show widget, else if error, show scaffold (sign in screen)
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -109,10 +111,12 @@ class _SignInState extends State<SignIn> {
                   ),
                   onPressed: () async {
                     if(_formKey.currentState.validate()){
+                      setState(() => loading = true);     //show loading widget when validating credentials
                       dynamic result = await _auth.signInWithEmailAndPassword(email, password);
                       if(result == null) {
                         setState(() {
                           error = 'Could not sign in with those credentials';
+                          loading = false;                //credentials error, stop showing loading widget
                         });
                       }
                     }

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lifebalance/screens/Others/LandingPage.dart';
 import 'package:lifebalance/screens/services/auth.dart';
-import 'package:lifebalance/screens/services/user.dart';
+import 'file:///C:/Users/Marcus/AndroidStudioProjects/LifeBalance-flutter/lib/screens/models/user.dart';
 import 'package:lifebalance/screens/services/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
