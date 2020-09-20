@@ -1,6 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+//import 'package:lifebalance/screens/models/course.dart';
 import 'package:lifebalance/screens/services/auth.dart';
+//import 'package:lifebalance/screens/services/database.dart';
+//import 'package:provider/provider.dart';
 
 class profile_page extends StatefulWidget {
 
@@ -14,35 +16,39 @@ class _profile_pageState extends State<profile_page> {
 
   @override
   Widget build(BuildContext context) {
+    /*return StreamProvider<List<Course>>.value(
+          value: DatabaseService().courses,
+          child: Scaffold(*/
     return Container(
         child: Scaffold(
-          backgroundColor: Colors.brown[50],
-          appBar: AppBar(
-             title: Text('Life Balance'),
-            backgroundColor: Colors.brown[400],
-            elevation: 0.0,
-            actions: <Widget>[
-              FlatButton.icon(
-                icon: Icon(Icons.person),
-                label: Text('Logout'),
-                onPressed: () async {
-                  await _auth.signOut(); //return null value to user
-                },
-              ),
-            ],
-          ),
-          /* body: Container(
-        padding: const EdgeInsets.all(32),
-         child: Row(children: [
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Image.asset(
-                'images/avatar.png',
-                width: 100.0,
-                height: 100.0,
-                fit: BoxFit.cover,
-              ),
-            ]),
-          ]),*/
+            backgroundColor: Colors.white,
+            appBar: AppBar(
+               title: Text('Life Balance'),
+              backgroundColor: Colors.blue[400],
+              elevation: 0.0,
+              actions: <Widget>[
+                FlatButton.icon(
+                  icon: Icon(Icons.person),
+                  label: Text('Logout'),
+                  onPressed: () async {
+                    await _auth.signOut(); //return null value to user
+                  },
+                ),
+              ],
+            ),
+
+            /* body: Container(
+          padding: const EdgeInsets.all(32),
+           child: Row(children: [
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Image.asset(
+                  'images/avatar.png',
+                  width: 100.0,
+                  height: 100.0,
+                  fit: BoxFit.cover,
+                ),
+              ]),
+            ]),*/
 
           body: new Stack(
             children: <Widget>[
@@ -64,6 +70,7 @@ class _profile_pageState extends State<profile_page> {
                 ]))
           ],
         ),
+    //),
     ),
     );
   }

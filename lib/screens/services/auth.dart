@@ -1,4 +1,5 @@
-import 'package:lifebalance/screens/services/user.dart';
+import 'package:lifebalance/screens/services/database.dart';
+import 'file:///C:/Users/Marcus/AndroidStudioProjects/LifeBalance-flutter/lib/screens/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
@@ -46,6 +47,9 @@ class AuthService {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
+
+      //create a new document for the user with the uid, pass in data to database
+      await DatabaseService(uid: user.uid).updateUserData('new user name', '0', 'module name', 0);
       return _userFromFirebaseUser(user);
     } catch (error) {
       print(error.toString());
