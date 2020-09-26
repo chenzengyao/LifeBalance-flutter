@@ -7,14 +7,14 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // create user obj based on firebase user
-  User _userFromFirebaseUser(FirebaseUser user) {
-    return user != null ? User(uid: user.uid) : null;    //get user uid
+  MyUser _userFromFirebaseUser(User user) {
+    return user != null ? MyUser(uid: user.uid) : null;    //get user uid
   }
 
   // auth change user stream
   //get information in the stream whenever user sign in/out based on user class
-  Stream<User> get user {
-    return _auth.onAuthStateChanged
+  Stream<MyUser> get user {
+    return _auth.authStateChanges()
         .map(_userFromFirebaseUser);
   }
 
@@ -33,8 +33,8 @@ class AuthService {
   // sign in with email and password
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
-      FirebaseUser user = result.user;
+      final result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      User user = result.user;
       return user;
     } catch (error) {
       print(error.toString());
@@ -45,8 +45,8 @@ class AuthService {
   // register with email and password
   Future registerWithEmailAndPassword(String email, String password) async {
     try {
-      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      FirebaseUser user = result.user;
+      final result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      User user = result.user;
 
       //create a new document for the user with the uid, pass in data to database
       await DatabaseService(uid: user.uid).updateUserData('new user name', '0', 'module name', 0);

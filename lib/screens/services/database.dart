@@ -6,10 +6,10 @@ class DatabaseService{
   final String uid;
   DatabaseService({ this.uid });    //Store collection in uid
   // collection reference, create 1 if not found in database
-  final CollectionReference courseCollection = Firestore.instance.collection('course');
+  final CollectionReference courseCollection = FirebaseFirestore.instance.collection('course');
 
   Future updateUserData(String name, String courseCode, String moduleName, int duration) async {
-    return await courseCollection.document(uid).setData({   //pass in uid to (new)document
+    return await courseCollection.doc(uid).set({   //pass in uid to (new)document
       'name': name,
       'courseCode': courseCode,
       'moduleName': moduleName,
@@ -19,12 +19,12 @@ class DatabaseService{
 
   // course list from snapshot
   List<Course> _courseListFromSnapshot(QuerySnapshot snapshot){
-    return snapshot.documents.map((doc){
+    return snapshot.docs.map((doc){
       return Course(
-        name: doc.data['name'] ?? '',    //empty string if dont exist
-        courseCode: doc.data['courseCode'] ?? '',
-        moduleName: doc.data['moduleName'] ?? '',
-        duration: doc.data['duration'] ?? 0
+        name: doc.data()['name'] ?? '',    //empty string if dont exist
+        courseCode: doc.data()['courseCode'] ?? '',
+        moduleName: doc.data()['moduleName'] ?? '',
+        duration: doc.data()['duration'] ?? 0
       );
     }).toList();
   }
