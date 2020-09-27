@@ -1,10 +1,8 @@
-class Course{
+class User{
 
-  final String name;
-  final String courseCode;
-  final String moduleName;
-  final int duration;
+  final String email;
+  final String username;
 
-  Course({ this.name, this.courseCode, this.moduleName, this.duration});
+  User({ this.email, this.username });
 
 }

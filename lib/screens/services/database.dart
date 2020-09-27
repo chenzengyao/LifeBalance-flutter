@@ -6,32 +6,28 @@ class DatabaseService{
   final String uid;
   DatabaseService({ this.uid });    //Store collection in uid
   // collection reference, create 1 if not found in database
-  final CollectionReference courseCollection = FirebaseFirestore.instance.collection('course');
+  final CollectionReference userCollection = FirebaseFirestore.instance.collection('user');
 
-  Future updateUserData(String name, String courseCode, String moduleName, int duration) async {
-    return await courseCollection.doc(uid).set({   //pass in uid to (new)document
-      'name': name,
-      'courseCode': courseCode,
-      'moduleName': moduleName,
-      'duration' : duration,
+  Future updateUserData(String email, String username) async {
+    return await userCollection.doc(uid).set({   //pass in uid to (new)document
+      'email': email,
+      'username': username,
     });
   }
 
   // course list from snapshot
-  List<Course> _courseListFromSnapshot(QuerySnapshot snapshot){
+  List<User> _courseListFromSnapshot(QuerySnapshot snapshot){
     return snapshot.docs.map((doc){
-      return Course(
-        name: doc.data()['name'] ?? '',    //empty string if dont exist
-        courseCode: doc.data()['courseCode'] ?? '',
-        moduleName: doc.data()['moduleName'] ?? '',
-        duration: doc.data()['duration'] ?? 0
+      return User(
+        email: doc.data()['email'] ?? '',    //empty string if dont exist
+        username: doc.data()['username'] ?? '',
       );
     }).toList();
   }
 
   // get course stream
-  Stream<List<Course>> get courses {     //snapshot of firestore collection when data changes
-    return courseCollection.snapshots()  //return stream
+  Stream<List<User>> get courses {     //snapshot of firestore collection when data changes
+    return userCollection.snapshots()  //return stream
       .map(_courseListFromSnapshot);
   }
 }
