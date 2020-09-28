@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
+import 'package:flutter_clean_calendar/flutter_clean_calendar2.dart';
 import 'package:lifebalance/screens/TaskPage.dart';
 
 class CalendarPage extends StatefulWidget {
@@ -94,6 +94,7 @@ class _CalendarPageState extends State<CalendarPage> {
                     print("Range is ${range.from}, ${range.to}"),
                 onDateSelected: (date) => _handleNewDate(date),
                 isExpandable: true,
+                isExpanded:true,
                 eventDoneColor: Colors.green,
                 selectedColor: Colors.pink,
                 todayColor: Colors.red,
