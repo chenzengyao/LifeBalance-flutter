@@ -24,22 +24,22 @@ class _notification_pageState extends State<notification_page> {
             children: <Widget>[
             SizedBox(height: 40.0),
             StreamBuilder<QuerySnapshot>(
-              stream: Firestore.instance.collection("course").snapshots(),
+              stream: FirebaseFirestore.instance.collection("course").snapshots(),
               builder: (context,snapshot) {
                 if (!snapshot.hasData) {
                   Text("Loading");
                 }
                 else {
                   List<DropdownMenuItem> courseList = [];
-                  for (int i = 0; i < snapshot.data.documents.length; i++) {
-                    DocumentSnapshot snap = snapshot.data.documents[i];
+                  for (int i = 0; i < snapshot.data.docs.length; i++) {
+                    DocumentSnapshot snap = snapshot.data.docs[i];
                     courseList.add(
                       DropdownMenuItem(
                         child: Text(
-                          snap.documentID,
+                          snap.id,
                           style: TextStyle(color: Color(0xff11b719)),
                         ),
-                        value: "${snap.documentID}",
+                        value: "${snap.id}",
                       ),
                     );
                   }
@@ -71,6 +71,7 @@ class _notification_pageState extends State<notification_page> {
                     ],
                   );
                 }
+                return Row();
               }),
               SizedBox(
                 height: 150.0,
@@ -89,7 +90,9 @@ class _notification_pageState extends State<notification_page> {
                               Text("Submit", style: TextStyle(fontSize: 24.0)),
                             ],
                           )),
-                      onPressed: () {},
+                      onPressed: () {
+                        
+                      },
                       shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(30.0))),
                 ],
