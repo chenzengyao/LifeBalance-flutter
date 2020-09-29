@@ -6,6 +6,7 @@ import './simple_gesture_detector.dart';
 import './calendar_tile.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:lifebalance/theme/colors/light_colors.dart';
 
 typedef DayBuilder(BuildContext context, DateTime day);
 
@@ -103,8 +104,8 @@ class _CalendarState extends State<Calendar> {
 
     if (!widget.hideArrows) {
       leftArrow = IconButton(
-        onPressed: isExpanded ? nextMonth : previousWeek,
-        icon: Icon(Icons.chevron_right),
+        onPressed: isExpanded ? previousMonth : previousWeek,
+        icon: Icon(Icons.chevron_left),
       );
       rightArrow = IconButton(
         onPressed: isExpanded ? nextMonth : nextWeek,
@@ -117,7 +118,7 @@ class _CalendarState extends State<Calendar> {
 
     if (!widget.hideTodayIcon) {
       todayIcon = InkWell(
-        child: Text('Today'),
+        child: Text('Today???'),
         onTap: resetToToday,
       );
     } else {
@@ -189,7 +190,7 @@ class _CalendarState extends State<Calendar> {
                 TextStyle(
                   color: widget.selectedColor,
                   fontWeight: FontWeight.w500,
-                  fontSize: 11,
+                  fontSize: 20,
                 ),
           ),
         );
@@ -292,7 +293,7 @@ class _CalendarState extends State<Calendar> {
                 icon: isExpanded
                     ? Icon(
                         Icons.arrow_drop_up,
-                        color: widget.bottomBarArrowColor ?? Colors.black,
+                        color: widget.bottomBarArrowColor ?? LightColors.kGreen,
                       )
                     : Icon(
                         Icons.arrow_drop_down,
@@ -489,7 +490,8 @@ class _CalendarState extends State<Calendar> {
   List<DateTime> _daysInMonth(DateTime month) {
     var first = Utils.firstDayOfMonth(month);
     var daysBefore = first.weekday;
-    var firstToDisplay = first.subtract(new Duration(days: daysBefore - 1));
+    //why does this only work when minus 0 but the actual is minus 1
+    var firstToDisplay = first.subtract(new Duration(days: daysBefore - 0));
     var last = Utils.lastDayOfMonth(month);
 
     var daysAfter = 7 - last.weekday;
@@ -523,7 +525,7 @@ class ExpansionCrossFade extends StatelessWidget {
         sizeCurve: Curves.decelerate,
         crossFadeState:
             isExpanded ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-        duration: const Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 500),
       ),
     );
   }

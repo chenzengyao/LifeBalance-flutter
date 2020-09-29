@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_calendar/flutter_clean_calendar2.dart';
+import 'package:flutter_clean_calendar/calendar_tile.dart';
 import 'package:lifebalance/screens/TaskPage.dart';
+import 'package:date_utils/date_utils.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:lifebalance/widgets/top_container.dart';
+import 'package:lifebalance/widgets/top_container_flat.dart';
+//import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
 
 class CalendarPage extends StatefulWidget {
   @override
@@ -8,6 +15,15 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
+  final calendarUtils = Utils();
+  List<DateTime> selectedMonthsDays;
+  Iterable<DateTime> selectedWeekDays;
+  DateTime _selectedDate = DateTime.now();
+  String currentMonth;
+  bool isExpanded = false;
+  String displayMonth = "";
+  DateTime get selectedDate => _selectedDate;
+
   void _handleNewDate(date) {
     setState(() {
       _selectedDay = date;
@@ -55,14 +71,19 @@ class _CalendarPageState extends State<CalendarPage> {
   @override
   void initState() {
     super.initState();
+
     _selectedEvents = _events[_selectedDay] ?? [];
+
+    var monthFormat = DateFormat("MMMM yyyy").format(_selectedDate);
+    displayMonth = "${monthFormat[0].toUpperCase()}${monthFormat.substring(1)}";
   }
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Calendar'),
+      /*appBar: AppBar(
+        title: Text(displayMonth),
         //new - add task in app bar
         actions: <Widget>[
           FlatButton.icon(
@@ -79,12 +100,69 @@ class _CalendarPageState extends State<CalendarPage> {
           ),
         ],
 
-      ),
+      ),*/
 
       body: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
+            TopContainerFlat(
+              height: 100,
+              width: width,
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            CircleAvatar(
+                              radius: 20.0,
+                              backgroundImage: AssetImage(
+                                'assets/images/avatar.png',
+                              ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          child: Text(
+                            'DIP Group 6',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontSize: 22.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              //nameAndIconRow,
+                              FlatButton.icon(
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
+                                padding: EdgeInsets.only(
+                                    left: 0, top: 0, right: 0, bottom: 0),
+                                icon: Icon(Icons.add),
+                                label: Text('Add Task'),
+                                textColor: Colors.white,
+                                onPressed: () async {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => TaskPage(),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ]),
+                      ],
+                    )
+                  ]),
+            ),
             Container(
               child: Calendar(
                 startOnMonday: false,
@@ -94,7 +172,7 @@ class _CalendarPageState extends State<CalendarPage> {
                     print("Range is ${range.from}, ${range.to}"),
                 onDateSelected: (date) => _handleNewDate(date),
                 isExpandable: true,
-                isExpanded:true,
+                isExpanded: true,
                 eventDoneColor: Colors.green,
                 selectedColor: Colors.pink,
                 todayColor: Colors.red,
@@ -115,25 +193,20 @@ class _CalendarPageState extends State<CalendarPage> {
   Widget _buildEventList() {
     return Expanded(
       child: ListView.builder(
-        itemBuilder: (BuildContext context, int index) =>
-            Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(width: 1.5, color: Colors.black12),
-                ),
-              ),
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 0.0, vertical: 4.0),
-              child: ListTile(
-                title: Text(_selectedEvents[index]['name'].toString()),
-                onTap: () {},
-              ),
+        itemBuilder: (BuildContext context, int index) => Container(
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(width: 1.5, color: Colors.black12),
             ),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 4.0),
+          child: ListTile(
+            title: Text(_selectedEvents[index]['name'].toString()),
+            onTap: () {},
+          ),
+        ),
         itemCount: _selectedEvents.length,
       ),
     );
   }
 }
-
-
-
