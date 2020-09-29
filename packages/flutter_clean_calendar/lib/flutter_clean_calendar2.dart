@@ -7,6 +7,7 @@ import './calendar_tile.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:lifebalance/theme/colors/light_colors.dart';
+import 'package:lifebalance/widgets/theme.dart';
 
 typedef DayBuilder(BuildContext context, DateTime day);
 
@@ -105,11 +106,11 @@ class _CalendarState extends State<Calendar> {
     if (!widget.hideArrows) {
       leftArrow = IconButton(
         onPressed: isExpanded ? previousMonth : previousWeek,
-        icon: Icon(Icons.chevron_left),
+        icon: Icon(Icons.chevron_left, color:theme.red),
       );
       rightArrow = IconButton(
         onPressed: isExpanded ? nextMonth : nextWeek,
-        icon: Icon(Icons.chevron_right),
+        icon: Icon(Icons.chevron_right, color:theme.red),
       );
     } else {
       leftArrow = Container();
@@ -118,30 +119,36 @@ class _CalendarState extends State<Calendar> {
 
     if (!widget.hideTodayIcon) {
       todayIcon = InkWell(
-        child: Text('Today???'),
+        child: Text('Today', 
+          style: TextStyle(color:theme.red)),
         onTap: resetToToday,
       );
     } else {
       todayIcon = Container();
     }
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        leftArrow ?? Container(),
-        Column(
-          children: <Widget>[
-            todayIcon ?? Container(),
-            Text(
-              displayMonth,
-              style: TextStyle(
-                fontSize: 20.0,
+    return Container(
+      decoration: BoxDecoration(
+          color: theme.green,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          leftArrow ?? Container(),
+          Column(
+            children: <Widget>[
+              todayIcon ?? Container(),
+              Text(
+                displayMonth,
+                style: TextStyle(
+                  fontSize: 20.0, color: Colors.white
+                ),
               ),
-            ),
-          ],
-        ),
-        rightArrow ?? Container(),
-      ],
+            ],
+          ),
+          rightArrow ?? Container(),
+        ],
+      ),
     );
   }
 
@@ -274,7 +281,7 @@ class _CalendarState extends State<Calendar> {
       return GestureDetector(
         onTap: toggleExpanded,
         child: Container(
-          color: widget.bottomBarColor ?? Color.fromRGBO(200, 200, 200, 0.2),
+          color: widget.bottomBarColor ?? LightColors.kDarkYellow.withOpacity(0.2),
           height: 40,
           margin: EdgeInsets.only(top: 8.0),
           padding: EdgeInsets.all(0),

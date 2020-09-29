@@ -5,6 +5,7 @@ import 'package:lifebalance/screens/TaskPage.dart';
 import 'package:date_utils/date_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:lifebalance/theme/colors/light_colors.dart';
 import 'package:lifebalance/widgets/top_container.dart';
 import 'package:lifebalance/widgets/top_container_flat.dart';
 //import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
@@ -81,113 +82,91 @@ class _CalendarPageState extends State<CalendarPage> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      /*appBar: AppBar(
-        title: Text(displayMonth),
-        //new - add task in app bar
-        actions: <Widget>[
-          FlatButton.icon(
-            icon: Icon(Icons.add),
-            label: Text('Add Task'),
-            onPressed: () async {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TaskPage(),
-                ),
-              );
-            },
-          ),
-        ],
-
-      ),*/
-
-      body: SafeArea(
+    return SafeArea(
         child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            TopContainerFlat(
-              height: 100,
-              width: width,
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        TopContainerFlat(
+            height: 70,
+            width: width,
+            child: Stack(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Flex(
-                      direction: Axis.horizontal,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            CircleAvatar(
-                              radius: 20.0,
-                              backgroundImage: AssetImage(
-                                'assets/images/avatar.png',
+                    Container(
+                      padding: EdgeInsets.only(top: 15),
+                      child: CircleAvatar(
+                        radius: 20.0,
+                        backgroundImage: AssetImage(
+                          'assets/images/avatar.png',
+                        ),
+                      ),
+                    ),
+                    Container(
+                        margin: EdgeInsets.only(left: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            FlatButton(
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              padding: EdgeInsets.only(
+                                  left: 0, top: 0, right: 0, bottom: 0),
+                              child: Column(
+                                children: <Widget>[
+                                  Text("Add Task",
+                                      style: TextStyle(color: Colors.white)),
+                                  Icon(Icons.add, color: Colors.white)
+                                ],
                               ),
-                            ),
+                              onPressed: () async {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TaskPage(),
+                                  ),
+                                );
+                              },
+                            )
                           ],
-                        ),
-                        Container(
-                          child: Text(
-                            'DIP Group 6',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              fontSize: 22.0,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
-                        ),
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              //nameAndIconRow,
-                              FlatButton.icon(
-                                materialTapTargetSize:
-                                    MaterialTapTargetSize.shrinkWrap,
-                                padding: EdgeInsets.only(
-                                    left: 0, top: 0, right: 0, bottom: 0),
-                                icon: Icon(Icons.add),
-                                label: Text('Add Task'),
-                                textColor: Colors.white,
-                                onPressed: () async {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => TaskPage(),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ]),
-                      ],
-                    )
-                  ]),
-            ),
-            Container(
-              child: Calendar(
-                startOnMonday: false,
-                //weekDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-                events: _events,
-                onRangeSelected: (range) =>
-                    print("Range is ${range.from}, ${range.to}"),
-                onDateSelected: (date) => _handleNewDate(date),
-                isExpandable: true,
-                isExpanded: true,
-                eventDoneColor: Colors.green,
-                selectedColor: Colors.pink,
-                todayColor: Colors.red,
-                eventColor: Colors.grey,
-                dayOfWeekStyle: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 11),
-              ),
-            ),
-            _buildEventList()
-          ],
+                        )),
+                  ],
+                ),
+                Center(
+                  child: Text(
+                    'DIP Group 6',
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontSize: 22.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+              ],
+            )),
+        Container(
+          child: Calendar(
+            startOnMonday: false,
+            //weekDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+            events: _events,
+            onRangeSelected: (range) =>
+                print("Range is ${range.from}, ${range.to}"),
+            onDateSelected: (date) => _handleNewDate(date),
+            isExpandable: true,
+            isExpanded: true,
+            eventDoneColor: Colors.green,
+            selectedColor: Colors.pink,
+            todayColor: Colors.red,
+            eventColor: Colors.grey,
+            dayOfWeekStyle: TextStyle(
+                color: Colors.black, fontWeight: FontWeight.w800, fontSize: 11),
+          ),
         ),
-      ),
-    );
+        _buildEventList()
+      ],
+    ));
   }
 
   Widget _buildEventList() {
@@ -195,6 +174,7 @@ class _CalendarPageState extends State<CalendarPage> {
       child: ListView.builder(
         itemBuilder: (BuildContext context, int index) => Container(
           decoration: BoxDecoration(
+            color: LightColors.kLightGreen,
             border: Border(
               bottom: BorderSide(width: 1.5, color: Colors.black12),
             ),
