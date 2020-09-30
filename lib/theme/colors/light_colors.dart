@@ -13,6 +13,7 @@ class LightColors  {
   static const Color kGreen = Color(0xFF5E7A6C);
   static const Color kPurple = Color(0xFFA689E0);
   static const Color kLightPurple = Color(0xFFC997D1);
+  static const Color kBrown = Color(0xFF754B4B);
 
   static const Color kDarkBlue = Color(0xFF0D253F);
 }
