@@ -90,8 +90,7 @@ class _notification_pageState extends State<notification_page> {
                               Text("Submit", style: TextStyle(fontSize: 24.0)),
                             ],
                           )),
-                      onPressed: () {
-                        
+                      onPressed: () async {
                       },
                       shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(30.0))),
