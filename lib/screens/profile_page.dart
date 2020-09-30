@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lifebalance/screens/Others/CoursePage.dart';
 //import 'package:lifebalance/screens/models/course.dart';
 import 'package:lifebalance/screens/services/auth.dart';
 //import 'package:lifebalance/screens/services/database.dart';
@@ -34,12 +35,12 @@ class _profile_pageState extends State<profile_page> {
     }
     double width = MediaQuery.of(context).size.width;
 
-    CircleAvatar calendarIcon() {
+    CircleAvatar addCourseIcon() {
       return CircleAvatar(
         radius: 25.0,
         backgroundColor: LightColors.kGreen,
         child: Icon(
-          Icons.calendar_today,
+          Icons.add,
           size: 20.0,
           color: Colors.white,
         ),
@@ -148,16 +149,16 @@ class _profile_pageState extends State<profile_page> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   subheading('My Tasks'),
-                                  /*GestureDetector(
+                                  GestureDetector(
                                     onTap: () {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => CalendarPage()),
+                                            builder: (context) => CoursePage()),
                                       );
                                     },
-                                    child: calendarIcon(),
-                                  ),*/
+                                    child: addCourseIcon(),
+                                  ),
                                 ],
                               ),
                               SizedBox(height: 5.0),
