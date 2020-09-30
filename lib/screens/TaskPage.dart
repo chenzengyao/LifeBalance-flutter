@@ -33,7 +33,11 @@ class _AddEventPageState extends State<AddEventPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.note != null ? "Edit Event" : "Add event"),
+        title: Text(
+          widget.note != null ? "Edit Event" : "Add Event",
+          style: TextStyle(fontSize: 20, color: Colors.white)
+        ),
+        backgroundColor: Color(0xFFD1C0B6),
       ),
       key: _key,
       body: Form(
@@ -43,37 +47,55 @@ class _AddEventPageState extends State<AddEventPage> {
           child: ListView(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
                 child: TextFormField(
                   controller: _title,
                   validator: (value) =>
                   (value.isEmpty) ? "Please Enter title" : null,
                   style: style,
                   decoration: InputDecoration(
-                      labelText: "Title",
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+                    labelText: "Title",
+                    labelStyle: TextStyle(color: Color(0x50000000), fontSize: 18),
+                    contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black)
+                    )
+                  ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
                 child: TextFormField(
                   controller: _description,
-                  minLines: 3,
+                  minLines: 1,
                   maxLines: 5,
                   validator: (value) =>
                   (value.isEmpty) ? "Please Enter description" : null,
                   style: style,
                   decoration: InputDecoration(
-                      labelText: "description",
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+                    labelText: "Description",
+                    labelStyle: TextStyle(color: Color(0x50000000), fontSize: 18),
+                    contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black)
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 10.0),
               ListTile(
-                title: Text("Date (YYYY-MM-DD)"),
-                subtitle: Text("${_eventDate.year} - ${_eventDate.month} - ${_eventDate.day}"),
+                title: Text(
+                    "Date (YYYY-MM-DD)",
+                    style: TextStyle(
+                      fontSize: 18.0
+                    ),
+                ),
+                subtitle: Text(
+                  "${_eventDate.year} - ${_eventDate.month} - ${_eventDate.day}",
+                  style: TextStyle(
+                    fontSize: 15.0
+                  )
+                ),
                 onTap: ()async{
                   DateTime picked = await showDatePicker(context: context, initialDate: _eventDate, firstDate: DateTime(_eventDate.year-5), lastDate: DateTime(_eventDate.year+5));
                   if(picked != null) {
@@ -84,7 +106,7 @@ class _AddEventPageState extends State<AddEventPage> {
                 },
               ),
 
-              SizedBox(height: 10.0),
+              SizedBox(height: 20.0),
               processing
                   ? Center(child: CircularProgressIndicator())
                   : Padding(
@@ -92,7 +114,7 @@ class _AddEventPageState extends State<AddEventPage> {
                 child: Material(
                   elevation: 5.0,
                   borderRadius: BorderRadius.circular(30.0),
-                  color: Theme.of(context).primaryColor,
+                  color: Color(0xFFD1C0B6),
                   child: MaterialButton(
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
@@ -152,14 +174,41 @@ import 'package:lifebalance/widgets/back_button.dart';
 import 'package:lifebalance/widgets/my_text_field.dart';
 
 class TaskPage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    var downwardIcon = Icon(
-      Icons.keyboard_arrow_down,
-      color: Colors.white,
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      elevation: 10,
+      child: _buildChild(context),
     );
-    return Scaffold(
+  }
+
+  _buildChild(BuildContext context) => Container(
+    height: 400,
+    width: 300,
+    decoration: BoxDecoration(
+      color: Color(0xFFD1C0B6),
+      shape: BoxShape.rectangle,
+      borderRadius: BorderRadius.circular(10)
+    ),
+    child: Column(
+      children: <Widget>[
+        SizedBox(height: 20),
+        Text(
+          'Add New Task',
+          style: TextStyle(fontSize: 18),
+        ),
+        TextFormField(
+          decoration: InputDecoration(
+            hintText: 'Event Title',
+
+          ),
+        )
+      ]
+    )
+  );
+    /* return Scaffold(
       body: SafeArea(
         child: Column(
           children: <Widget>[
@@ -259,8 +308,7 @@ class TaskPage extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
+    ); */
 }
 
 */
