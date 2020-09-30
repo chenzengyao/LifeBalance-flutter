@@ -5,14 +5,41 @@ import 'package:lifebalance/widgets/back_button.dart';
 import 'package:lifebalance/widgets/my_text_field.dart';
 
 class TaskPage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    var downwardIcon = Icon(
-      Icons.keyboard_arrow_down,
-      color: Colors.white,
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      elevation: 10,
+      child: _buildChild(context),
     );
-    return Scaffold(
+  }
+
+  _buildChild(BuildContext context) => Container(
+    height: 400,
+    width: 300,
+    decoration: BoxDecoration(
+      color: Color(0xFFD1C0B6),
+      shape: BoxShape.rectangle,
+      borderRadius: BorderRadius.circular(10)
+    ),
+    child: Column(
+      children: <Widget>[
+        SizedBox(height: 20),
+        Text(
+          'Add New Task',
+          style: TextStyle(fontSize: 18),
+        ),
+        TextFormField(
+          decoration: InputDecoration(
+            hintText: 'Event Title',
+
+          ),
+        )
+      ]
+    )
+  );
+    /* return Scaffold(
       body: SafeArea(
         child: Column(
           children: <Widget>[
@@ -112,7 +139,6 @@ class TaskPage extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
+    ); */
 }
 
