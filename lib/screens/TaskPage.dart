@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lifebalance/screens/event.dart';
 import 'package:flutter/material.dart';
 import 'package:lifebalance/screens/event_firestore_service.dart';
@@ -18,6 +20,7 @@ class _AddEventPageState extends State<AddEventPage> {
   DateTime _eventDate;
   final _formKey = GlobalKey<FormState>();
   final _key = GlobalKey<ScaffoldState>();
+  final _id = FirebaseAuth.instance.currentUser.uid;
   bool processing;
 
   @override
@@ -130,6 +133,7 @@ class _AddEventPageState extends State<AddEventPage> {
                         }else{
                           await eventDBS.createItem(EventModel(
                               title: _title.text,
+                              id: _id,
                               description: _description.text,
                               eventDate: _eventDate
                           ));

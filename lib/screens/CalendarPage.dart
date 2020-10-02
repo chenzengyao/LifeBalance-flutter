@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lifebalance/screens/event_firestore_service.dart';
 import 'package:lifebalance/screens/TaskPage.dart';
@@ -18,6 +20,8 @@ class _HomePageState extends State<CalendarPage> {
   CalendarController _controller;
   Map<DateTime, List<dynamic>> _events;
   List<dynamic> _selectedEvents;
+  final _fireStore = FirebaseFirestore.instance;
+  final _userId = FirebaseAuth.instance.currentUser.uid;
 
   @override
   void initState() {
@@ -26,13 +30,27 @@ class _HomePageState extends State<CalendarPage> {
     _events = {};
     _selectedEvents = [];
   }
+  
+  eventStream() async {
+    await for(var snapshot in _fireStore.collection('events').snapshots()){
+      for(var event in snapshot.docs){
+        if (event.data().containsValue(_userId)) {
+          print(event.data());
+          return true;
+        }
+        else
+          return null;
+      }
+    }
+  }
 
   Map<DateTime, List<dynamic>> _groupEvents(List<EventModel> allEvents) {
     Map<DateTime, List<dynamic>> data = {};
     allEvents.forEach((event) {
       DateTime date = DateTime(
           event.eventDate.year, event.eventDate.month, event.eventDate.day, 12);
-      if (data[date] == null) data[date] = [];
+      if (data[date] == null)
+        data[date] = [];
       data[date].add(event);
     });
     return data;
@@ -106,17 +124,23 @@ class _HomePageState extends State<CalendarPage> {
               ],
             )),
       Container(
-        child: StreamBuilder<List<EventModel>>(
+        child: StreamBuilder<List<dynamic>>(
             stream: eventDBS.streamList(),
             builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                List<EventModel> allEvents = snapshot.data;
-                if (allEvents.isNotEmpty) {
-                  _events = _groupEvents(allEvents);
-                } else {
-                  _events = {};
-                  _selectedEvents = [];
-                }
+              if (snapshot.hasData ) {
+                  List<EventModel> allEvents = snapshot.data;
+                  if (allEvents.isNotEmpty) {
+                    List<EventModel> userEvent = [];
+                    for(var e = 0; e < allEvents.length ; e++){
+                      if(allEvents[e].id == _userId){
+                        userEvent.add(allEvents[e]);
+                      }
+                    }
+                    _events = _groupEvents(userEvent);
+                  } else {
+                    _events = {};
+                    _selectedEvents = [];
+                  }
               }
               return SingleChildScrollView(
                 child: Column(
