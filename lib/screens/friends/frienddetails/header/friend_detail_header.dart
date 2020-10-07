@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lifebalance/screens/friends/friends/friend.dart';
 import 'package:lifebalance/screens/friends/frienddetails/header/diagonally_cut_colored_image.dart';
+import 'package:lifebalance/theme/colors/light_colors.dart';
 import 'package:meta/meta.dart';
 
 class FriendDetailHeader extends StatelessWidget {
@@ -24,7 +25,7 @@ class FriendDetailHeader extends StatelessWidget {
         height: 280.0,
         fit: BoxFit.cover,
       ),
-      color: const Color(0xBB8338f4),
+      color: LightColors.kLightGreen,
     );
   }
 
@@ -37,7 +38,7 @@ class FriendDetailHeader extends StatelessWidget {
       ),
     );
   }
-
+/*
   Widget _buildFollowerInfo(TextTheme textTheme) {
     var followerStyle =
         textTheme.subhead.copyWith(color: const Color(0xBBFFFFFF));
@@ -58,7 +59,7 @@ class FriendDetailHeader extends StatelessWidget {
       ),
     );
   }
-
+*/
   Widget _buildActionButtons(ThemeData theme) {
     return new Padding(
       padding: const EdgeInsets.only(
@@ -70,18 +71,19 @@ class FriendDetailHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           _createPillButton(
-            'HIRE ME',
-            backgroundColor: theme.accentColor,
+            'ADD ME',
+            backgroundColor: LightColors.kGreen,
           ),
-          new DecoratedBox(
+         /* new DecoratedBox(
             decoration: new BoxDecoration(
               border: new Border.all(color: Colors.white30),
               borderRadius: new BorderRadius.circular(30.0),
-            ),
-            child: _createPillButton(
+            ), */
+             _createPillButton(
               'FOLLOW',
+              backgroundColor: LightColors.orange,
               textColor: Colors.white70,
-            ),
+            //),
           ),
         ],
       ),
@@ -90,7 +92,7 @@ class FriendDetailHeader extends StatelessWidget {
 
   Widget _createPillButton(
     String text, {
-    Color backgroundColor = Colors.transparent,
+    Color backgroundColor = LightColors.orange,
     Color textColor = Colors.white70,
   }) {
     return new ClipRRect(
@@ -119,7 +121,7 @@ class FriendDetailHeader extends StatelessWidget {
           child: new Column(
             children: <Widget>[
               _buildAvatar(),
-              _buildFollowerInfo(textTheme),
+             // _buildFollowerInfo(textTheme),
               _buildActionButtons(theme),
             ],
           ),

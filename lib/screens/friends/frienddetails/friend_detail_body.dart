@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lifebalance/screens/friends/friends/friend.dart';
 //import 'package:lifebalance/theme/colors/light_colors.dart';
+//import 'package:lifebalance/widgets/top_container.dart';
 
 class FriendDetailBody extends StatelessWidget {
   FriendDetailBody(this.friend);
 
   final Friend friend;
+
 
   Widget _buildLocationInfo(TextTheme textTheme) {
     return new Row(
@@ -26,6 +28,7 @@ class FriendDetailBody extends StatelessWidget {
     );
   }
 
+
   Widget _createCircleBadge(IconData iconData, Color color) {
     return new Padding(
       padding: const EdgeInsets.only(left: 8.0),
@@ -37,6 +40,7 @@ class FriendDetailBody extends StatelessWidget {
           size: 16.0,
         ),
         radius: 16.0,
+
       ),
     );
   }
@@ -57,6 +61,7 @@ class FriendDetailBody extends StatelessWidget {
           padding: const EdgeInsets.only(top: 4.0),
           child: _buildLocationInfo(textTheme),
         ),
+        /*
         new Padding(
           padding: const EdgeInsets.only(top: 16.0),
           child: new Text(
@@ -66,7 +71,7 @@ class FriendDetailBody extends StatelessWidget {
             style:
                 textTheme.body1.copyWith(color: Colors.white70, fontSize: 16.0),
           ),
-        ),
+        ),  */
       ],
     );
   }

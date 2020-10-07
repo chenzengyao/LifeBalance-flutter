@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lifebalance/screens/friends/frienddetails/friend_details_page.dart';
 import 'package:lifebalance/screens/friends/friends/friend.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FriendsListPage extends StatefulWidget {
   @override
@@ -19,7 +20,7 @@ class _FriendsListPageState extends State<FriendsListPage> {
     _loadFriends();
   }
 
-  //Change this to async from firebase instead
+  //This retrieves info from http website temporarily -- Change this to async from firebase instead?
   Future<void> _loadFriends() async {
     http.Response response =
     await http.get('https://randomuser.me/api/?results=25');

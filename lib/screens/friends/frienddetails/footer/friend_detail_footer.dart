@@ -23,9 +23,9 @@ class _FriendShowcaseState extends State<FriendShowcase>
   void initState() {
     super.initState();
     _tabs = [
-      new Tab(text: 'Portfolio'),
-      new Tab(text: 'Skills'),
-      new Tab(text: 'Articles'),
+      new Tab(text: 'Progress'),
+      new Tab(text: 'Study Date'),
+      new Tab(text: 'Mirror'),
     ];
     _pages = [
       new PortfolioShowcase(),

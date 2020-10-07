@@ -24,6 +24,7 @@ class Friend {
         .cast<Friend>();
   }
 
+  //Declaring friend variable
   static Friend fromMap(Map map) {
     var name = map['name'];
 

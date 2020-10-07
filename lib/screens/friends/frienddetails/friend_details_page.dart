@@ -4,6 +4,7 @@ import 'package:lifebalance/screens/friends/frienddetails/footer/friend_detail_f
 import 'package:lifebalance/screens/friends/frienddetails/header/friend_detail_header.dart';
 import 'package:lifebalance/screens/friends/friends/friend.dart';
 import 'package:meta/meta.dart';
+import 'package:lifebalance/theme/colors/light_colors.dart';
 
 import 'friend_detail_body.dart';
 
@@ -28,8 +29,8 @@ class _FriendDetailsPageState extends State<FriendDetailsPage> {
         begin: FractionalOffset.centerRight,
         end: FractionalOffset.bottomLeft,
         colors: <Color>[
-          const Color(0xFF413070),
-          const Color(0xFF2B264A),
+          LightColors.darkergreen,
+          LightColors.kGreen,
         ],
       ),
     );
