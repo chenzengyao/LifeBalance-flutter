@@ -40,8 +40,6 @@ dependencies:
 
   date_utils: ^0.1.0+3
   intl: ^0.16.1
-  flutter_clean_calendar:
-    path: packages/flutter_clean_calendar
 
 dev_dependencies:
   flutter_test:

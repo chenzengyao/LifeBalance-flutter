@@ -148,7 +148,7 @@ class _HomePageState extends State<CalendarPage> {
                   children: <Widget>[
                     TableCalendar(
                       events: _events,
-                      initialCalendarFormat: CalendarFormat.week,
+                      initialCalendarFormat: CalendarFormat.month,
                       calendarStyle: CalendarStyle(
                           canEventMarkersOverflow: true,
                           todayColor: Colors.orange,
@@ -166,7 +166,7 @@ class _HomePageState extends State<CalendarPage> {
                         formatButtonTextStyle: TextStyle(color: Colors.white),
                         formatButtonShowsNext: false,
                       ),
-                      startingDayOfWeek: StartingDayOfWeek.monday,
+                      startingDayOfWeek: StartingDayOfWeek.sunday,
                       onDaySelected: (date, events) {
                         setState(() {
                           _selectedEvents = events;

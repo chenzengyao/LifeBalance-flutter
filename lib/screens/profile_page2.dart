@@ -6,6 +6,7 @@ import 'package:lifebalance/screens/friends_page.dart';
 import 'package:lifebalance/screens/message_page.dart';
 import 'package:lifebalance/screens/notification_page.dart';
 import 'package:lifebalance/screens/profile_page.dart';
+import 'package:lifebalance/screens/friends/friends/friends_list_page.dart';
 
 class profile_page2 extends StatefulWidget {
 
@@ -18,7 +19,8 @@ class _profile_page2State extends State<profile_page2> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     profile_page(),
-    friends_page(),
+    FriendsListPage(),
+    //friends_page(),
     CalendarPage(),
     message_page(),
     notification_page()
