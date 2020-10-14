@@ -12,30 +12,30 @@ class _message_pageState extends State<message_page> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: LightColors.kGreen,
-          brightness: Brightness.dark,
-          elevation: 8,
-          leading: IconButton(
-            icon: Icon(Icons.menu),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: LightColors.kGreen,
+        brightness: Brightness.dark,
+        elevation: 8,
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          color: Colors.white,
+          onPressed: () {},
+        ),
+        title: Text(
+          'Messages',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
             color: Colors.white,
             onPressed: () {},
           ),
-          title: Text(
-            'Messages',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.search),
-              color: Colors.white,
-              onPressed: () {},
-            ),
-          ],
-        ),
+        ],
+      ),
 
       body: ListView.builder(
         itemCount: chats.length,
@@ -59,7 +59,7 @@ class _message_pageState extends State<message_page> {
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.all(2),
-                    decoration: chat.unread
+                    decoration: /*chat.unread
                         ? BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(40)),
                       border: Border.all(
@@ -75,7 +75,7 @@ class _message_pageState extends State<message_page> {
                         ),
                       ],
                     )
-                        : BoxDecoration(
+                        :*/ BoxDecoration(
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
@@ -137,18 +137,53 @@ class _message_pageState extends State<message_page> {
                         SizedBox(
                           height: 10,
                         ),
-                        Container(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            chat.text,
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.black54,
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                            Container(
+                              alignment: Alignment.topLeft,
+                              width:180,
+                              height: 30,
+                              child: Text(
+                                chat.text,
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: Colors.black54,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
                             ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                          ),
-                        ),
+                              SizedBox(
+                                width: 9,
+                              ),
+                            chat.unread
+                            ?Container(
+                              margin: const EdgeInsets.only(right:5),
+                              width: 20,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                shape:BoxShape.circle,
+                                color: LightColors.kGreen,
+                              ),
+                              child: Center(
+                                  child:Text("1",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15.0,
+                                      )
+
+                                  ),
+                              ),
+                            )
+                           :Container(
+                              child: null,
+                            )
+
+
+                          ]
+                        )
+
                       ],
                     ),
                   ),
