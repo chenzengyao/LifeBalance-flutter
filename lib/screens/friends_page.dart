@@ -17,7 +17,7 @@ class _friends_pageState extends State<friends_page> {
             // Goes to another page for friend list in case any edits are made
             FlatButton.icon(
               icon: Icon(Icons.people, color: Colors.white,),
-              label: Text('Friend List', style: TextStyle(color: Colors.white),),
+              label: Text('Add New Friends', style: TextStyle(color: Colors.white),),
               onPressed: () async {
                 Navigator.push(
                   context,
