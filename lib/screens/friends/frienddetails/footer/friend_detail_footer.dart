@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lifebalance/screens/friends/frienddetails/footer/articles_showcase.dart';
+//import 'package:lifebalance/screens/friends/frienddetails/footer/articles_showcase.dart';
 import 'package:lifebalance/screens/friends/frienddetails/footer/portfolio_showcase.dart';
-import 'package:lifebalance/screens/friends/frienddetails/footer/skills_showcase.dart';
+import 'package:lifebalance/screens/friends/frienddetails/footer/courses_showcase.dart';
 import 'package:lifebalance/screens/friends/friends/friend.dart';
 
 class FriendShowcase extends StatefulWidget {
@@ -23,14 +23,14 @@ class _FriendShowcaseState extends State<FriendShowcase>
   void initState() {
     super.initState();
     _tabs = [
-      new Tab(text: 'Progress'),
-      new Tab(text: 'Study Date'),
-      new Tab(text: 'Mirror'),
+      new Tab(text: 'Profile'),
+      new Tab(text: 'Courses'),
+      //new Tab(text: 'Mirror'),
     ];
     _pages = [
       new PortfolioShowcase(),
       new SkillsShowcase(),
-      new ArticlesShowcase(),
+      //new ArticlesShowcase(),
     ];
     _controller = new TabController(
       length: _tabs.length,

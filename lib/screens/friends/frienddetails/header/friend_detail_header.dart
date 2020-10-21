@@ -80,7 +80,7 @@ class FriendDetailHeader extends StatelessWidget {
               borderRadius: new BorderRadius.circular(30.0),
             ), */
              _createPillButton(
-              'FOLLOW',
+              'MESSAGE',
               backgroundColor: LightColors.orange,
               textColor: Colors.white70,
             //),

@@ -19,8 +19,10 @@ class _profile_page2State extends State<profile_page2> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     profile_page(),
-    FriendsListPage(),
-    //friends_page(),
+    //FriendsListPage to add new friends(keep refreshing itself)
+    //FriendsListPage(),
+    //friendsPage to show existing(added) friends: CAN ONLY VIEW ADDED FRIENDS' CALENDAR/PROGRESS
+    friends_page(),
     CalendarPage(),
     message_page(),
     notification_page()

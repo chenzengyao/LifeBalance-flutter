@@ -52,13 +52,13 @@ class CoursePageState extends State<CoursePage> {
                             onChanged: (selectedCourse) {
                               final snackBar = SnackBar(
                                 content: Text(
-                                  'Selected course is index $selectedCourse',
+                                  'Selected course index is $selectedCourse',
                                   style: TextStyle(color: Color(0xff11b719)),
                                 ),
                               );
                               Scaffold.of(context).showSnackBar(snackBar);
                               setState(() {
-                                courseList = selectedCourse;
+                                selectedIndex = selectedCourse;
                               });
                             },
                             value: selectedIndex,
@@ -90,7 +90,12 @@ class CoursePageState extends State<CoursePage> {
                               Text("Submit", style: TextStyle(fontSize: 24.0)),
                             ],
                           )),
-                      onPressed: () {
+                      onPressed: ()async {
+
+
+
+
+                        Navigator.pop(context);
 
                       },
                       shape: new RoundedRectangleBorder(

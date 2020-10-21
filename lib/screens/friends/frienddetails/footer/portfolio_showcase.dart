@@ -5,6 +5,17 @@ import 'package:flutter/material.dart';
 
 
 class PortfolioShowcase extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var textTheme = Theme.of(context).textTheme;
+
+    return new Center(
+      child: new Text(
+        'IEM Year3',
+        style: TextStyle(fontSize: 16, color: Colors.white), textAlign: TextAlign.left,
+      ),
+    );
+  }
 /*
   List<Widget> _buildItems() {
               Expanded(
@@ -80,7 +91,7 @@ class PortfolioShowcase extends StatelessWidget {
     return items;
   }
 
-  @override
+  /*@override
   Widget build(BuildContext context) {
     var delegate = new SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: 3,
@@ -93,5 +104,5 @@ class PortfolioShowcase extends StatelessWidget {
       gridDelegate: delegate,
       children: _buildItems(),
     );
-  }
+  }*/
 }

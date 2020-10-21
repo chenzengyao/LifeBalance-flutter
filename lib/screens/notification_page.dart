@@ -16,7 +16,7 @@ class _notification_pageState extends State<notification_page> {
         appBar: new AppBar(
             title: new Text("Notification Page")
         ),
-        body: Form(
+        /*body: Form(
           key: _formKeyValue,
           autovalidate: true,
           child: new ListView(
@@ -98,6 +98,6 @@ class _notification_pageState extends State<notification_page> {
               ),
           ],
           ),
-    ));
+    )*/);
   }
 }
