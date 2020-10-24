@@ -15,5 +15,11 @@ class LightColors  {
   static const Color kLightPurple = Color(0xFFC997D1);
   static const Color kBrown = Color(0xFF754B4B);
 
+  //for buttons maybe?
+  static const Color darkbrown = Color(0xFF836B5F);
+  static const Color red = Color(0xFF963B20);
+  static const Color darkergreen = Color(0xFF3A5B41);
   static const Color kDarkBlue = Color(0xFF0D253F);
+  static const Color orange = Color(0xFFC79B74);
+  static const Color lightbrown = Color(0xFFD1C0B6);
 }
