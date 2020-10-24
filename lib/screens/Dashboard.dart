@@ -1,31 +1,29 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:lifebalance/Chat/chatroom.dart';
 import 'package:lifebalance/screens/CalendarPage.dart';
-import 'package:lifebalance/screens/friends_page.dart';
+import 'package:lifebalance/screens/Community.dart';
 import 'package:lifebalance/screens/message_page.dart';
 import 'package:lifebalance/screens/notification_page.dart';
 import 'package:lifebalance/screens/profile_page.dart';
 
-class profile_page2 extends StatefulWidget {
-
+class Dashboard extends StatefulWidget {
   @override
-  _profile_page2State createState() => _profile_page2State();
+  _DashboardState createState() => _DashboardState();
 }
 
-class _profile_page2State extends State<profile_page2> {
-
+class _DashboardState extends State<Dashboard> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     profile_page(),
-    friends_page(),
+    CommunityPage(),
     CalendarPage(),
-    message_page(),
+    ChatRoom(),
     notification_page()
   ];
 
-  void onTappedBar(int index)
-  {
+  void onTappedBar(int index) {
     setState(() {
       _currentIndex = index;
     });
@@ -34,8 +32,6 @@ class _profile_page2State extends State<profile_page2> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-
-
       /* body: Container(
         padding: const EdgeInsets.all(32),
          child: Row(children: [
@@ -50,38 +46,23 @@ class _profile_page2State extends State<profile_page2> {
           ]),*/
 
       body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar
-        (
+      bottomNavigationBar: BottomNavigationBar(
         onTap: onTappedBar,
         currentIndex: _currentIndex,
-
         type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle),
-              title: Text('Profile')
-          ),
-
+              icon: Icon(Icons.account_circle), title: Text('Profile')),
           BottomNavigationBarItem(
-              icon: Icon(Icons.supervisor_account),
-              title: new Text('Friends')
-          ),
-
+              icon: Icon(Icons.supervisor_account), title: new Text('Social')),
           BottomNavigationBarItem(
-              icon: Icon(Icons.date_range),
-              title: new Text('Calendar')
-          ),
-
+              icon: Icon(Icons.date_range), title: new Text('Calendar')),
           BottomNavigationBarItem(
-              icon: Icon(Icons.mail_outline),
-              title: new Text('Messages')
-          ),
-
+              icon: Icon(Icons.mail_outline), title: new Text('Messages')),
           BottomNavigationBarItem(
-              icon: Icon(Icons.add_alert),
-              title: new Text('Notifications')
-          ),
+              icon: Icon(Icons.add_alert), title: new Text('Notifications')),
         ],
-      ),);
+      ),
+    );
   }
 }

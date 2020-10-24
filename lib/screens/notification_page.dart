@@ -22,57 +22,57 @@ class _notification_pageState extends State<notification_page> {
           child: new ListView(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             children: <Widget>[
-            SizedBox(height: 40.0),
-            StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance.collection("course").snapshots(),
-              builder: (context,snapshot) {
-                if (!snapshot.hasData) {
-                  Text("Loading");
-                }
-                else {
-                  List<DropdownMenuItem> courseList = [];
-                  for (int i = 0; i < snapshot.data.docs.length; i++) {
-                    DocumentSnapshot snap = snapshot.data.docs[i];
-                    courseList.add(
-                      DropdownMenuItem(
-                        child: Text(
-                          snap.id,
-                          style: TextStyle(color: Color(0xff11b719)),
-                        ),
-                        value: "${snap.id}",
-                      ),
-                    );
-                  }
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(width: 50.0),
-                      DropdownButton(
-                        items: courseList,
-                        onChanged: (selectedCourse) {
-                          final snackBar = SnackBar(
-                            content: Text(
-                              'Selected course is index $selectedCourse',
+              SizedBox(height: 40.0),
+              StreamBuilder<QuerySnapshot>(
+                  stream: Firestore.instance.collection("course").snapshots(),
+                  builder: (context,snapshot) {
+                    if (!snapshot.hasData) {
+                      Text("Loading");
+                    }
+                    else {
+                      List<DropdownMenuItem> courseList = [];
+                      for (int i = 0; i < snapshot.data.documents.length; i++) {
+                        DocumentSnapshot snap = snapshot.data.documents[i];
+                        courseList.add(
+                          DropdownMenuItem(
+                            child: Text(
+                              snap.documentID,
                               style: TextStyle(color: Color(0xff11b719)),
                             ),
-                          );
-                          Scaffold.of(context).showSnackBar(snackBar);
-                          setState(() {
-                            courseList = selectedCourse;
-                          });
-                        },
-                        value: selectedIndex,
-                        isExpanded: false,
-                        hint: new Text(
-                          "Choose Course Index from List",
-                          style: TextStyle(color: Color(0xff11b719)),
-                        ),
-                      ),
-                    ],
-                  );
-                }
-                return Row();
-              }),
+                            value: "${snap.documentID}",
+                          ),
+                        );
+                      }
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(width: 50.0),
+                          DropdownButton(
+                            items: courseList,
+                            onChanged: (selectedCourse) {
+                              final snackBar = SnackBar(
+                                content: Text(
+                                  'Selected course is index $selectedCourse',
+                                  style: TextStyle(color: Color(0xff11b719)),
+                                ),
+                              );
+                              Scaffold.of(context).showSnackBar(snackBar);
+                              setState(() {
+                                courseList = selectedCourse;
+                              });
+                            },
+                            value: selectedIndex,
+                            isExpanded: false,
+                            hint: new Text(
+                              "Choose Course Index from List",
+                              style: TextStyle(color: Color(0xff11b719)),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                    return Row();
+                  }),
               SizedBox(
                 height: 150.0,
               ),
@@ -96,8 +96,8 @@ class _notification_pageState extends State<notification_page> {
                           borderRadius: new BorderRadius.circular(30.0))),
                 ],
               ),
-          ],
+            ],
           ),
-    ));
+        ));
   }
 }

@@ -17,18 +17,18 @@ class ActiveProjectsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      flex: 1,
+      // flex: 1,
       child: Container(
-        
-        margin: EdgeInsets.symmetric(vertical: 10.0),
+
+        margin: EdgeInsets.symmetric(horizontal: 10.0),
         padding: EdgeInsets.all(15.0),
-        height: 200,
+        // height: 200,
         decoration: BoxDecoration(
           color: cardColor,
           borderRadius: BorderRadius.circular(40.0),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(

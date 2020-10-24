@@ -23,14 +23,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_auth: ^0.18.0+1
-  firebase_core: ^0.5.0
-  cloud_firestore: ^0.14.0+2
-  provider: ^3.1.0
-  flutter_spinkit: ^4.1.2
-  percent_indicator: ^2.1.7+3
-  firebase_helpers: ^0.2.1
-  table_calendar: ^2.2.3
+  firebase_auth: 0.16.0
+  firebase_core:
+  cloud_firestore:
+  provider:
+  flutter_spinkit:
+  percent_indicator:
+  firebase_helpers:
+  table_calendar:
+  font_awesome_flutter:
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -40,8 +41,7 @@ dependencies:
 
   date_utils: ^0.1.0+3
   intl: ^0.16.1
-  flutter_clean_calendar:
-    path: packages/flutter_clean_calendar
+  paginate_firestore:
 
 dev_dependencies:
   flutter_test:
@@ -61,8 +61,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     - assets/images/
-     - assets/avatars/images/
+    - assets/images/
+    - assets/avatars/images/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -80,7 +80,7 @@ flutter:
     - family: Roboto
       fonts:
         # - asset: assets/fonts/Roboto/Roboto-Light.ttf
-         - asset: assets/fonts/Roboto/Roboto-Medium.ttf
+        - asset: assets/fonts/Roboto/Roboto-Medium.ttf
         # - asset: assets/fonts/Roboto/Roboto-Regular.ttf
         # - asset: assets/fonts/Roboto/Roboto-BoldItalic.ttf
     # - family: Trajan Pro

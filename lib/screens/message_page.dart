@@ -12,31 +12,30 @@ class _message_pageState extends State<message_page> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: LightColors.kGreen,
-          brightness: Brightness.dark,
-          elevation: 8,
-          leading: IconButton(
-            icon: Icon(Icons.menu),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: LightColors.kGreen,
+        brightness: Brightness.dark,
+        elevation: 8,
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          color: Colors.white,
+          onPressed: () {},
+        ),
+        title: Text(
+          'Messages',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
             color: Colors.white,
             onPressed: () {},
           ),
-          title: Text(
-            'Messages',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.search),
-              color: Colors.white,
-              onPressed: () {},
-            ),
-          ],
-        ),
-
+        ],
+      ),
       body: ListView.builder(
         itemCount: chats.length,
         itemBuilder: (BuildContext context, int index) {
@@ -87,7 +86,7 @@ class _message_pageState extends State<message_page> {
                     ),
                     child: CircleAvatar(
                       radius: 35,
-                      backgroundImage: AssetImage(chat.sender.imageUrl),
+                      //  backgroundImage: AssetImage(chat.sender.imageUrl),
                     ),
                   ),
                   Container(
@@ -109,7 +108,7 @@ class _message_pageState extends State<message_page> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                chat.sender.isOnline
+                                true // chat.sender.isOnline
                                     ? Container(
                                   margin: const EdgeInsets.only(left: 5),
                                   width: 7,
