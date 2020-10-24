@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lifebalance/Objects/calender.dart';
@@ -13,7 +11,6 @@ import 'package:paginate_firestore/paginate_firestore.dart';
 import 'package:lifebalance/screens/event.dart';
 import 'package:lifebalance/widgets/top_container_flat.dart';
 import 'package:lifebalance/widgets/theme.dart';
-import 'dart:core';
 
 class CalendarPage extends StatefulWidget {
   @override
@@ -277,7 +274,7 @@ class _HomePageState extends State<CalendarPage> {
                     formatButtonShowsNext: false,
                   ),
                   startingDayOfWeek: StartingDayOfWeek.monday,
-                  onDaySelected: (date, events) {
+                  onDaySelected: (date, events, _) {
                     setState(() {
                       _selectedSharedEvents = events;
                     });
@@ -381,7 +378,7 @@ class _HomePageState extends State<CalendarPage> {
                             formatButtonShowsNext: false,
                           ),
                           startingDayOfWeek: StartingDayOfWeek.monday,
-                          onDaySelected: (date, events) {
+                          onDaySelected: (date, events, _) {
                             setState(() {
                               _selectedSharedEvents = events;
                             });

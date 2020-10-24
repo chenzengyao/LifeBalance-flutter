@@ -96,7 +96,7 @@ class _CalenderExpandedViewState extends State<CalenderExpandedView> {
                           formatButtonShowsNext: false,
                         ),
                         startingDayOfWeek: StartingDayOfWeek.monday,
-                        onDaySelected: (date, events) {
+                        onDaySelected: (date, events, _) {
                           setState(() {
                             _selectedSharedEvents = events;
                           });
