@@ -48,7 +48,7 @@ class _ChatRoomState extends State<ChatRoom> {
                         userID: snapshot.data.documents[index].documentID,
                         message: snapshot.data.documents[index]
                         ['lastMessage'],
-                        time: DateTime.fromMillisecondsSinceEpoch(snapshot.data.documents[index]['date'].millisecondsSinceEpoch).toIso8601String(),
+                        time: DateTime.fromMillisecondsSinceEpoch(snapshot.data.documents[index]['date'].millisecondsSinceEpoch).toIso8601String(), //ahh i see, thn should be fine after deletin
 
                       );
                       return ChatTile(lastMessage: lastMessage);

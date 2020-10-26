@@ -20,9 +20,11 @@ class ConversationMessage {
       receiverID: doc['recieverID'],
       sentTime: DateTime.fromMillisecondsSinceEpoch(
           doc.data['time'].millisecondsSinceEpoch),
+        timeStamp:DateTime.fromMillisecondsSinceEpoch(
+            doc.data['time'].millisecondsSinceEpoch).toIso8601String(),
     );
   }
-}
+}// all done?
 
 class LastMessage {
   final String userID;

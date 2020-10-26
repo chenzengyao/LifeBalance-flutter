@@ -11,12 +11,13 @@ class AddEventPage extends StatefulWidget {
   final CalenderMode mode;
   final String calenderId;
   final DocumentReference calenderDocRef;
+  final bool fromPublic;
   const AddEventPage(
       {Key key,
         this.note,
         this.mode,
         @required this.calenderId,
-        this.calenderDocRef})
+        this.calenderDocRef, this.fromPublic=false})
       : super(key: key);
 
   @override
@@ -173,6 +174,28 @@ class _AddEventPageState extends State<AddEventPage> {
                         setState(() {
                           processing = true;
                         });
+                        if(widget.fromPublic){
+                          var taskID = widget.calenderDocRef
+                              .collection('events')
+                              .document()
+                              .documentID;
+
+                          widget.calenderDocRef
+                              .collection('events')
+                              .document(taskID)
+                              .setData(TaskEvent(
+                              taskCreatorID: currentUser.uid,
+                              taskID: taskID,
+                              time: chosenTime,
+                              quantityOfWork: totalUnits,
+                              taskName: _title.text,
+                              description: _description.text,
+                              dueDate: _eventDate)
+                              .toJson())
+                              .then((value) {
+                            Navigator.pop(context);
+                          });
+                        }else
                         if (widget.mode == CalenderMode.PRIVATE) {
                           var taskID = currentUserCalenderCollectionRef
                               .document(widget.calenderId)

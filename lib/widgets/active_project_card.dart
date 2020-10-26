@@ -21,15 +21,15 @@ class ActiveProjectsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
 
-      margin: EdgeInsets.symmetric(horizontal: 10.0),
-      padding: EdgeInsets.all(15.0),
-      // height: 200,
+      margin: EdgeInsets.symmetric(horizontal: 10.0, ),
+      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+       height: 200,
       decoration: BoxDecoration(
         color: cardColor,
         borderRadius: BorderRadius.circular(40.0),
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
@@ -54,6 +54,8 @@ class ActiveProjectsCard extends StatelessWidget {
             children: <Widget>[
               Text(
                 title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 14.0,
                   color: Colors.white,
@@ -62,6 +64,8 @@ class ActiveProjectsCard extends StatelessWidget {
               ),
               Text(
                 subtitle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 12.0,
                   color: Colors.white54,

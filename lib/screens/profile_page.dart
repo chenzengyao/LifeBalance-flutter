@@ -254,13 +254,16 @@ class _profile_pageState extends State<profile_page> {
                                                     );
                                                   });
                                             },
-                                            child: ActiveProjectsCard(
-                                              task: task,
-                                              cardColor: LightColors.kPurple,
-                                              loadingPercent: task.unitsDone /
-                                                  task.quantityOfWork,
-                                              title: task.taskName,
-                                              subtitle: task.description,
+                                            child: Padding(
+                                              padding: const EdgeInsets.symmetric(vertical: 4),
+                                              child: ActiveProjectsCard(
+                                                task: task,
+                                                cardColor: LightColors.kPurple,
+                                                loadingPercent: task.unitsDone /
+                                                    task.quantityOfWork,
+                                                title: task.taskName,
+                                                subtitle: task.description,
+                                              ),
                                             ),
                                           );
                                         } else {

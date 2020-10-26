@@ -67,7 +67,7 @@ class _EditProfileState extends State<EditProfile> {
                     )
                   : CircleAvatar(
                       radius: 50.0,
-                      backgroundImage: AssetImage(
+                      backgroundImage: AssetImage(// network error, which calender did u add to, okay so we cannot see the event on calender. but the error u sent in screenshot is gone? yes(error was on chat previously) yes I know
                         'assets/images/avatar.png',
                       ),
                     ),

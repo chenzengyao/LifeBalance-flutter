@@ -37,6 +37,7 @@ class _CalenderExpandedViewState extends State<CalenderExpandedView> {
       selectedCalender = CalenderObject.fromJson(value.data);
       setState(() {});
     });
+    print(widget.calenderDocRef.path);
   }
 
   @override
@@ -54,6 +55,7 @@ class _CalenderExpandedViewState extends State<CalenderExpandedView> {
             context,
             MaterialPageRoute(
               builder: (context) => AddEventPage(
+                fromPublic: true,
                 mode: CalenderMode.SHARED,
                 calenderId: widget.calenderDocRef.documentID,
                 calenderDocRef: widget.calenderDocRef,
@@ -96,7 +98,7 @@ class _CalenderExpandedViewState extends State<CalenderExpandedView> {
                           formatButtonShowsNext: false,
                         ),
                         startingDayOfWeek: StartingDayOfWeek.monday,
-                        onDaySelected: (date, events,_) {
+                        onDaySelected: (date, events,_) {  //we change this part i think, one of my friend cos prev got error, yeah soemtimes happens if the package changes, anyways. plesae show me firestore.
                           setState(() {
                             _selectedSharedEvents = events;
                           });

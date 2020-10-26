@@ -36,7 +36,8 @@ class CommunityPageState extends State<CommunityPage> {
           ]),
         ),
         body: TabBarView(
-          children: [// these are the three widgets provided
+          children: [
+            // these are the three widgets provided
             AllCalenders(),
             AllFriends(),
             AllUsers(),
@@ -63,50 +64,51 @@ class _AllUsersState extends State<AllUsers> {
           return ListTile(
             leading: friend.imageUrl.isNotEmpty
                 ? ClipOval(
-                child: Image.network(
-                  friend.imageUrl,
-                  height: 50,
-                  width: 50,
-                  fit: BoxFit.cover,
-                ))
+                    child: Image.network(
+                    friend.imageUrl,
+                    height: 50,
+                    width: 50,
+                    fit: BoxFit.cover,
+                  ))
                 : CircleAvatar(
-              backgroundColor: myPink,
-              child: Text(friend.name[0].toUpperCase()),
-            ),
+                    backgroundColor: myPink,
+                    child: Text(friend.name[0].toUpperCase()),
+                  ),
             title: Text(friend.name),
             subtitle: Text(friend.email),
             trailing: currentUser.uid != friend.uid
                 ? FlatButton(
-              onPressed: () async {
-                if (currentUser.friendList.contains(friend.uid)) {
-                  await doc.reference.setData({
-                    'friendList':
-                    FieldValue.arrayRemove([currentUser.uid])
-                  }, merge: true);
-                  await currentUserDocumentReference.setData({
-                    'friendList': FieldValue.arrayRemove([friend.uid])
-                  }, merge: true);
-                  setState(() {});
-                } else {
-                  await doc.reference.setData({
-                    'friendList': FieldValue.arrayUnion([currentUser.uid])
-                  }, merge: true);
-                  await currentUserDocumentReference.setData({
-                    'friendList': FieldValue.arrayUnion([friend.uid])
-                  }, merge: true);
-                  setState(() {});
-                }
-              },
-              child: Text(
-                currentUser.friendList.contains(friend.uid)
-                    ? "Remove"
-                    : "Add",
-              ),
-            )
+                    onPressed: () async {
+                      if (currentUser.friendList.contains(friend.uid)) {
+                        await doc.reference.setData({
+                          'friendList':
+                              FieldValue.arrayRemove([currentUser.uid])
+                        }, merge: true);
+                        await currentUserDocumentReference.setData({
+                          'friendList': FieldValue.arrayRemove([friend.uid])
+                        }, merge: true);
+                        setState(() {});
+                      } else {
+                        await doc.reference.setData({
+                          'friendList': FieldValue.arrayUnion([currentUser.uid])
+                        }, merge: true);
+                        await currentUserDocumentReference.setData({
+                          'friendList': FieldValue.arrayUnion([friend.uid])
+                        }, merge: true);
+                        setState(() {});
+                      }
+                    },
+                    child: Text(
+                      currentUser.friendList.contains(friend.uid)
+                          ? "Remove"
+                          : "Add",
+                    ),
+                  )
                 : null,
           );
         },
-        query: Firestore.instance.collection('/users').orderBy('email'), // this is the query and above is what to build. so above is the widget it should build based on teh adta it reads from the databse.
+        query: Firestore.instance.collection('/users').orderBy(
+            'email'), // this is the query and above is what to build. so above is the widget it should build based on teh adta it reads from the databse.
         itemBuilderType: PaginateBuilderType.listView);
   }
 }
@@ -124,7 +126,8 @@ class _AllCalendersState extends State<AllCalenders> {
         stream: Stream.value(reloader),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return PaginateFirestore( /// same thing again but this time we fetch all calenders so user cna join whichever he wants. He cannot join his own calender.
+            return PaginateFirestore(
+              /// same thing again but this time we fetch all calenders so user cna join whichever he wants. He cannot join his own calender.
               query: Firestore.instance
                   .collectionGroup('userCalenders')
                   .where('isPrivate', isEqualTo: false)
@@ -138,95 +141,117 @@ class _AllCalendersState extends State<AllCalenders> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => CalenderExpandedView(
-                            calenderDocRef: doc.reference,
-                          )),
+                                calenderDocRef: doc.reference,
+                              )),
                     );
                   },
                   title: Text(calenderObj.calenderTitle),
                   subtitle: Text(calenderObj.calenderDescription),
                   trailing: calenderObj.creatorID != currentUser.uid
                       ? FlatButton(
-                    child: Text(currentUser.joinedCalenderPaths
-                        .contains(doc.reference.path)
-                        ? "Leave"
-                        : "Join"),
-                    onPressed: () {
-                      if (!currentUser.joinedCalenderPaths
-                          .contains(doc.reference.path)) {
-                        WriteBatch writeBatch =
-                        Firestore.instance.batch();
-                        writeBatch.setData(
-                            currentUserDocumentReference,
-                            {
-                              'joinedCalenderPaths':
-                              FieldValue.arrayUnion(
-                                  [doc.reference.path])
-                            },
-                            merge: true);
+                          child: Text(currentUser.joinedCalenderPaths
+                                  .contains(doc.reference.path)
+                              ? "Leave"
+                              : "Join"),
+                          onPressed: () {
+                            if (!currentUser.joinedCalenderPaths
+                                .contains(doc.reference.path)) {
+                              WriteBatch writeBatch =
+                                  Firestore.instance.batch();
+                              writeBatch.setData(
+                                  currentUserDocumentReference,
+                                  {
+                                    'joinedCalenderPaths':
+                                        FieldValue.arrayUnion(
+                                            [doc.reference.path])
+                                  },
+                                  merge: true);
 
-                        writeBatch.setData(doc.reference,
-                            {'participantCount': FieldValue.increment(1)},
-                            merge: true);
+                              writeBatch.setData(doc.reference,
+                                  {'participantCount': FieldValue.increment(1)},
+                                  merge: true);
 
-                        writeBatch.setData(
-                            doc.reference,
-                            {
-                              'participantList':
-                              FieldValue.arrayUnion([currentUser.uid])
-                            },
-                            merge: true);
-                        writeBatch.commit().then((value) {
-                          setState(() {});
-                        });
-                      } else {
-                        WriteBatch writeBatch =
-                        Firestore.instance.batch();
-                        writeBatch.setData(
-                            currentUserDocumentReference,
-                            {
-                              'joinedCalenderPaths':
-                              FieldValue.arrayRemove(
-                                  [doc.reference.path])
-                            },
-                            merge: true);
+                              writeBatch.setData(
+                                  doc.reference,
+                                  {
+                                    'participantList':
+                                        FieldValue.arrayUnion([currentUser.uid])
+                                  },
+                                  merge: true);
+                              writeBatch.commit().then((value) {
+                                setState(() {});
+                              });
+                            } else {
+                              WriteBatch writeBatch =
+                                  Firestore.instance.batch();
+                              writeBatch.setData(
+                                  currentUserDocumentReference,
+                                  {
+                                    'joinedCalenderPaths':
+                                        FieldValue.arrayRemove(
+                                            [doc.reference.path])
+                                  },
+                                  merge: true);
 
-                        writeBatch.setData(
-                            doc.reference,
-                            {
-                              'participantCount': FieldValue.increment(-1)
-                            },
-                            merge: true);
+                              writeBatch.setData(
+                                  doc.reference,
+                                  {
+                                    'participantCount': FieldValue.increment(-1)
+                                  },
+                                  merge: true);
 
-                        writeBatch.setData(
-                            doc.reference,
-                            {
-                              'participantList': FieldValue.arrayRemove(
-                                  [currentUser.uid])
-                            },
-                            merge: true);
-                        writeBatch.commit().then((value) {
-                          setState(() {});
-                        });
-                        // currentUser.joinedCalenderPaths
-                        //     .remove(doc.reference.path);
-                        // currentUserDocumentReference.setData({
-                        //   'joinedCalenderPaths': currentUser.joinedCalenderPaths
-                        // }, merge: true).then((value) {
-                        //   setState(() {});
-                        // });
-                      }
-                    },
-                  )
+                              writeBatch.setData(
+                                  doc.reference,
+                                  {
+                                    'participantList': FieldValue.arrayRemove(
+                                        [currentUser.uid])
+                                  },
+                                  merge: true);
+                              writeBatch.commit().then((value) {
+                                setState(() {});
+                              });
+                              // currentUser.joinedCalenderPaths
+                              //     .remove(doc.reference.path);
+                              // currentUserDocumentReference.setData({
+                              //   'joinedCalenderPaths': currentUser.joinedCalenderPaths
+                              // }, merge: true).then((value) {
+                              //   setState(() {});
+                              // });
+                            }
+                          },
+                        )
                       : FlatButton.icon(
-                      onPressed: () {
-                        doc.reference.delete().then((value) {
-                          setState(() {
-                            reloader=2;
-                          });
-                        });
-                      },
-                      icon: Icon(Icons.delete, color: Colors.red,),
-                      label: Text("Delete", style: TextStyle(color: Colors.red),)),
+                          onPressed: () {
+                            showDialog(
+                                barrierDismissible: false,
+                                context: context,child: AlertDialog(content: Text("Deleting, please wait.."),));
+                            print(doc.reference.path);
+                            doc.reference
+                                .collection('events')
+                                .getDocuments()
+                                .then((value) {
+                                  print(value.documents.length);
+                              value.documents.forEach((element) async {
+                                await element.reference.delete();
+                              });
+                              doc.reference.delete().then((value) {
+
+                                setState(() {
+                                  reloader=2;
+                                });
+                              });
+                            }).whenComplete(() {
+                              Navigator.of(context).pop();
+                            });
+                          },
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                          ),
+                          label: Text(
+                            "Delete",
+                            style: TextStyle(color: Colors.red),
+                          )),
                 );
               },
             );
@@ -257,7 +282,9 @@ class _AllFriendsState extends State<AllFriends> {
         if (snapshot.hasData) {
           return Container(
             child: ListView.builder(
-              itemCount: currentUser.friendList.length,/// here we display a user's friends based on the list of friends that he had added.
+              itemCount: currentUser.friendList.length,
+
+              /// here we display a user's friends based on the list of friends that he had added.
               itemBuilder: (BuildContext context, int index) {
                 return StreamBuilder<DocumentSnapshot>(
                     stream: Firestore.instance
@@ -281,24 +308,24 @@ class _AllFriendsState extends State<AllFriends> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => ConverstationScreen(
-                                        name: friend.name,
-                                        userID: friend.uid,
-                                      )),
+                                            name: friend.name,
+                                            userID: friend.uid,
+                                          )),
                                 );
                               },
                               child: Text("Message")),
                           leading: friend.imageUrl.isNotEmpty
                               ? ClipOval(
-                              child: Image.network(
-                                friend.imageUrl,
-                                height: 50,
-                                width: 50,
-                                fit: BoxFit.cover,
-                              ))
+                                  child: Image.network(
+                                  friend.imageUrl,
+                                  height: 50,
+                                  width: 50,
+                                  fit: BoxFit.cover,
+                                ))
                               : CircleAvatar(
-                            backgroundColor: myPink,
-                            child: Text(friend.name[0].toUpperCase()),
-                          ),
+                                  backgroundColor: myPink,
+                                  child: Text(friend.name[0].toUpperCase()),
+                                ),
                           title: Text(friend.name),
                           subtitle: Text(friend.email),
                         );
