@@ -42,7 +42,7 @@ class _ConverstationScreenState extends State<ConverstationScreen> {
     if (msgController.text[0] != ' ') {
       msgScrollController.jumpTo(msgScrollController.position.maxScrollExtent);
       String temp = msgController.text;
-      final time = DateTime.now().toIso8601String();
+      final time = DateTime.now();
       msgController.clear();
       // is this code from rippel yes
       await Firestore.instance
@@ -153,7 +153,7 @@ class _ConverstationScreenState extends State<ConverstationScreen> {
                       .collection('chats')
                       .document(widget.userID)
                       .collection('messages')
-                      .orderBy('time', descending: false)
+                      .orderBy('time', descending: false).limit(200)
                       .snapshots(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lifebalance/Objects/task.dart';
 import 'package:lifebalance/auth/authService.dart';
 import 'package:lifebalance/screens/Others/CoursePage.dart';
+import 'package:lifebalance/screens/editProfile.dart';
 //import 'package:lifebalance/screens/models/course.dart';
 //import 'package:lifebalance/screens/services/database.dart';
 //import 'package:provider/provider.dart';
@@ -102,44 +103,57 @@ class _profile_pageState extends State<profile_page> {
                                       width: 50,
                                       fit: BoxFit.cover,
                                     ))
-                                    :
-                                CircleAvatar(
+                                    : CircleAvatar(
                                   radius: 50.0,
                                   backgroundImage: AssetImage(
                                     'assets/images/avatar.png',
                                   ),
                                 ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Container(
-                                      child: Text(
-                                        currentUser.name,
-                                        textAlign: TextAlign.start,
-                                        style: TextStyle(
-                                          fontSize: 22.0,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w800,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        '${currentUser.email}',
-                                        textAlign: TextAlign.start,
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
-                                    ),
-                                    RaisedButton(
-                                      onPressed: () {},
-                                      child: Text("Edit Profile"),
-                                    ),
-                                  ],
-                                )
+                                StreamBuilder<DocumentSnapshot>(
+                                  ///another stream builder continuously connected to database and watching the current user document, whenever the document chanegs, such as uodated, this widget will show new changes
+                                    stream:
+                                    currentUserDocumentReference.snapshots(),
+                                    builder: (context, snapshot) {
+                                      return Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          Container(
+                                            child: Text(
+                                              currentUser.name,
+                                              textAlign: TextAlign.start,
+                                              style: TextStyle(
+                                                fontSize: 22.0,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w800,
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            child: Text(
+                                              '${currentUser.email}',
+                                              textAlign: TextAlign.start,
+                                              style: TextStyle(
+                                                fontSize: 16.0,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ),
+                                          RaisedButton(
+                                            onPressed: () {
+                                              Navigator.of(context)
+                                                  .push(MaterialPageRoute(
+                                                builder: (context) => EditProfile(
+                                                  user: currentUser,
+                                                ),
+                                              ));
+                                            },
+                                            child: Text("Edit Profile"),
+                                          ),
+                                        ],
+                                      );
+                                    })
                               ],
                             ),
                           )
@@ -151,29 +165,115 @@ class _profile_pageState extends State<profile_page> {
                     Container(
                       height: MediaQuery.of(context).size.height,
                       color: Colors.transparent,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 30.0),
+                      padding:
+                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
                       child: Column(
                         children: <Widget>[
                           PaginateFirestore(
-
                               shrinkWrap: true,
                               itemBuilder: (index, context, doc) {
-                                var task = TaskEvent.fromJson(doc.data);
                                 return Container(
-
-                                  child: ActiveProjectsCard(
-                                    cardColor: LightColors.kPurple,
-                                    loadingPercent: 0.25,
-                                    title: task.taskName,
-                                    subtitle: task.description,
-                                  ),
+                                  child: StreamBuilder<DocumentSnapshot>(
+                                      stream: doc.reference.snapshots(),
+                                      builder: (context, tasksnapshot) {
+                                        if (tasksnapshot.hasData) {
+                                          var task = TaskEvent.fromJson(
+                                              tasksnapshot.data.data);
+                                          return InkWell(
+                                            onTap: () {
+                                              /// this is the bottom sheet which the user will click to update his progress in his task.
+                                              /// this whole widget is wrapped in a stream builder too so when the task data in database changes
+                                              /// this widget rebuilds based on new data.
+                                              showModalBottomSheet(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    var workDone =
+                                                    task.unitsDone.toDouble();
+                                                    return StatefulBuilder(
+                                                      builder:
+                                                          (context, setState) =>
+                                                          Card(
+                                                            child: Padding(
+                                                              padding:
+                                                              const EdgeInsets.all(
+                                                                  8.0),
+                                                              child: Column(
+                                                                mainAxisSize:
+                                                                MainAxisSize.min,
+                                                                children: [
+                                                                  Text(
+                                                                    "How much work is done?",
+                                                                    style: TextStyle(
+                                                                      fontSize: 20,
+                                                                    ),
+                                                                  ),
+                                                                  Slider(
+                                                                    divisions: task
+                                                                        .quantityOfWork -
+                                                                        task.unitsDone,
+                                                                    label: workDone
+                                                                        .toInt()
+                                                                        .toString() +
+                                                                        " units",
+                                                                    min: task.unitsDone
+                                                                        .toDouble(),
+                                                                    max: task
+                                                                        .quantityOfWork
+                                                                        .toDouble(),
+                                                                    value: workDone,
+                                                                    onChanged: (val) {
+                                                                      setState(() {
+                                                                        workDone = val;
+                                                                      });
+                                                                    },
+                                                                  ),
+                                                                  Text(workDone
+                                                                      .toInt()
+                                                                      .toString() +
+                                                                      " / " +
+                                                                      task.quantityOfWork
+                                                                          .toString() +
+                                                                      " Done"),
+                                                                  RaisedButton(
+                                                                    onPressed: () {
+                                                                      doc.reference.updateData({
+                                                                        'unitsDone':
+                                                                        workDone
+                                                                            .toInt()
+                                                                      }).then((value) =>
+                                                                          Navigator.of(
+                                                                              context)
+                                                                              .pop());
+                                                                    },
+                                                                    child: Text("Save"),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                    );
+                                                  });
+                                            },
+                                            child: ActiveProjectsCard(
+                                              task: task,
+                                              cardColor: LightColors.kPurple,
+                                              loadingPercent: task.unitsDone /
+                                                  task.quantityOfWork,
+                                              title: task.taskName,
+                                              subtitle: task.description,
+                                            ),
+                                          );
+                                        } else {
+                                          return Container();
+                                        }
+                                      }),
                                 );
                               },
                               query: Firestore.instance
                                   .collectionGroup('events')
                                   .where('taskCreatorID',
-                                  isEqualTo: currentUser.uid).orderBy('dueDate'),
+                                  isEqualTo: currentUser.uid)
+                                  .orderBy('dueDate'),
                               itemBuilderType: PaginateBuilderType.gridView),
                           // Row(
                           //   crossAxisAlignment: CrossAxisAlignment.center,

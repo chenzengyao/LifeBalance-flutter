@@ -17,6 +17,8 @@ class CommunityPageState extends State<CommunityPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
+      /// we have the default tab bar view whcih creates a tabbed page for us, we have to give it the count of tabs we want and then we provide it
+      /// that many widgets to display, on this case we set the length to 3 and provide three widgets.
       length: 3,
       child: Scaffold(
         appBar: AppBar(
@@ -34,7 +36,7 @@ class CommunityPageState extends State<CommunityPage> {
           ]),
         ),
         body: TabBarView(
-          children: [
+          children: [// these are the three widgets provided
             AllCalenders(),
             AllFriends(),
             AllUsers(),
@@ -53,6 +55,8 @@ class AllUsers extends StatefulWidget {
 class _AllUsersState extends State<AllUsers> {
   @override
   Widget build(BuildContext context) {
+    /// this is paginate firestore form the paginate firestore package, it reads 15 documents at a time from firebase, based on the query we provide it
+    /// in this case, it is ffetching all registered users so we can add whoever we want.
     return PaginateFirestore(
         itemBuilder: (index, context, doc) {
           var friend = User.fromJson(doc.data);
@@ -102,7 +106,7 @@ class _AllUsersState extends State<AllUsers> {
                 : null,
           );
         },
-        query: Firestore.instance.collection('/users').orderBy('email'),
+        query: Firestore.instance.collection('/users').orderBy('email'), // this is the query and above is what to build. so above is the widget it should build based on teh adta it reads from the databse.
         itemBuilderType: PaginateBuilderType.listView);
   }
 }
@@ -113,98 +117,125 @@ class AllCalenders extends StatefulWidget {
 }
 
 class _AllCalendersState extends State<AllCalenders> {
+  int reloader = 0;
   @override
   Widget build(BuildContext context) {
-    return PaginateFirestore(
-      query: Firestore.instance
-          .collectionGroup('userCalenders')
-          .where('isPrivate', isEqualTo: false)
-          .orderBy('participantCount', descending: true),
-      itemBuilderType: PaginateBuilderType.listView,
-      itemBuilder: (index, context, doc) {
-        var calenderObj = CalenderObject.fromJson(doc.data);
-        return ListTile(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => CalenderExpandedView(
-                    calenderDocRef: doc.reference,
-                  )),
+    return StreamBuilder<int>(
+        stream: Stream.value(reloader),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return PaginateFirestore( /// same thing again but this time we fetch all calenders so user cna join whichever he wants. He cannot join his own calender.
+              query: Firestore.instance
+                  .collectionGroup('userCalenders')
+                  .where('isPrivate', isEqualTo: false)
+                  .orderBy('participantCount', descending: true),
+              itemBuilderType: PaginateBuilderType.listView,
+              itemBuilder: (index, context, doc) {
+                var calenderObj = CalenderObject.fromJson(doc.data);
+                return ListTile(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CalenderExpandedView(
+                            calenderDocRef: doc.reference,
+                          )),
+                    );
+                  },
+                  title: Text(calenderObj.calenderTitle),
+                  subtitle: Text(calenderObj.calenderDescription),
+                  trailing: calenderObj.creatorID != currentUser.uid
+                      ? FlatButton(
+                    child: Text(currentUser.joinedCalenderPaths
+                        .contains(doc.reference.path)
+                        ? "Leave"
+                        : "Join"),
+                    onPressed: () {
+                      if (!currentUser.joinedCalenderPaths
+                          .contains(doc.reference.path)) {
+                        WriteBatch writeBatch =
+                        Firestore.instance.batch();
+                        writeBatch.setData(
+                            currentUserDocumentReference,
+                            {
+                              'joinedCalenderPaths':
+                              FieldValue.arrayUnion(
+                                  [doc.reference.path])
+                            },
+                            merge: true);
+
+                        writeBatch.setData(doc.reference,
+                            {'participantCount': FieldValue.increment(1)},
+                            merge: true);
+
+                        writeBatch.setData(
+                            doc.reference,
+                            {
+                              'participantList':
+                              FieldValue.arrayUnion([currentUser.uid])
+                            },
+                            merge: true);
+                        writeBatch.commit().then((value) {
+                          setState(() {});
+                        });
+                      } else {
+                        WriteBatch writeBatch =
+                        Firestore.instance.batch();
+                        writeBatch.setData(
+                            currentUserDocumentReference,
+                            {
+                              'joinedCalenderPaths':
+                              FieldValue.arrayRemove(
+                                  [doc.reference.path])
+                            },
+                            merge: true);
+
+                        writeBatch.setData(
+                            doc.reference,
+                            {
+                              'participantCount': FieldValue.increment(-1)
+                            },
+                            merge: true);
+
+                        writeBatch.setData(
+                            doc.reference,
+                            {
+                              'participantList': FieldValue.arrayRemove(
+                                  [currentUser.uid])
+                            },
+                            merge: true);
+                        writeBatch.commit().then((value) {
+                          setState(() {});
+                        });
+                        // currentUser.joinedCalenderPaths
+                        //     .remove(doc.reference.path);
+                        // currentUserDocumentReference.setData({
+                        //   'joinedCalenderPaths': currentUser.joinedCalenderPaths
+                        // }, merge: true).then((value) {
+                        //   setState(() {});
+                        // });
+                      }
+                    },
+                  )
+                      : FlatButton.icon(
+                      onPressed: () {
+                        doc.reference.delete().then((value) {
+                          setState(() {
+                            reloader=2;
+                          });
+                        });
+                      },
+                      icon: Icon(Icons.delete, color: Colors.red,),
+                      label: Text("Delete", style: TextStyle(color: Colors.red),)),
+                );
+              },
             );
-          },
-          title: Text(calenderObj.calenderTitle),
-          subtitle: Text(calenderObj.calenderDescription),
-          trailing: calenderObj.creatorID != currentUser.uid
-              ? FlatButton(
-            child: Text(currentUser.joinedCalenderPaths
-                .contains(doc.reference.path)
-                ? "Leave"
-                : "Join"),
-            onPressed: () {
-              if (!currentUser.joinedCalenderPaths
-                  .contains(doc.reference.path)) {
-                WriteBatch writeBatch = Firestore.instance.batch();
-                writeBatch.setData(
-                    currentUserDocumentReference,
-                    {
-                      'joinedCalenderPaths':
-                      FieldValue.arrayUnion([doc.reference.path])
-                    },
-                    merge: true);
-
-                writeBatch.setData(doc.reference,
-                    {'participantCount': FieldValue.increment(1)},
-                    merge: true);
-
-                writeBatch.setData(
-                    doc.reference,
-                    {
-                      'participantList':
-                      FieldValue.arrayUnion([currentUser.uid])
-                    },
-                    merge: true);
-                writeBatch.commit().then((value) {
-                  setState(() {});
-                });
-              } else {
-                WriteBatch writeBatch = Firestore.instance.batch();
-                writeBatch.setData(
-                    currentUserDocumentReference,
-                    {
-                      'joinedCalenderPaths':
-                      FieldValue.arrayRemove([doc.reference.path])
-                    },
-                    merge: true);
-
-                writeBatch.setData(doc.reference,
-                    {'participantCount': FieldValue.increment(-1)},
-                    merge: true);
-
-                writeBatch.setData(
-                    doc.reference,
-                    {
-                      'participantList':
-                      FieldValue.arrayRemove([currentUser.uid])
-                    },
-                    merge: true);
-                writeBatch.commit().then((value) {
-                  setState(() {});
-                });
-                // currentUser.joinedCalenderPaths
-                //     .remove(doc.reference.path);
-                // currentUserDocumentReference.setData({
-                //   'joinedCalenderPaths': currentUser.joinedCalenderPaths
-                // }, merge: true).then((value) {
-                //   setState(() {});
-                // });
-              }
-            },
-          )
-              : null,
-        );
-      },
-    );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
   }
 }
 
@@ -226,7 +257,7 @@ class _AllFriendsState extends State<AllFriends> {
         if (snapshot.hasData) {
           return Container(
             child: ListView.builder(
-              itemCount: currentUser.friendList.length,
+              itemCount: currentUser.friendList.length,/// here we display a user's friends based on the list of friends that he had added.
               itemBuilder: (BuildContext context, int index) {
                 return StreamBuilder<DocumentSnapshot>(
                     stream: Firestore.instance

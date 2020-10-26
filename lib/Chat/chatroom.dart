@@ -45,10 +45,12 @@ class _ChatRoomState extends State<ChatRoom> {
                     itemCount: snapshot.data.documents.length,
                     itemBuilder: (context, index) {
                       final lastMessage = LastMessage(
-                          userID: snapshot.data.documents[index].documentID,
-                          message: snapshot.data.documents[index]
-                          ['lastMessage'],
-                          time: snapshot.data.documents[index]['date']);
+                        userID: snapshot.data.documents[index].documentID,
+                        message: snapshot.data.documents[index]
+                        ['lastMessage'],
+                        time: DateTime.fromMillisecondsSinceEpoch(snapshot.data.documents[index]['date'].millisecondsSinceEpoch).toIso8601String(),
+
+                      );
                       return ChatTile(lastMessage: lastMessage);
                     });
               },

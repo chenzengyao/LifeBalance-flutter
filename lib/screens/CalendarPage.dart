@@ -68,6 +68,7 @@ class _HomePageState extends State<CalendarPage> {
               context,
               MaterialPageRoute(
                 builder: (context) => AddEventPage(
+
                   mode: calenderMode,
                   calenderId: calenderMode == CalenderMode.PRIVATE ||
                       selectedCalender == null
@@ -168,6 +169,15 @@ class _HomePageState extends State<CalendarPage> {
               calenderMode == CalenderMode.PRIVATE
                   ? getPrivateCalenderBody()
                   : getPublicCalenderBody(),
+
+              /// based on the mode we select, we will get two widgets. one is the private calender which each user has only one Of and it is created at sign up
+              /// the events added to this will only be visible to the owner of the calender.
+              ///
+              /// the second is the public calender body. in this we can see all the calenders that were created by the current logged in user. and in these shared calenders,
+              /// he can see events from everyone who has joined his calender.
+              ///
+              /// we have the class called task event which is an object that wraps the details of each task. and then we have a fucntion called [generateMapOfEventsFromFirestoreDocuments()] which does exactly
+              /// as the name suggests, it takes all the documents of tasks from firestore and creates a list of events that is required by our caledner package.
             ],
           ),
         ),
@@ -274,7 +284,7 @@ class _HomePageState extends State<CalendarPage> {
                     formatButtonShowsNext: false,
                   ),
                   startingDayOfWeek: StartingDayOfWeek.monday,
-                  onDaySelected: (date, events, _) {
+                  onDaySelected: (date, events,_) {
                     setState(() {
                       _selectedSharedEvents = events;
                     });
@@ -378,7 +388,7 @@ class _HomePageState extends State<CalendarPage> {
                             formatButtonShowsNext: false,
                           ),
                           startingDayOfWeek: StartingDayOfWeek.monday,
-                          onDaySelected: (date, events, _) {
+                          onDaySelected: (date, events,_) {
                             setState(() {
                               _selectedSharedEvents = events;
                             });

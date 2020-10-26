@@ -8,6 +8,7 @@ class TaskEvent {
   String taskName;
   String description;
   int quantityOfWork;
+  int unitsDone;
   int percentageCompleted;
   DateTime dueDate;
   TimeOfDay time;
@@ -22,21 +23,25 @@ class TaskEvent {
         this.time,
         this.quantityOfWork});
 
+  /// from json is used when reading data from firestore.
   TaskEvent.fromJson(Map<String, dynamic> json) {
+    unitsDone = json['unitsDone'] ?? 0;
     time = TimeOfDay(hour: json['time'] ?? 0, minute: 0);
     taskID = json['taskID'] ?? '';
     calenderID = json['calenderID'] ?? '';
     taskCreatorID = json['taskCreatorID'] ?? "";
     taskName = json['taskName'];
     description = json['description'];
-    quantityOfWork = json['quantityOfWork'];
-    percentageCompleted = json['percentageCompleted']??0;
+    quantityOfWork = json['quantityOfWork']??1;
+    percentageCompleted = json['percentageCompleted'] ?? 0;
     dueDate = DateTime.fromMillisecondsSinceEpoch(
         json['dueDate'].millisecondsSinceEpoch);
   }
 
+  /// to json is used when sending data to firestore.
   Map<String, dynamic> toJson() => {
-    'time': time.hour,
+    'unitsDone': unitsDone,
+    'time': time?.hour ?? 0,
     'calenderID': calenderID,
     'taskID': taskID,
     'taskCreatorID': taskCreatorID,

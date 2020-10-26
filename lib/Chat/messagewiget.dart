@@ -1,12 +1,8 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lifebalance/Chat/message.dart';
 import 'package:lifebalance/auth/authService.dart';
 import 'package:lifebalance/auth/signIn.dart';
-
-
 
 class Message extends StatefulWidget {
   ConversationMessage message;
@@ -29,9 +25,7 @@ class _MessageState extends State<Message> {
           children: [
             widget.message.senderID == currentUser.uid
                 ? Text(
-              DateFormat.jm().format(
-                DateTime.tryParse(widget.message.timeStamp),
-              ),
+              DateFormat.jm().format(widget.message.sentTime),
               style: TextStyle(
                 fontSize: 9,
               ),
@@ -53,7 +47,7 @@ class _MessageState extends State<Message> {
                   ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: widget.message.senderID ==currentUser.uid
+                    color: widget.message.senderID == currentUser.uid
                         ? myPink
                         : Colors.grey[200],
                   ),
@@ -90,17 +84,3 @@ class _MessageState extends State<Message> {
   }
 }
 
-// message object
-
-// enum MessageType {
-//   Sender,
-//   Receiver,
-// }
-
-// class ChatMessage {
-//   String message;
-//   MessageType type;
-//   DateTime date;
-
-//   ChatMessage({@required this.message, @required this.type, this.date});
-// }

@@ -11,7 +11,12 @@ class AddEventPage extends StatefulWidget {
   final CalenderMode mode;
   final String calenderId;
   final DocumentReference calenderDocRef;
-  const AddEventPage({Key key, this.note, this.mode, @required this.calenderId, this.calenderDocRef})
+  const AddEventPage(
+      {Key key,
+        this.note,
+        this.mode,
+        @required this.calenderId,
+        this.calenderDocRef})
       : super(key: key);
 
   @override
@@ -27,6 +32,8 @@ class _AddEventPageState extends State<AddEventPage> {
   final _key = GlobalKey<ScaffoldState>();
   bool processing;
   CalenderMode mode;
+  int totalUnits=0;
+  TextEditingController countController=new TextEditingController();
 
   @override
   void initState() {
@@ -120,6 +127,37 @@ class _AddEventPageState extends State<AddEventPage> {
                   }
                 },
               ),
+              SizedBox(height: 10.0),
+              Padding(
+                padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+                child: TextFormField(
+                  controller: countController,
+                  minLines: 1,
+                  maxLines: 5,
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if(int.tryParse(value)!=null){
+                      totalUnits=int.tryParse(value);
+                      return null;
+                    }else{
+                      return "Value must be a valid number";
+                    }
+
+
+                  },
+                  style: style,
+                  decoration: InputDecoration(
+                    labelText: "Unit Count",
+                    labelStyle:
+                    TextStyle(color: Color(0x50000000), fontSize: 18),
+                    contentPadding:
+                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black)),
+                  ),
+                ),
+              ),
               SizedBox(height: 20.0),
               processing
                   ? Center(child: CircularProgressIndicator())
@@ -135,7 +173,7 @@ class _AddEventPageState extends State<AddEventPage> {
                         setState(() {
                           processing = true;
                         });
-                        if(widget.mode==CalenderMode.PRIVATE){
+                        if (widget.mode == CalenderMode.PRIVATE) {
                           var taskID = currentUserCalenderCollectionRef
                               .document(widget.calenderId)
                               .collection('events')
@@ -150,6 +188,7 @@ class _AddEventPageState extends State<AddEventPage> {
                               taskCreatorID: currentUser.uid,
                               taskID: taskID,
                               time: chosenTime,
+                              quantityOfWork: totalUnits,
                               taskName: _title.text,
                               description: _description.text,
                               dueDate: _eventDate)
@@ -157,13 +196,15 @@ class _AddEventPageState extends State<AddEventPage> {
                               .then((value) {
                             Navigator.pop(context);
                           });
-                        }else{
-                          var taskID = widget.calenderDocRef
+                        } else {
+                          var taskID = currentUserCalenderCollectionRef
+                              .document(widget.calenderId)
                               .collection('events')
                               .document()
                               .documentID;
 
-                          widget.calenderDocRef
+                          currentUserCalenderCollectionRef
+                              .document(widget.calenderId)
                               .collection('events')
                               .document(taskID)
                               .setData(TaskEvent(

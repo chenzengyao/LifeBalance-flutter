@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lifebalance/Objects/calender.dart';
 import 'package:lifebalance/Objects/user.dart';
+import 'package:lifebalance/auth/signIn.dart';
 import 'package:lifebalance/theme/colors/light_colors.dart';
 
 class SignUp extends StatefulWidget {
@@ -19,12 +21,14 @@ class _SignUpState extends State<SignUp> {
   TextEditingController name = new TextEditingController();
   TextEditingController email = new TextEditingController();
   TextEditingController password = new TextEditingController();
+  final scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      key: scaffoldKey,
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -162,46 +166,54 @@ class _SignUpState extends State<SignUp> {
                         ),
                         onPressed: () {
                           if (formKey.currentState.validate()) {
-                            FirebaseAuth.instance
-                                .createUserWithEmailAndPassword(
-                                email: email.text, password: password.text)
-                                .then((value) {
-                              var docID = Firestore.instance
-                                  .collection('/calenders')
-                                  .document(value.user.uid)
-                                  .collection('userCalenders')
-                                  .document()
-                                  .documentID;
-                              Firestore.instance
-                                  .collection('/users')
-                                  .document(value.user.uid)
-                                  .setData(User(
-                                uid: value.user.uid,
-                                email: email.text,
-                                name: name.text,
-                                myCalenders: [],
-                                myPrivateCalenderID: docID,
-                              ).toJson())
-                                  .then((secondvalue) async {
-                                await Firestore.instance
+                            /// standard exception handling, errors are displayed in form of snack bar if they occur while singup or login.
+                            try {
+                              FirebaseAuth.instance
+                                  .createUserWithEmailAndPassword(
+                                  email: email.text,
+                                  password: password.text)
+                                  .then((value) {
+                                var docID = Firestore.instance
                                     .collection('/calenders')
                                     .document(value.user.uid)
                                     .collection('userCalenders')
-                                    .document(docID)
-                                    .setData(CalenderObject(
-                                    calenderID: docID,
-                                    calenderDescription:
-                                    name.text.trim() +
-                                        "'s Personal Calender",
-                                    calenderTitle: name.text,
-                                    creatorID: value.user.uid,
-                                    isPrivate: true,
-                                    participantCount: 1,
-                                    participantList: [value.user.uid])
-                                    .toJson());
-                                Navigator.of(context).pop();
+                                    .document()
+                                    .documentID;
+                                Firestore.instance
+                                    .collection('/users')
+                                    .document(value.user.uid)
+                                    .setData(User(
+                                  uid: value.user.uid,
+                                  email: email.text,
+                                  name: name.text,
+                                  myCalenders: [],
+                                  myPrivateCalenderID: docID,
+                                ).toJson())
+                                    .then((secondvalue) async {
+                                  await Firestore.instance
+                                      .collection('/calenders')
+                                      .document(value.user.uid)
+                                      .collection('userCalenders')
+                                      .document(docID)
+                                      .setData(CalenderObject(
+                                      calenderID: docID,
+                                      calenderDescription:
+                                      name.text.trim() +
+                                          "'s Personal Calender",
+                                      calenderTitle: name.text,
+                                      creatorID: value.user.uid,
+                                      isPrivate: true,
+                                      participantCount: 1,
+                                      participantList: [value.user.uid])
+                                      .toJson());
+                                  Navigator.of(context).pop();
+                                });
                               });
-                            });
+                            } on PlatformException catch (e) {
+                              showSnackBar(e.message, scaffoldKey);
+                              print('Failed with error code: ${e.code}');
+                              print(e.message);
+                            }
                           }
                         },
                         child: Text(

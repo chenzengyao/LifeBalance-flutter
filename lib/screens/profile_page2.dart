@@ -1,45 +1,18 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:lifebalance/auth/authService.dart';
-
-import 'package:provider/provider.dart' as provider;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:lifebalance/screens/CalendarPage.dart';
-import 'package:lifebalance/screens/Community.dart';
+import 'package:lifebalance/screens/friends_page.dart';
 import 'package:lifebalance/screens/message_page.dart';
 import 'package:lifebalance/screens/notification_page.dart';
 import 'package:lifebalance/screens/profile_page.dart';
-import 'package:lifebalance/screens/Others/LandingPageNew.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of our application.
+class Dashboard extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: AuthService().handleAuth(),
-    );
-
-    //  provider.StreamProvider<MyUser>.value(   //listen to stream, get user data from user.dart, no value if not signed in
-    //   value: AuthService().user,
-    //   child: MaterialApp(
-    //     home: LandingPageNew(),          //access data from stream
-    //   ),
-    // );
-  }
+  _DashboardState createState() => _DashboardState();
 }
 
-class MyBottomNavigationBar extends StatefulWidget {
-  @override
-  _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
-}
-
-class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
+class _DashboardState extends State<Dashboard> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     profile_page(),
@@ -57,7 +30,20 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return new Scaffold(
+      /* body: Container(
+        padding: const EdgeInsets.all(32),
+         child: Row(children: [
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Image.asset(
+                'images/avatar.png',
+                width: 100.0,
+                height: 100.0,
+                fit: BoxFit.cover,
+              ),
+            ]),
+          ]),*/
+
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTappedBar,
@@ -67,7 +53,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
           BottomNavigationBarItem(
               icon: Icon(Icons.account_circle), title: Text('Profile')),
           BottomNavigationBarItem(
-              icon: Icon(Icons.supervisor_account), title: new Text('Community')),
+              icon: Icon(Icons.supervisor_account), title: new Text('Social')),
           BottomNavigationBarItem(
               icon: Icon(Icons.date_range), title: new Text('Calendar')),
           BottomNavigationBarItem(

@@ -10,7 +10,6 @@ class EventModel extends DatabaseItem{
 
   factory EventModel.fromMap(Map data) {
     return EventModel(
-      id : data['id'],
       title: data['title'],
       description: data['description'],
       eventDate: data['event_date'],
@@ -19,7 +18,7 @@ class EventModel extends DatabaseItem{
 
   factory EventModel.fromDS(String id, Map<String,dynamic> data) {
     return EventModel(
-      id: data['id'],
+      id: id,
       title: data['title'],
       description: data['description'],
       eventDate: data['event_date'].toDate(),
@@ -28,10 +27,10 @@ class EventModel extends DatabaseItem{
 
   Map<String,dynamic> toMap() {
     return {
-      "id":id,
       "title":title,
       "description": description,
       "event_date":eventDate,
+      "id":id,
     };
   }
 }

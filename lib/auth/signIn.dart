@@ -1,8 +1,23 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lifebalance/auth/signUp.dart';
 import 'package:lifebalance/theme/colors/light_colors.dart';
+
+showSnackBar(String message, final scaffoldKey) {
+  scaffoldKey.currentState.showSnackBar(
+    new SnackBar(
+      backgroundColor: Colors.red[600],
+      content: new Text(
+        message,
+        style: new TextStyle(color: Colors.white),
+      ),
+    ),
+  );
+}
+
+
 
 class SignIn extends StatefulWidget {
   @override
@@ -16,12 +31,15 @@ class _SignInState extends State<SignIn> {
   TextEditingController name = new TextEditingController();
   TextEditingController email = new TextEditingController();
   TextEditingController password = new TextEditingController();
+  final scaffoldKey = new GlobalKey<ScaffoldState>();
+
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      key: scaffoldKey,
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -221,10 +239,18 @@ class _SignInState extends State<SignIn> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           if (formKey.currentState.validate()) {
-                            FirebaseAuth.instance.signInWithEmailAndPassword(
-                                email: email.text, password: password.text);
+                            try {
+                              await FirebaseAuth.instance
+                                  .signInWithEmailAndPassword(
+                                  email: email.text,
+                                  password: password.text);
+                            } on PlatformException catch (e) {
+                              showSnackBar(e.message, scaffoldKey);
+                              print('Failed with error code: ${e.code}');
+                              print(e.message);
+                            }
                           }
                         },
                         child: Text(
