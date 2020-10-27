@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lifebalance/auth/signIn.dart';
 
 class notification_page extends StatefulWidget {
   @override
@@ -14,7 +15,9 @@ class _notification_pageState extends State<notification_page> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-            title: new Text("Notification Page")
+          //Changed colour of the top bar to myPink = kGreen
+          backgroundColor: myPink,
+          title: new Text("Notification Page"),
         ),
         body: Form(
           key: _formKeyValue,

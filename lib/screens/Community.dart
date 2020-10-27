@@ -22,6 +22,8 @@ class CommunityPageState extends State<CommunityPage> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
+          //Changed colour of the top bar to myPink = kGreen
+          backgroundColor: myPink,
           title: Text("Community"),
           bottom: TabBar(tabs: [
             Tab(

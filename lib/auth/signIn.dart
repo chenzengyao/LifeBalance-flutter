@@ -24,7 +24,9 @@ class SignIn extends StatefulWidget {
   _SignInState createState() => _SignInState();
 }
 
-Color myPink = LightColors.kDarkBlue;
+//Edited colour of all the headers to Green - standardised
+//Color myPink = LightColors.kDarkBlue;
+Color myPink = LightColors.kGreen;
 
 class _SignInState extends State<SignIn> {
   GlobalKey<FormState> formKey = new GlobalKey<FormState>();
