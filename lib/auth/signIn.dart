@@ -24,7 +24,7 @@ class SignIn extends StatefulWidget {
   _SignInState createState() => _SignInState();
 }
 
-//Edited colour of all the headers to Green - standardised
+//Edited colour of all the headers to Green - standardised colours
 //Color myPink = LightColors.kDarkBlue;
 Color myPink = LightColors.kGreen;
 
