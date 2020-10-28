@@ -209,29 +209,29 @@ class _HomePageState extends State<CalendarPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
-                        FlatButton.icon(
-                          materialTapTargetSize:
-                          MaterialTapTargetSize.shrinkWrap,
-                          padding: EdgeInsets.only(
-                              left: 0, top: 0, right: 0, bottom: 0),
-                          label: Text("Add Task",
-                              style: TextStyle(color: Colors.white)),
-                          icon: Icon(Icons.add, color: Colors.white),
-                          onPressed: () async {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AddEventPage(
-                                  calenderId:
-                                  calenderMode == CalenderMode.PRIVATE ||
-                                      selectedCalender == null
-                                      ? currentUser.myPrivateCalenderID
-                                      : selectedCalender.calenderID,
-                                ),
-                              ),
-                            );
-                          },
-                        )
+                        // FlatButton.icon(
+                        //   materialTapTargetSize:
+                        //   MaterialTapTargetSize.shrinkWrap,
+                        //   padding: EdgeInsets.only(
+                        //       left: 0, top: 0, right: 0, bottom: 0),
+                        //   label: Text("Add Task",
+                        //       style: TextStyle(color: Colors.white)),
+                        //   icon: Icon(Icons.add, color: Colors.white),
+                        //   onPressed: () async {
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) => AddEventPage(
+                        //           calenderId:
+                        //           calenderMode == CalenderMode.PRIVATE ||
+                        //               selectedCalender == null
+                        //               ? currentUser.myPrivateCalenderID
+                        //               : selectedCalender.calenderID,
+                        //         ),
+                        //       ),
+                        //     );
+                        //   },
+                        // )
                       ],
                     )),
               ],
