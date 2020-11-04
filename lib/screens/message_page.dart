@@ -36,7 +36,6 @@ class _message_pageState extends State<message_page> {
           ),
         ],
       ),
-
       body: ListView.builder(
         itemCount: chats.length,
         itemBuilder: (BuildContext context, int index) {
@@ -59,7 +58,7 @@ class _message_pageState extends State<message_page> {
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.all(2),
-                    decoration: /*chat.unread
+                    decoration: chat.unread
                         ? BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(40)),
                       border: Border.all(
@@ -75,7 +74,7 @@ class _message_pageState extends State<message_page> {
                         ),
                       ],
                     )
-                        :*/ BoxDecoration(
+                        : BoxDecoration(
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
@@ -87,7 +86,7 @@ class _message_pageState extends State<message_page> {
                     ),
                     child: CircleAvatar(
                       radius: 35,
-                      backgroundImage: AssetImage(chat.sender.imageUrl),
+                      //  backgroundImage: AssetImage(chat.sender.imageUrl),
                     ),
                   ),
                   Container(
@@ -109,7 +108,7 @@ class _message_pageState extends State<message_page> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                chat.sender.isOnline
+                                true // chat.sender.isOnline
                                     ? Container(
                                   margin: const EdgeInsets.only(left: 5),
                                   width: 7,
@@ -137,53 +136,18 @@ class _message_pageState extends State<message_page> {
                         SizedBox(
                           height: 10,
                         ),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                            Container(
-                              alignment: Alignment.topLeft,
-                              width:180,
-                              height: 30,
-                              child: Text(
-                                chat.text,
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.black54,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
-                              ),
+                        Container(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            chat.text,
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.black54,
                             ),
-                              SizedBox(
-                                width: 9,
-                              ),
-                            chat.unread
-                            ?Container(
-                              margin: const EdgeInsets.only(right:5),
-                              width: 20,
-                              height: 20,
-                              decoration: BoxDecoration(
-                                shape:BoxShape.circle,
-                                color: LightColors.kGreen,
-                              ),
-                              child: Center(
-                                  child:Text("1",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15.0,
-                                      )
-
-                                  ),
-                              ),
-                            )
-                           :Container(
-                              child: null,
-                            )
-
-
-                          ]
-                        )
-
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          ),
+                        ),
                       ],
                     ),
                   ),

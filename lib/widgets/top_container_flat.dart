@@ -14,7 +14,7 @@ class TopContainerFlat extends StatelessWidget {
     return Container(
       padding: padding!=null ? padding : EdgeInsets.symmetric(horizontal: 20.0),
       decoration: BoxDecoration(
-          color: theme.green,
+        color: theme.green,
       ),
       height: height,
       width: width,

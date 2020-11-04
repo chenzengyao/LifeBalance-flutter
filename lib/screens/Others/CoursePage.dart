@@ -13,9 +13,7 @@ class CoursePageState extends State<CoursePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: new AppBar(
-            title: new Text("Add course")
-        ),
+        appBar: new AppBar(title: new Text("Add course")),
         body: Form(
           key: _formKeyValue,
           autovalidate: true,
@@ -24,22 +22,21 @@ class CoursePageState extends State<CoursePage> {
             children: <Widget>[
               SizedBox(height: 40.0),
               StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance.collection("course").snapshots(),
-                  builder: (context,snapshot) {
+                  stream: Firestore.instance.collection("course").snapshots(),
+                  builder: (context, snapshot) {
                     if (!snapshot.hasData) {
                       Text("Loading");
-                    }
-                    else {
+                    } else {
                       List<DropdownMenuItem> courseList = [];
-                      for (int i = 0; i < snapshot.data.docs.length; i++) {
-                        DocumentSnapshot snap = snapshot.data.docs[i];
+                      for (int i = 0; i < snapshot.data.documents.length; i++) {
+                        DocumentSnapshot snap = snapshot.data.documents[i];
                         courseList.add(
                           DropdownMenuItem(
                             child: Text(
-                              snap.id,
+                              snap.documentID,
                               style: TextStyle(color: Color(0xff11b719)),
                             ),
-                            value: "${snap.id}",
+                            value: "${snap.documentID}",
                           ),
                         );
                       }
@@ -52,13 +49,13 @@ class CoursePageState extends State<CoursePage> {
                             onChanged: (selectedCourse) {
                               final snackBar = SnackBar(
                                 content: Text(
-                                  'Selected course index is $selectedCourse',
+                                  'Selected course is index $selectedCourse',
                                   style: TextStyle(color: Color(0xff11b719)),
                                 ),
                               );
                               Scaffold.of(context).showSnackBar(snackBar);
                               setState(() {
-                                selectedIndex = selectedCourse;
+                                courseList = selectedCourse;
                               });
                             },
                             value: selectedIndex,
@@ -73,35 +70,55 @@ class CoursePageState extends State<CoursePage> {
                     }
                     return Row();
                   }),
+              TextFormField(
+                decoration: InputDecoration(
+                  hintText: "Course name?",
+                ),
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                  hintText: "Task Description",
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2020),
+                      lastDate: DateTime(2099))
+                      .then((value) {});
+                },
+                child: TextFormField(
+                  enabled: false,
+                  decoration: InputDecoration(
+                    hintText: "Select Due Date",
+                  ),
+                ),
+              ),
+              TextFormField(
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  hintText: "Unit Count",
+                ),
+              ),
               SizedBox(
                 height: 150.0,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  RaisedButton(
-                      color: Color(0xff11b719),
-                      textColor: Colors.white,
-                      child: Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Text("Submit", style: TextStyle(fontSize: 24.0)),
-                            ],
-                          )),
-                      onPressed: ()async {
-
-
-
-
-                        Navigator.pop(context);
-
-                      },
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0))),
-                ],
-              ),
+              RaisedButton(
+                  color: Color(0xff11b719),
+                  textColor: Colors.white,
+                  child: Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Text("Submit", style: TextStyle(fontSize: 24.0)),
+                        ],
+                      )),
+                  onPressed: () {},
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0))),
             ],
           ),
         ));

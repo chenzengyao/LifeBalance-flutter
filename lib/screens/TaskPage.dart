@@ -1,13 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lifebalance/Objects/task.dart';
+import 'package:lifebalance/auth/authService.dart';
+import 'package:lifebalance/screens/CalendarPage.dart';
 import 'package:lifebalance/screens/event.dart';
 import 'package:flutter/material.dart';
 import 'package:lifebalance/screens/event_firestore_service.dart';
 
 class AddEventPage extends StatefulWidget {
   final EventModel note;
-
-  const AddEventPage({Key key, this.note}) : super(key: key);
+  final CalenderMode mode;
+  final String calenderId;
+  final DocumentReference calenderDocRef;
+  final bool fromPublic;
+  const AddEventPage(
+      {Key key,
+        this.note,
+        this.mode,
+        @required this.calenderId,
+        this.calenderDocRef, this.fromPublic=false})
+      : super(key: key);
 
   @override
   _AddEventPageState createState() => _AddEventPageState();
@@ -20,26 +31,30 @@ class _AddEventPageState extends State<AddEventPage> {
   DateTime _eventDate;
   final _formKey = GlobalKey<FormState>();
   final _key = GlobalKey<ScaffoldState>();
-  final _id = FirebaseAuth.instance.currentUser.uid;
   bool processing;
+  CalenderMode mode;
+  int totalUnits=0;
+  TextEditingController countController=new TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _title = TextEditingController(text: widget.note != null ? widget.note.title : "");
-    _description = TextEditingController(text:  widget.note != null ? widget.note.description : "");
+    mode = widget.mode;
+    _title = TextEditingController(
+        text: widget.note != null ? widget.note.title : "");
+    _description = TextEditingController(
+        text: widget.note != null ? widget.note.description : "");
     _eventDate = DateTime.now();
     processing = false;
   }
 
+  TimeOfDay chosenTime;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          widget.note != null ? "Edit Event" : "Add Event",
-          style: TextStyle(fontSize: 20, color: Colors.white)
-        ),
+        title: Text(widget.note != null ? "Edit Event" : "Add Event",
+            style: TextStyle(fontSize: 20, color: Colors.white)),
         backgroundColor: Color(0xFFD1C0B6),
       ),
       key: _key,
@@ -50,24 +65,26 @@ class _AddEventPageState extends State<AddEventPage> {
           child: ListView(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+                padding:
+                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
                 child: TextFormField(
                   controller: _title,
                   validator: (value) =>
                   (value.isEmpty) ? "Please Enter title" : null,
                   style: style,
                   decoration: InputDecoration(
-                    labelText: "Title",
-                    labelStyle: TextStyle(color: Color(0x50000000), fontSize: 18),
-                    contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black)
-                    )
-                  ),
+                      labelText: "Title",
+                      labelStyle:
+                      TextStyle(color: Color(0x50000000), fontSize: 18),
+                      contentPadding:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black))),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+                padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
                 child: TextFormField(
                   controller: _description,
                   minLines: 1,
@@ -77,38 +94,71 @@ class _AddEventPageState extends State<AddEventPage> {
                   style: style,
                   decoration: InputDecoration(
                     labelText: "Description",
-                    labelStyle: TextStyle(color: Color(0x50000000), fontSize: 18),
-                    contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+                    labelStyle:
+                    TextStyle(color: Color(0x50000000), fontSize: 18),
+                    contentPadding:
+                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
                     focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black)
-                    ),
+                        borderSide: BorderSide(color: Colors.black)),
                   ),
                 ),
               ),
               const SizedBox(height: 10.0),
               ListTile(
                 title: Text(
-                    "Date (YYYY-MM-DD)",
-                    style: TextStyle(
-                      fontSize: 18.0
-                    ),
+                  "Date (YYYY-MM-DD-HH)",
+                  style: TextStyle(fontSize: 18.0),
                 ),
                 subtitle: Text(
-                  "${_eventDate.year} - ${_eventDate.month} - ${_eventDate.day}",
-                  style: TextStyle(
-                    fontSize: 15.0
-                  )
-                ),
-                onTap: ()async{
-                  DateTime picked = await showDatePicker(context: context, initialDate: _eventDate, firstDate: DateTime(_eventDate.year-5), lastDate: DateTime(_eventDate.year+5));
-                  if(picked != null) {
+                    "${_eventDate.year} - ${_eventDate.month} - ${_eventDate.day} - ${chosenTime?.format(context) ?? TimeOfDay.now().format(context)}",
+                    style: TextStyle(fontSize: 15.0)),
+                onTap: () async {
+                  DateTime picked = await showDatePicker(
+                      context: context,
+                      initialDate: _eventDate,
+                      firstDate: DateTime(_eventDate.year - 5),
+                      lastDate: DateTime(_eventDate.year + 5));
+
+                  chosenTime = await showTimePicker(
+                      context: context, initialTime: TimeOfDay.now());
+                  if (picked != null) {
                     setState(() {
                       _eventDate = picked;
                     });
                   }
                 },
               ),
+              SizedBox(height: 10.0),
+              Padding(
+                padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+                child: TextFormField(
+                  controller: countController,
+                  minLines: 1,
+                  maxLines: 5,
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if(int.tryParse(value)!=null){
+                      totalUnits=int.tryParse(value);
+                      return null;
+                    }else{
+                      return "Value must be a valid number";
+                    }
 
+
+                  },
+                  style: style,
+                  decoration: InputDecoration(
+                    labelText: "Unit Count",
+                    labelStyle:
+                    TextStyle(color: Color(0x50000000), fontSize: 18),
+                    contentPadding:
+                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black)),
+                  ),
+                ),
+              ),
               SizedBox(height: 20.0),
               processing
                   ? Center(child: CircularProgressIndicator())
@@ -124,24 +174,92 @@ class _AddEventPageState extends State<AddEventPage> {
                         setState(() {
                           processing = true;
                         });
-                        if(widget.note != null) {
-                          await eventDBS.updateData(widget.note.id,{
-                            "title": _title.text,
-                            "description": _description.text,
-                            "event_date": widget.note.eventDate
-                          });
-                        }else{
-                          await eventDBS.createItem(EventModel(
-                              title: _title.text,
-                              id: _id,
+                        if(widget.fromPublic){
+                          var taskID = widget.calenderDocRef
+                              .collection('events')
+                              .document()
+                              .documentID;
+
+                          widget.calenderDocRef
+                              .collection('events')
+                              .document(taskID)
+                              .setData(TaskEvent(
+                              taskCreatorID: currentUser.uid,
+                              taskID: taskID,
+                              time: chosenTime,
+                              quantityOfWork: totalUnits,
+                              taskName: _title.text,
                               description: _description.text,
-                              eventDate: _eventDate
-                          ));
+                              dueDate: _eventDate)
+                              .toJson())
+                              .then((value) {
+                            Navigator.pop(context);
+                          });
+                        }else
+                        if (widget.mode == CalenderMode.PRIVATE) {
+                          var taskID = currentUserCalenderCollectionRef
+                              .document(widget.calenderId)
+                              .collection('events')
+                              .document()
+                              .documentID;
+
+                          currentUserCalenderCollectionRef
+                              .document(widget.calenderId)
+                              .collection('events')
+                              .document(taskID)
+                              .setData(TaskEvent(
+                              taskCreatorID: currentUser.uid,
+                              taskID: taskID,
+                              time: chosenTime,
+                              quantityOfWork: totalUnits,
+                              taskName: _title.text,
+                              description: _description.text,
+                              dueDate: _eventDate)
+                              .toJson())
+                              .then((value) {
+                            Navigator.pop(context);
+                          });
+                        } else {
+                          var taskID = currentUserCalenderCollectionRef
+                              .document(widget.calenderId)
+                              .collection('events')
+                              .document()
+                              .documentID;
+
+                          currentUserCalenderCollectionRef
+                              .document(widget.calenderId)
+                              .collection('events')
+                              .document(taskID)
+                              .setData(TaskEvent(
+                              taskCreatorID: currentUser.uid,
+                              taskID: taskID,
+                              time: chosenTime,
+                              taskName: _title.text,
+                              description: _description.text,
+                              dueDate: _eventDate)
+                              .toJson())
+                              .then((value) {
+                            Navigator.pop(context);
+                          });
                         }
-                        Navigator.pop(context);
-                        setState(() {
-                          processing = false;
-                        });
+
+                        // if (widget.note != null) {
+                        //   await eventDBS.updateData(widget.note.id, {
+                        //     "title": _title.text,
+                        //     "description": _description.text,
+                        //     "event_date": widget.note.eventDate
+                        //   });
+                        // } else {
+                        //   await eventDBS.createItem(EventModel(
+                        //       title: _title.text,
+                        //       description: _description.text,
+                        //       eventDate: _eventDate));
+                        // }
+                        if (mounted) {
+                          setState(() {
+                            processing = false;
+                          });
+                        }
                       }
                     },
                     child: Text(
@@ -167,8 +285,6 @@ class _AddEventPageState extends State<AddEventPage> {
     super.dispose();
   }
 }
-
-
 
 /*
 import 'package:flutter/material.dart';

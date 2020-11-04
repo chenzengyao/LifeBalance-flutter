@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lifebalance/Objects/user.dart';
+import 'package:lifebalance/auth/authService.dart';
 import 'package:lifebalance/screens/models/message_model.dart';
-import 'package:lifebalance/screens/models/user_model.dart';
+
 import 'package:lifebalance/theme/colors/light_colors.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -26,7 +28,7 @@ class _ChatScreenState extends State<ChatScreen> {
               padding: EdgeInsets.all(10),
               margin: EdgeInsets.symmetric(vertical: 10),
               decoration: BoxDecoration(
-                color: LightColors.kBrown,//Theme.of(context).primaryColor,
+                color: LightColors.kBrown, //Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(15),
                 boxShadow: [
                   BoxShadow(
@@ -202,16 +204,15 @@ class _ChatScreenState extends State<ChatScreen> {
                     fontWeight: FontWeight.w400,
                   )),
               TextSpan(text: '\n'),
-              widget.user.isOnline ?
-              TextSpan(
+              true // widget.user.isOnline
+                  ? TextSpan(
                 text: 'Online',
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w400,
                 ),
               )
-                  :
-              TextSpan(
+                  : TextSpan(
                 text: 'Offline',
                 style: TextStyle(
                   fontSize: 11,
@@ -237,10 +238,10 @@ class _ChatScreenState extends State<ChatScreen> {
               itemCount: messages.length,
               itemBuilder: (BuildContext context, int index) {
                 final Message message = messages[index];
-                final bool isMe = message.sender.id == currentUser.id;
-                final bool isSameUser = prevUserId == message.sender.id;
-                prevUserId = message.sender.id;
-                return _chatBubble(message, isMe, isSameUser);
+                final bool isMe = message.sender.uid == currentUser.uid;
+                // final bool isSameUser = prevUserId == message.sender.uid;
+                // prevUserId = message.sender.id;
+                return _chatBubble(message, isMe, true); // isSameUser);
               },
             ),
           ),
