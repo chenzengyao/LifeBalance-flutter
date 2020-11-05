@@ -25,37 +25,16 @@ class _profile_pageState extends State<profile_page> {
 
   @override
   Widget build(BuildContext context) {
-    Text subheading(String title) {
-      return Text(
-        title,
-        style: TextStyle(
-            color: LightColors.kDarkBlue,
-            fontSize: 20.0,
-            fontWeight: FontWeight.w700,
-            letterSpacing: 1.2),
-      );
-    }
 
     double width = MediaQuery.of(context).size.width;
 
-    CircleAvatar addCourseIcon() {
-      return CircleAvatar(
-        radius: 25.0,
-        backgroundColor: LightColors.kGreen,
-        child: Icon(
-          Icons.add,
-          size: 20.0,
-          color: Colors.white,
-        ),
-      );
-    }
 
     /*return StreamProvider<List<Course>>.value(
           value: DatabaseService().courses,
           child: Scaffold(*/
     return Container(
         child: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.transparent,
           appBar: AppBar(
             title: Text('Life Balance'),
             backgroundColor: LightColors.kGreen,
@@ -81,8 +60,8 @@ class _profile_pageState extends State<profile_page> {
               physics: NeverScrollableScrollPhysics(),
               children: <Widget>[
                 TopContainer(
-                  // height: 100,
                   width: width,
+                  // height: 100,
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 20),
                     child: Column(
@@ -90,7 +69,7 @@ class _profile_pageState extends State<profile_page> {
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 0, vertical: 0.0),
+                                horizontal: 0, vertical: 10.0),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -123,7 +102,7 @@ class _profile_pageState extends State<profile_page> {
                                               currentUser.name,
                                               textAlign: TextAlign.start,
                                               style: TextStyle(
-                                                fontSize: 22.0,
+                                                fontSize: 20.0,
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w800,
                                               ),
@@ -134,23 +113,40 @@ class _profile_pageState extends State<profile_page> {
                                               '${currentUser.email}',
                                               textAlign: TextAlign.start,
                                               style: TextStyle(
-                                                fontSize: 16.0,
+                                                fontSize: 12.0,
                                                 color: Colors.white,
-                                                fontWeight: FontWeight.w400,
+                                                fontWeight: FontWeight.w200,
                                               ),
                                             ),
-                                          ),
-                                          RaisedButton(
+                                      ),
+                                      SizedBox(height: 15),
+                                      ButtonTheme(
+                                          minWidth: 10,
+                                          height: 30,
+                                          child: RaisedButton(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        18.0)),
+                                            color: LightColors.test5,
+                                            elevation: 0.0,
                                             onPressed: () {
                                               Navigator.of(context)
                                                   .push(MaterialPageRoute(
-                                                builder: (context) => EditProfile(
+                                                builder: (context) =>
+                                                    EditProfile(
                                                   user: currentUser,
                                                 ),
                                               ));
                                             },
-                                            child: Text("Edit Profile"),
-                                          ),
+                                            child: Text(
+                                              "Edit Profile",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12),
+                                            ),
+                                          )
+                                          )
                                         ],
                                       );
                                     })
@@ -165,8 +161,7 @@ class _profile_pageState extends State<profile_page> {
                     Container(
                       height: MediaQuery.of(context).size.height,
                       color: Colors.transparent,
-                      padding:
-                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
+                      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
                       child: Column(
                         children: <Widget>[
                           PaginateFirestore(
@@ -255,10 +250,10 @@ class _profile_pageState extends State<profile_page> {
                                                   });
                                             },
                                             child: Padding(
-                                              padding: const EdgeInsets.symmetric(vertical: 4),
+                                              padding: const EdgeInsets.symmetric(vertical: 2),
                                               child: ActiveProjectsCard(
                                                 task: task,
-                                                cardColor: LightColors.kPurple,
+                                                cardColor: LightColors.test4,
                                                 loadingPercent: task.unitsDone /
                                                     task.quantityOfWork,
                                                 title: task.taskName,

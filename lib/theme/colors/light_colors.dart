@@ -10,10 +10,22 @@ class LightColors  {
   static const Color kLavender = Color(0xFFD5E4FE);
   static const Color kBlue = Color(0xFF6488E4);
   static const Color kLightGreen = Color(0xFFD9E6DC);
-  static const Color kGreen = Color(0xFF5E7A6C);
   static const Color kPurple = Color(0xFFA689E0);
   static const Color kLightPurple = Color(0xFFC997D1);
   static const Color kBrown = Color(0xFF754B4B);
+  static const Color almond = Color(0xFFE1D8C4);
+  static const Color rose = Color(0xFFBB9BA3);
+  static const Color test = Color(0xFFf4f1f1);
+  static const Color test1 = Color(0xFFAC8B7B);
+  static const Color test2 = Color(0xFF836B5F);
+  static const Color test3 = Color(0xFFD1C0B6);
+
+
+ //for profile_page
+  static const Color kGreen = Color(0xFF5E7A6C);
+  static const Color test5 = Color(0xFF963B20);
+  static const Color test4 = Color(0xFFCB9D8F);
+
 
   //for buttons maybe?
   static const Color darkbrown = Color(0xFF836B5F);
