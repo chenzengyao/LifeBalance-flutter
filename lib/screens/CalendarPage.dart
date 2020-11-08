@@ -6,6 +6,7 @@ import 'package:lifebalance/auth/authService.dart';
 import 'package:lifebalance/auth/signIn.dart';
 import 'package:lifebalance/screens/TaskPage.dart';
 import 'package:lifebalance/screens/view_event.dart';
+import 'package:lifebalance/theme/colors/light_colors.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:paginate_firestore/paginate_firestore.dart';
 import 'package:lifebalance/screens/event.dart';
@@ -86,68 +87,76 @@ class _HomePageState extends State<CalendarPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  RaisedButton(
-                    child: Text("Start new calender"),
-                    onPressed: () {
-                      TextEditingController name = new TextEditingController();
-                      TextEditingController description =
-                      new TextEditingController();
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (context) => Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Calender Title"),
-                              TextFormField(
-                                controller: name,
-                                decoration: InputDecoration(
-                                    hintText: "Calender title..."),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text("Short Description"),
-                              TextFormField(
-                                controller: description,
-                                maxLines: null,
-                                decoration: InputDecoration(
-                                    hintText: "What is this about.."),
-                              ),
-                              Center(
-                                child: RaisedButton(
-                                  color: myPink,
-                                  onPressed: () {
-                                    var docId = currentUserCalenderCollectionRef
-                                        .document()
-                                        .documentID;
-                                    currentUserCalenderCollectionRef
-                                        .document(docId)
-                                        .setData(CalenderObject(
-                                      calenderTitle: name.text,
-                                      calenderDescription: description.text,
-                                      creatorID: currentUser.uid,
-                                      isPrivate: false,
-                                      calenderID: docId,
-                                    ).toJson())
-                                        .then((value) {
-                                      Navigator.of(context).pop();
-                                    });
-                                  },
-                                  child: Text(
-                                    "Create Calender",
-                                    style: TextStyle(
-                                      color: Colors.white,
+                  Container(
+                    margin: const EdgeInsets.only(top: 10, left:8 ),
+                    child: RaisedButton.icon(
+                      icon: Icon(Icons.calendar_today),
+                      label: Text("New Calender"),
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                      highlightColor: Colors.orange[300],
+                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      onPressed: () {
+                        TextEditingController name = new TextEditingController();
+                        TextEditingController description =
+                        new TextEditingController();
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) => Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Calender Title"),
+                                TextFormField(
+                                  controller: name,
+                                  decoration: InputDecoration(
+                                      hintText: "Calender title..."),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text("Short Description"),
+                                TextFormField(
+                                  controller: description,
+                                  maxLines: null,
+                                  decoration: InputDecoration(
+                                      hintText: "What is this about.."),
+                                ),
+                                Center(
+                                  child: RaisedButton(
+                                    color: myPink,
+                                    onPressed: () {
+                                      var docId = currentUserCalenderCollectionRef
+                                          .document()
+                                          .documentID;
+                                      currentUserCalenderCollectionRef
+                                          .document(docId)
+                                          .setData(CalenderObject(
+                                        calenderTitle: name.text,
+                                        calenderDescription: description.text,
+                                        creatorID: currentUser.uid,
+                                        isPrivate: false,
+                                        calenderID: docId,
+                                      ).toJson())
+                                          .then((value) {
+                                        Navigator.of(context).pop();
+                                      });
+                                    },
+                                    child: Text(
+                                      "Create Calender",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                   Spacer(),
                   Text("Private Mode"),
@@ -244,6 +253,7 @@ class _HomePageState extends State<CalendarPage> {
                   fontSize: 22.0,
                   color: Colors.white,
                   fontWeight: FontWeight.w800,
+                  fontFamily: 'Courgette'
                 ),
               ),
             ),
@@ -283,7 +293,7 @@ class _HomePageState extends State<CalendarPage> {
                     formatButtonTextStyle: TextStyle(color: Colors.white),
                     formatButtonShowsNext: false,
                   ),
-                  startingDayOfWeek: StartingDayOfWeek.monday,
+                  startingDayOfWeek: StartingDayOfWeek.sunday,
                   onDaySelected: (date, events,_) {
                     setState(() {
                       _selectedSharedEvents = events;

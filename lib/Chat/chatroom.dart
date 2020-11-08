@@ -18,6 +18,7 @@ class _ChatRoomState extends State<ChatRoom> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: myPink,
+          title: Text("Messages"),
           iconTheme: IconThemeData(color: Colors.white),
         ),
         body: Container(
