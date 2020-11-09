@@ -56,17 +56,23 @@ class _AddEventPageState extends State<AddEventPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Text(widget.note != null ? "Edit Event" : "Add Event",
-            style: TextStyle(fontSize: 20, color: Colors.white)),
-        backgroundColor: theme.darkergreen,
+        title: Text(
+            widget.note != null ? "Edit Event" : "Add Event",
+            style: TextStyle(
+                fontSize: 20.0,
+                color: Colors.white,
+            ),
+        ),
+        backgroundColor: theme.green,
+        toolbarHeight: 65.0,
+        elevation: 0.0,
       ),
       key: _key,
       body: Form(
         key: _formKey,
         child: Container(
-          color: Colors.green.withOpacity(0.1),
-          alignment: Alignment.center,
+          color: Colors.white,
+          alignment: Alignment.centerLeft,
           child: ListView(
             children: <Widget>[
               Padding(
@@ -80,7 +86,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   decoration: InputDecoration(
                       labelText: "Title",
                       labelStyle:
-                          TextStyle(color: Color(0x50000000), fontSize: 18),
+                          TextStyle(color: Colors.black, fontSize: 18.0),
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
                       focusedBorder: UnderlineInputBorder(
@@ -89,7 +95,7 @@ class _AddEventPageState extends State<AddEventPage> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0, vertical: 10.0),
+                    horizontal: 15.0, vertical: 10.0),
                 child: TextFormField(
                   controller: _description,
                   minLines: 1,
@@ -100,7 +106,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   decoration: InputDecoration(
                     labelText: "Description",
                     labelStyle:
-                        TextStyle(color: Color(0x50000000), fontSize: 18),
+                        TextStyle(color: Colors.black, fontSize: 18.0),
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
                     focusedBorder: UnderlineInputBorder(
@@ -184,11 +190,11 @@ class _AddEventPageState extends State<AddEventPage> {
                   decoration: InputDecoration(
                     labelText: "Unit Count",
                     labelStyle:
-                        TextStyle(color: Color(0x50000000), fontSize: 18),
+                        TextStyle(color: Colors.black, fontSize: 18.0),
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
                     focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black)),
+                        borderSide: BorderSide(color: theme.darkergreen)),
                   ),
                 ),
               ),
@@ -198,8 +204,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   : Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Material(
-                        elevation: 5.0,
-                        borderRadius: BorderRadius.circular(30.0),
+                        elevation: 0.0,
                         color: theme.green,//changed from Color(0xFFD1C0B6)
                         child: MaterialButton(
                           onPressed: () async {
@@ -297,8 +302,8 @@ class _AddEventPageState extends State<AddEventPage> {
                           child: Text(
                             "Save",
                             style: style.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
