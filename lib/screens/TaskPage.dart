@@ -200,7 +200,7 @@ class _AddEventPageState extends State<AddEventPage> {
                       child: Material(
                         elevation: 5.0,
                         borderRadius: BorderRadius.circular(30.0),
-                        color: Colors.deepPurple, //changed from Color(0xFFD1C0B6)
+                        color: theme.green,//changed from Color(0xFFD1C0B6)
                         child: MaterialButton(
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {

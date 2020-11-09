@@ -59,7 +59,7 @@ class _AllUsersState extends State<AllUsers> {
   @override
   Widget build(BuildContext context) {
     /// this is paginate firestore form the paginate firestore package, it reads 15 documents at a time from firebase, based on the query we provide it
-    /// in this case, it is ffetching all registered users so we can add whoever we want.
+    /// in this case, it is fetching all registered users so we can add whoever we want.
     return PaginateFirestore(
         itemBuilder: (index, context, doc) {
           var friend = User.fromJson(doc.data);
@@ -129,7 +129,7 @@ class _AllCalendersState extends State<AllCalenders> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return PaginateFirestore(
-              /// same thing again but this time we fetch all calenders so user cna join whichever he wants. He cannot join his own calender.
+              /// same thing again but this time we fetch all calenders so user can join whichever he wants. He cannot join his own calender.
               query: Firestore.instance
                   .collectionGroup('userCalenders')
                   .where('isPrivate', isEqualTo: false)
@@ -137,123 +137,135 @@ class _AllCalendersState extends State<AllCalenders> {
               itemBuilderType: PaginateBuilderType.listView,
               itemBuilder: (index, context, doc) {
                 var calenderObj = CalenderObject.fromJson(doc.data);
-                return ListTile(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CalenderExpandedView(
-                                calenderDocRef: doc.reference,
-                              )),
-                    );
-                  },
-                  title: Text(calenderObj.calenderTitle),
-                  subtitle: Text(calenderObj.calenderDescription),
-                  trailing: calenderObj.creatorID != currentUser.uid
-                      ? FlatButton(
-                          child: Text(currentUser.joinedCalenderPaths
-                                  .contains(doc.reference.path)
-                              ? "Leave"
-                              : "Join"),
-                          onPressed: () {
-                            if (!currentUser.joinedCalenderPaths
-                                .contains(doc.reference.path)) {
-                              WriteBatch writeBatch =
-                                  Firestore.instance.batch();
-                              writeBatch.setData(
-                                  currentUserDocumentReference,
-                                  {
-                                    'joinedCalenderPaths':
-                                        FieldValue.arrayUnion(
-                                            [doc.reference.path])
-                                  },
-                                  merge: true);
+                return SizedBox(
+                  height:100,
+                                  child: Card(
+                    child: ListTile(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CalenderExpandedView(
+                                    calenderDocRef: doc.reference,
+                                  )),
+                        );
+                      },
+                      title: Text(calenderObj.calenderTitle),
+                      subtitle: Text(calenderObj.calenderDescription),
+                      trailing: calenderObj.creatorID != currentUser.uid
+                          ? FlatButton(
+                              child: Text(currentUser.joinedCalenderPaths
+                                      .contains(doc.reference.path)
+                                  ? "Leave"
+                                  : "Join"),
+                              onPressed: () {
+                                if (!currentUser.joinedCalenderPaths
+                                    .contains(doc.reference.path)) {
+                                  WriteBatch writeBatch =
+                                      Firestore.instance.batch();
+                                  writeBatch.setData(
+                                      currentUserDocumentReference,
+                                      {
+                                        'joinedCalenderPaths':
+                                            FieldValue.arrayUnion(
+                                                [doc.reference.path])
+                                      },
+                                      merge: true);
 
-                              writeBatch.setData(doc.reference,
-                                  {'participantCount': FieldValue.increment(1)},
-                                  merge: true);
+                                  writeBatch.setData(
+                                      doc.reference,
+                                      {
+                                        'participantCount':
+                                            FieldValue.increment(1)
+                                      },
+                                      merge: true);
 
-                              writeBatch.setData(
-                                  doc.reference,
-                                  {
-                                    'participantList':
-                                        FieldValue.arrayUnion([currentUser.uid])
-                                  },
-                                  merge: true);
-                              writeBatch.commit().then((value) {
-                                setState(() {});
-                              });
-                            } else {
-                              WriteBatch writeBatch =
-                                  Firestore.instance.batch();
-                              writeBatch.setData(
-                                  currentUserDocumentReference,
-                                  {
-                                    'joinedCalenderPaths':
-                                        FieldValue.arrayRemove(
-                                            [doc.reference.path])
-                                  },
-                                  merge: true);
+                                  writeBatch.setData(
+                                      doc.reference,
+                                      {
+                                        'participantList': FieldValue.arrayUnion(
+                                            [currentUser.uid])
+                                      },
+                                      merge: true);
+                                  writeBatch.commit().then((value) {
+                                    setState(() {});
+                                  });
+                                } else {
+                                  WriteBatch writeBatch =
+                                      Firestore.instance.batch();
+                                  writeBatch.setData(
+                                      currentUserDocumentReference,
+                                      {
+                                        'joinedCalenderPaths':
+                                            FieldValue.arrayRemove(
+                                                [doc.reference.path])
+                                      },
+                                      merge: true);
 
-                              writeBatch.setData(
-                                  doc.reference,
-                                  {
-                                    'participantCount': FieldValue.increment(-1)
-                                  },
-                                  merge: true);
+                                  writeBatch.setData(
+                                      doc.reference,
+                                      {
+                                        'participantCount':
+                                            FieldValue.increment(-1)
+                                      },
+                                      merge: true);
 
-                              writeBatch.setData(
-                                  doc.reference,
-                                  {
-                                    'participantList': FieldValue.arrayRemove(
-                                        [currentUser.uid])
-                                  },
-                                  merge: true);
-                              writeBatch.commit().then((value) {
-                                setState(() {});
-                              });
-                              // currentUser.joinedCalenderPaths
-                              //     .remove(doc.reference.path);
-                              // currentUserDocumentReference.setData({
-                              //   'joinedCalenderPaths': currentUser.joinedCalenderPaths
-                              // }, merge: true).then((value) {
-                              //   setState(() {});
-                              // });
-                            }
-                          },
-                        )
-                      : FlatButton.icon(
-                          onPressed: () {
-                            showDialog(
-                                barrierDismissible: false,
-                                context: context,child: AlertDialog(content: Text("Deleting, please wait.."),));
-                            print(doc.reference.path);
-                            doc.reference
-                                .collection('events')
-                                .getDocuments()
-                                .then((value) {
+                                  writeBatch.setData(
+                                      doc.reference,
+                                      {
+                                        'participantList': FieldValue.arrayRemove(
+                                            [currentUser.uid])
+                                      },
+                                      merge: true);
+                                  writeBatch.commit().then((value) {
+                                    setState(() {});
+                                  });
+                                  // currentUser.joinedCalenderPaths
+                                  //     .remove(doc.reference.path);
+                                  // currentUserDocumentReference.setData({
+                                  //   'joinedCalenderPaths': currentUser.joinedCalenderPaths
+                                  // }, merge: true).then((value) {
+                                  //   setState(() {});
+                                  // });
+                                }
+                              },
+                            )
+                          : FlatButton.icon(
+                              onPressed: () {
+                                showDialog(
+                                    barrierDismissible: false,
+                                    context: context,
+                                    child: AlertDialog(
+                                      content: Text("Deleting, please wait.."),
+                                    ));
+                                print(doc.reference.path);
+                                doc.reference
+                                    .collection('events')
+                                    .getDocuments()
+                                    .then((value) {
                                   print(value.documents.length);
-                              value.documents.forEach((element) async {
-                                await element.reference.delete();
-                              });
-                              doc.reference.delete().then((value) {
-
-                                setState(() {
-                                  reloader=2;
+                                  value.documents.forEach((element) async {
+                                    await element.reference.delete();
+                                  });
+                                  doc.reference.delete().then((value) {
+                                    setState(() {
+                                      reloader = 2;
+                                    });
+                                  });
+                                }).whenComplete(() {
+                                  Navigator.of(context).pop();
                                 });
-                              });
-                            }).whenComplete(() {
-                              Navigator.of(context).pop();
-                            });
-                          },
-                          icon: Icon(
-                            Icons.delete,
-                            color: Colors.red,
-                          ),
-                          label: Text(
-                            "Delete",
-                            style: TextStyle(color: Colors.red),
-                          )),
+                              },
+                              icon: Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                              ),
+                              label: Text(
+                                "Delete",
+                                style: TextStyle(color: Colors.red),
+                              )),
+                    ),
+                  ),
                 );
               },
             );
