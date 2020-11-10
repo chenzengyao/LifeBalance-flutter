@@ -138,8 +138,9 @@ class _AllCalendersState extends State<AllCalenders> {
               itemBuilder: (index, context, doc) {
                 var calenderObj = CalenderObject.fromJson(doc.data);
                 return SizedBox(
-                  height:100,
-                                  child: Card(
+                  height:145,
+
+                  child: Card(color: Color(0xFFD9E6DC),
                     child: ListTile(
                       onTap: () {
                         Navigator.push(
@@ -150,14 +151,23 @@ class _AllCalendersState extends State<AllCalenders> {
                                   )),
                         );
                       },
-                      title: Text(calenderObj.calenderTitle),
-                      subtitle: Text(calenderObj.calenderDescription),
+                      title: Text(calenderObj.calenderTitle,
+                                  style: TextStyle(height: 2, fontSize: 19, color: Color(0xFF3A5B41))),
+                      subtitle: Text(calenderObj.calenderDescription,
+                                  style: TextStyle(fontSize: 13, color: Color(0xFF5E7A6C).withOpacity(0.6))),
                       trailing: calenderObj.creatorID != currentUser.uid
-                          ? FlatButton(
-                              child: Text(currentUser.joinedCalenderPaths
-                                      .contains(doc.reference.path)
-                                  ? "Leave"
-                                  : "Join"),
+                          ? MaterialButton(
+                              minWidth: 0,
+                              height: 0,
+                              padding: EdgeInsets.all(8.0),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                 side: BorderSide(color: Colors.lightGreen[300])),
+                        child:
+                             currentUser.joinedCalenderPaths.contains(doc.reference.path)
+                                ? Text( "Leave",style:TextStyle(color:Color(0xFFB71C1C).withOpacity(0.6)))
+                                : Text("Join",style:TextStyle(color:Color(0xFF558B2F))),
+
                               onPressed: () {
                                 if (!currentUser.joinedCalenderPaths
                                     .contains(doc.reference.path)) {
