@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lifebalance/Objects/task.dart';
-import 'package:lifebalance/theme/colors/light_colors.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class ActiveProjectsCard extends StatelessWidget {
@@ -21,7 +20,7 @@ class ActiveProjectsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5.0),
+      margin: EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 18),
        height: 200,
       decoration: BoxDecoration(
@@ -46,12 +45,12 @@ class ActiveProjectsCard extends StatelessWidget {
               percent: loadingPercent,
               lineWidth: 5.0,
               circularStrokeCap: CircularStrokeCap.round,
-              backgroundColor: LightColors.test3,
-              progressColor: LightColors.test5,
+              backgroundColor: Color(0xffdfc4bc),
+              progressColor: Color(0xffa04e36),
               center: Text(
                 '${(loadingPercent*100).round()}%',
                 style: TextStyle(
-                    fontWeight: FontWeight.w200, color: Colors.black),
+                    fontSize: 14, color: Colors.black),
               ),
             ),
           ),
@@ -64,7 +63,7 @@ class ActiveProjectsCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 15.0,
-                  color: Colors.black,
+                  color: Color(0xFF202020),
                   fontWeight: FontWeight.w500,
                 ),
               ),

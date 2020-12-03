@@ -32,6 +32,7 @@ class _HomePageState extends State<CalendarPage> {
   CalenderMode calenderMode = CalenderMode.PRIVATE;
   List<dynamic> _selectedSharedEvents = [];
   int calendersReloader;
+
   @override
   void initState() {
     super.initState();
@@ -69,10 +70,9 @@ class _HomePageState extends State<CalendarPage> {
               context,
               MaterialPageRoute(
                 builder: (context) => AddEventPage(
-
                   mode: calenderMode,
                   calenderId: calenderMode == CalenderMode.PRIVATE ||
-                      selectedCalender == null
+                          selectedCalender == null
                       ? currentUser.myPrivateCalenderID
                       : selectedCalender.calenderID,
                 ),
@@ -88,91 +88,90 @@ class _HomePageState extends State<CalendarPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(top: 10, left:8 ),
+                    margin: const EdgeInsets.only(top: 10, left: 8),
                     child: RaisedButton.icon(
                       icon: Icon(Icons.calendar_today),
                       label: Text("New Calender"),
                       elevation: 5,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
                       highlightColor: Colors.orange[300],
-                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                       onPressed: () {
-                        TextEditingController name = new TextEditingController();
+                        TextEditingController name =
+                            new TextEditingController();
                         TextEditingController description =
-                        new TextEditingController();
+                            new TextEditingController();
                         showModalBottomSheet(
                           backgroundColor: theme.blue,
                           context: context,
                           isScrollControlled: true,
                           builder: (context) => SingleChildScrollView(
-                                                      child: Container(
-                                                        padding: EdgeInsets.only(
-                                                          bottom: MediaQuery.of(context).viewInsets.bottom
-                                                        ),
-                                                        child: Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Calender Title",
-                                    style: TextStyle(
-                                      fontSize: 18)
-                                  ),
-                                  TextFormField(
-                                    controller: name,
-                                    decoration: InputDecoration(
-                                        hintText: "Calender title..."),
-                                        style: TextStyle(fontStyle: FontStyle.italic),
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(
-                                    "Short Description",
-                                    style: TextStyle(
-                                      fontFamily: 'Roboto',
-                                      fontSize: 18),
-                                  ),
-                                  TextFormField(
-                                    controller: description,
-                                    maxLines: null,
-                                    decoration: InputDecoration(
-                                        hintText: "What is this about.."),
-                                        style: TextStyle(fontStyle: FontStyle.italic),
-                                  ),
-                                  Center(
-                                    child: RaisedButton(
-                                      color: myPink,
-                                      onPressed: () {
-                                        var docId = currentUserCalenderCollectionRef
-                                            .document()
-                                            .documentID;
-                                        currentUserCalenderCollectionRef
-                                            .document(docId)
-                                            .setData(CalenderObject(
-                                          calenderTitle: name.text,
-                                          calenderDescription: description.text,
-                                          creatorID: currentUser.uid,
-                                          isPrivate: false,
-                                          calenderID: docId,
-                                        ).toJson())
-                                            .then((value) {
-                                          Navigator.of(context).pop();
-                                        });
-                                      },
-                                      child: Text(
-                                        "Create Calender",
-                                        style: TextStyle(
-                                          color: Colors.white,
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      MediaQuery.of(context).viewInsets.bottom),
+                              child: Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Calender Title",
+                                        style: TextStyle(fontSize: 18)),
+                                    TextFormField(
+                                      controller: name,
+                                      decoration: InputDecoration(
+                                          hintText: "Calender title..."),
+                                      style: TextStyle(
+                                          fontStyle: FontStyle.italic),
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Text(
+                                      "Short Description",
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    TextFormField(
+                                      controller: description,
+                                      maxLines: null,
+                                      decoration: InputDecoration(
+                                          hintText: "What is this about.."),
+                                      style: TextStyle(
+                                          fontStyle: FontStyle.italic),
+                                    ),
+                                    SizedBox(height: 6),
+                                    Center(
+                                      child: RaisedButton(
+                                        onPressed: () {
+                                          var docId =
+                                              currentUserCalenderCollectionRef
+                                                  .document()
+                                                  .documentID;
+                                          currentUserCalenderCollectionRef
+                                              .document(docId)
+                                              .setData(CalenderObject(
+                                                calenderTitle: name.text,
+                                                calenderDescription:
+                                                    description.text,
+                                                creatorID: currentUser.uid,
+                                                isPrivate: false,
+                                                calenderID: docId,
+                                              ).toJson())
+                                              .then((value) {
+                                            Navigator.of(context).pop();
+                                          });
+                                        },
+                                        child: Text(
+                                          "Create Calender",
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                                                      ),
                           ),
                         );
                       },
@@ -186,7 +185,7 @@ class _HomePageState extends State<CalendarPage> {
                     onChanged: (value) {
                       setState(() {
                         isPrivate = value;
-                        _selectedSharedEvents=[];
+                        _selectedSharedEvents = [];
                         calenderMode = isPrivate
                             ? CalenderMode.PRIVATE
                             : CalenderMode.SHARED;
@@ -271,11 +270,10 @@ class _HomePageState extends State<CalendarPage> {
                 currentUser.name,
                 textAlign: TextAlign.start,
                 style: TextStyle(
-                  fontSize: 22.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w800,
-                  fontFamily: 'Courgette'
-                ),
+                    fontSize: 22.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w800,
+                    fontFamily: 'Courgette'),
               ),
             ),
           ],
@@ -295,7 +293,8 @@ class _HomePageState extends State<CalendarPage> {
               if (eventsnapshot.hasData) {
                 return TableCalendar(
                   events: generateMapOfEventsFromFirestoreDocuments(
-                      eventsnapshot.data), //_events,
+                      eventsnapshot.data),
+                  //_events,
                   initialCalendarFormat: CalendarFormat.month,
                   calendarStyle: CalendarStyle(
                       canEventMarkersOverflow: true,
@@ -315,7 +314,7 @@ class _HomePageState extends State<CalendarPage> {
                     formatButtonShowsNext: false,
                   ),
                   startingDayOfWeek: StartingDayOfWeek.sunday,
-                  onDaySelected: (date, events,_) {
+                  onDaySelected: (date, events, _) {
                     setState(() {
                       _selectedSharedEvents = events;
                     });
@@ -353,26 +352,28 @@ class _HomePageState extends State<CalendarPage> {
               }
             }),
         ..._selectedSharedEvents.map(
-              (event) => calenderMode==CalenderMode.PRIVATE? ListTile(
-            title: Text(event.taskName),
-            subtitle: Text(event.description),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => TaskEventDetails(
-                    event: event,
-                    taskDocRef: currentUserCalenderCollectionRef
-                        .document(currentUser.myPrivateCalenderID)
-                        .collection('events')
-                        .document(event.taskID),
-                  ),
-                ),
-              ).then((value) {
-                setState(() {});
-              });
-            },
-          ):Container(),
+          (event) => calenderMode == CalenderMode.PRIVATE
+              ? ListTile(
+                  title: Text(event.taskName),
+                  subtitle: Text(event.description),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => TaskEventDetails(
+                          event: event,
+                          taskDocRef: currentUserCalenderCollectionRef
+                              .document(currentUser.myPrivateCalenderID)
+                              .collection('events')
+                              .document(event.taskID),
+                        ),
+                      ),
+                    ).then((value) {
+                      setState(() {});
+                    });
+                  },
+                )
+              : Container(),
         ),
       ],
     );
@@ -398,7 +399,8 @@ class _HomePageState extends State<CalendarPage> {
                       if (eventsnapshot.hasData) {
                         return TableCalendar(
                           events: generateMapOfEventsFromFirestoreDocuments(
-                              eventsnapshot.data), //_events,
+                              eventsnapshot.data),
+                          //_events,
                           initialCalendarFormat: CalendarFormat.month,
                           calendarStyle: CalendarStyle(
                               canEventMarkersOverflow: true,
@@ -415,11 +417,11 @@ class _HomePageState extends State<CalendarPage> {
                               borderRadius: BorderRadius.circular(20.0),
                             ),
                             formatButtonTextStyle:
-                            TextStyle(color: Colors.white),
+                                TextStyle(color: Colors.white),
                             formatButtonShowsNext: false,
                           ),
                           startingDayOfWeek: StartingDayOfWeek.sunday,
-                          onDaySelected: (date, events,_) {
+                          onDaySelected: (date, events, _) {
                             setState(() {
                               _selectedSharedEvents = events;
                             });
@@ -432,7 +434,7 @@ class _HomePageState extends State<CalendarPage> {
                                     decoration: BoxDecoration(
                                         color: theme.orange,
                                         borderRadius:
-                                        BorderRadius.circular(30.0)),
+                                            BorderRadius.circular(30.0)),
                                     child: Text(
                                       date.day.toString(),
                                       style: TextStyle(color: Colors.white),
@@ -444,7 +446,7 @@ class _HomePageState extends State<CalendarPage> {
                                     decoration: BoxDecoration(
                                         color: Colors.orange,
                                         borderRadius:
-                                        BorderRadius.circular(30.0)),
+                                            BorderRadius.circular(30.0)),
                                     child: Text(
                                       date.day.toString(),
                                       style: TextStyle(color: Colors.white),
@@ -464,28 +466,29 @@ class _HomePageState extends State<CalendarPage> {
             }
           },
         ),
-
         ..._selectedSharedEvents.map(
-              (event) => _selectedSharedEvents.length>0? ListTile(
-            title: Text(event.taskName),
-            subtitle: Text(event.description),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => TaskEventDetails(
-                    event: event,
-                    taskDocRef: currentUserCalenderCollectionRef
-                        .document(selectedCalender.calenderID)
-                        .collection('events')
-                        .document(event.taskID),
-                  ),
-                ),
-              ).then((value) {
-                setState(() {});
-              });
-            },
-          ):Container(),
+          (event) => _selectedSharedEvents.length > 0
+              ? ListTile(
+                  title: Text(event.taskName),
+                  subtitle: Text(event.description),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => TaskEventDetails(
+                          event: event,
+                          taskDocRef: currentUserCalenderCollectionRef
+                              .document(selectedCalender.calenderID)
+                              .collection('events')
+                              .document(event.taskID),
+                        ),
+                      ),
+                    ).then((value) {
+                      setState(() {});
+                    });
+                  },
+                )
+              : Container(),
         ),
         Divider(
           indent: 20,
