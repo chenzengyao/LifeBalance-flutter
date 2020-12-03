@@ -2,9 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lifebalance/Objects/task.dart';
 import 'package:lifebalance/screens/event.dart';
 import 'package:lifebalance/widgets/theme.dart';
+import 'package:intl/intl.dart';
+
 
 import 'TaskPage.dart';
 
@@ -71,6 +74,9 @@ class _TaskEventDetailsState extends State<TaskEventDetails> {
 
   @override
   Widget build(BuildContext context){
+    final dateFormatter = DateFormat('yyyy-MM-dd hh:mm');
+    final dateString = dateFormatter.format(widget.event.dueDate);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -84,24 +90,34 @@ class _TaskEventDetailsState extends State<TaskEventDetails> {
         elevation: 0.0,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(25.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Text(
               widget.event.taskName,
               style: TextStyle(
-                fontSize: 22.0,
+                fontSize: 32.0,
+                fontFamily: 'Courgette',
+                fontWeight: FontWeight.bold,
               )
             ),
-            SizedBox(height: 15.0),
+            SizedBox(height:25.0),
+            Text(
+              dateString,
+              style: TextStyle(
+                fontSize: 17.0,
+              )
+            ),
+            SizedBox(height: 5.0),
             Text(
                 widget.event.description,
                 style: TextStyle(
-                    fontSize: 16.0,
+                    fontSize: 18.0,
                 )
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 25.0),
             ButtonTheme(
                 minWidth: 50.0,
                 height: 40.0,
