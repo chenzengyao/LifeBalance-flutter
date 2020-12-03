@@ -1,3 +1,4 @@
+//calendar class file 
 class CalenderObject {
   String calenderTitle;
   List<String> participantList=[];
@@ -15,13 +16,14 @@ class CalenderObject {
         this.participantList,
         this.isPrivate,
         this.calenderID});
-
+  
+  //map list of attirbutes as json object file into firestore
   Map<String, dynamic> toJson() => {
     'isPrivate': isPrivate,
     'calenderTitle': calenderTitle,
     'creatorID': creatorID,
     'participantCount': participantCount,
-    'participantList': participantList,
+    'participantList': participantList, //users that join public calendar, stored as their unique user id
     'calenderID': calenderID,
     'calenderDescription': calenderDescription,
   };

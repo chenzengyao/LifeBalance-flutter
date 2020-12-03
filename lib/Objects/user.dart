@@ -16,7 +16,7 @@ class User {
     this.imageUrl,
     this.myCalenders,
     this.joinedCalenderPaths,
-    this.myPrivateCalenderID,
+    this.myPrivateCalenderID, //to identify which is the private calendar that user created
     this.friendList = const [],
   });
 

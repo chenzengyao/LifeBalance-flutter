@@ -20,11 +20,16 @@ class ActiveProjectsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-
-      margin: EdgeInsets.symmetric(horizontal: 10.0, ),
-      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+      margin: EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 18),
        height: 200,
       decoration: BoxDecoration(
+        boxShadow: [
+          new BoxShadow(
+            color: Colors.black54,
+            blurRadius: 2.0,
+          ),
+        ],
         color: cardColor,
         borderRadius: BorderRadius.circular(40.0),
       ),
@@ -40,12 +45,12 @@ class ActiveProjectsCard extends StatelessWidget {
               percent: loadingPercent,
               lineWidth: 5.0,
               circularStrokeCap: CircularStrokeCap.round,
-              backgroundColor: Colors.white10,
-              progressColor: Colors.white,
+              backgroundColor: Color(0xffdfc4bc),
+              progressColor: Color(0xffa04e36),
               center: Text(
                 '${(loadingPercent*100).round()}%',
                 style: TextStyle(
-                    fontWeight: FontWeight.w700, color: Colors.white),
+                    fontSize: 14, color: Colors.black),
               ),
             ),
           ),
@@ -57,19 +62,20 @@ class ActiveProjectsCard extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  fontSize: 14.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
+                  fontSize: 15.0,
+                  color: Color(0xFF202020),
+                  fontWeight: FontWeight.w500,
                 ),
               ),
+              SizedBox(height:2),
               Text(
                 subtitle,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  fontSize: 12.0,
-                  color: Colors.white54,
-                  fontWeight: FontWeight.w400,
+                  fontSize: 13.0,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.w200,
                 ),
               ),
             ],

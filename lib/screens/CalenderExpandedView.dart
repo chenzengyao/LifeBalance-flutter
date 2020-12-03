@@ -1,3 +1,4 @@
+//class to display public calendar in the community calendars
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lifebalance/Objects/calender.dart';
@@ -67,6 +68,7 @@ class _CalenderExpandedViewState extends State<CalenderExpandedView> {
           : null
           : null,
       appBar: AppBar(
+        title: Text(selectedCalender.calenderTitle),
         backgroundColor: myPink,
       ),
       body: SingleChildScrollView(

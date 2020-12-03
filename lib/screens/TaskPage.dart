@@ -5,6 +5,8 @@ import 'package:lifebalance/screens/CalendarPage.dart';
 import 'package:lifebalance/screens/event.dart';
 import 'package:flutter/material.dart';
 import 'package:lifebalance/screens/event_firestore_service.dart';
+import 'package:lifebalance/theme/colors/light_colors.dart';
+import 'package:lifebalance/widgets/theme.dart';
 
 class AddEventPage extends StatefulWidget {
   final EventModel note;
@@ -14,10 +16,11 @@ class AddEventPage extends StatefulWidget {
   final bool fromPublic;
   const AddEventPage(
       {Key key,
-        this.note,
-        this.mode,
-        @required this.calenderId,
-        this.calenderDocRef, this.fromPublic=false})
+      this.note,
+      this.mode,
+      @required this.calenderId,
+      this.calenderDocRef,
+      this.fromPublic = false})
       : super(key: key);
 
   @override
@@ -33,8 +36,8 @@ class _AddEventPageState extends State<AddEventPage> {
   final _key = GlobalKey<ScaffoldState>();
   bool processing;
   CalenderMode mode;
-  int totalUnits=0;
-  TextEditingController countController=new TextEditingController();
+  int totalUnits = 0;
+  TextEditingController countController = new TextEditingController();
 
   @override
   void initState() {
@@ -53,62 +56,71 @@ class _AddEventPageState extends State<AddEventPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.note != null ? "Edit Event" : "Add Event",
-            style: TextStyle(fontSize: 20, color: Colors.white)),
-        backgroundColor: Color(0xFFD1C0B6),
+        title: Text(
+            widget.note != null ? "Edit Event" : "Add Event",
+            style: TextStyle(
+                fontSize: 20.0,
+                color: Colors.white,
+            ),
+        ),
+        backgroundColor: theme.green,
+        toolbarHeight: 65.0,
+        elevation: 0.0,
       ),
       key: _key,
       body: Form(
         key: _formKey,
         child: Container(
-          alignment: Alignment.center,
+          color: Colors.white,
+          alignment: Alignment.centerLeft,
           child: ListView(
             children: <Widget>[
               Padding(
-                padding:
-                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 15.0, vertical: 10.0),
                 child: TextFormField(
                   controller: _title,
                   validator: (value) =>
-                  (value.isEmpty) ? "Please Enter title" : null,
+                      (value.isEmpty) ? "Please Enter title" : null,
                   style: style,
                   decoration: InputDecoration(
                       labelText: "Title",
                       labelStyle:
-                      TextStyle(color: Color(0x50000000), fontSize: 18),
+                          TextStyle(color: Colors.black, fontSize: 18.0),
                       contentPadding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+                          EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
                       focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black))),
+                          borderSide: BorderSide(color: theme.darkergreen))),
                 ),
               ),
               Padding(
-                padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 15.0, vertical: 10.0),
                 child: TextFormField(
                   controller: _description,
                   minLines: 1,
                   maxLines: 5,
                   validator: (value) =>
-                  (value.isEmpty) ? "Please Enter description" : null,
+                      (value.isEmpty) ? "Please Enter description" : null,
                   style: style,
                   decoration: InputDecoration(
                     labelText: "Description",
                     labelStyle:
-                    TextStyle(color: Color(0x50000000), fontSize: 18),
+                        TextStyle(color: Colors.black, fontSize: 18.0),
                     contentPadding:
-                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
                     focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black)),
+                        borderSide: BorderSide(color: theme.darkergreen)),
                   ),
                 ),
               ),
               const SizedBox(height: 10.0),
               ListTile(
                 title: Text(
-                  "Date (YYYY-MM-DD-HH)",
+                  "Date and Time (YYYY-MM-DD-HH)",
                   style: TextStyle(fontSize: 18.0),
                 ),
+                leading: Icon(Icons.access_time),
                 subtitle: Text(
                     "${_eventDate.year} - ${_eventDate.month} - ${_eventDate.day} - ${chosenTime?.format(context) ?? TimeOfDay.now().format(context)}",
                     style: TextStyle(fontSize: 15.0)),
@@ -117,10 +129,39 @@ class _AddEventPageState extends State<AddEventPage> {
                       context: context,
                       initialDate: _eventDate,
                       firstDate: DateTime(_eventDate.year - 5),
-                      lastDate: DateTime(_eventDate.year + 5));
+                      lastDate: DateTime(_eventDate.year + 5),
+                      builder: (BuildContext context, Widget child) {
+                        return Theme(
+                          data: ThemeData.dark().copyWith(
+                            colorScheme: ColorScheme.dark(
+                              primary: Colors.deepPurple,
+                              onPrimary: Colors.white,
+                              surface: theme.darkergreen,
+                              onSurface: LightColors.kLightYellow2,
+                            ),
+                            dialogBackgroundColor: LightColors.kDarkBlue,
+                          ),
+                          child: child,
+                        );
+                      });
 
                   chosenTime = await showTimePicker(
-                      context: context, initialTime: TimeOfDay.now());
+                      context: context, initialTime: TimeOfDay.now(),
+                      builder: (BuildContext context, Widget child) {
+                        return Theme(
+                          data: ThemeData.dark().copyWith(
+                            colorScheme: ColorScheme.dark(
+                              primary: Colors.deepPurple,
+                              onPrimary: Colors.white,
+                              surface: LightColors.kDarkBlue,
+                              onSurface: LightColors.kLightYellow2,
+                            ),
+                            dialogBackgroundColor: LightColors.kDarkBlue,
+                          ),
+                          child: child,
+                        );
+                      }
+                      );
                   if (picked != null) {
                     setState(() {
                       _eventDate = picked;
@@ -131,31 +172,29 @@ class _AddEventPageState extends State<AddEventPage> {
               SizedBox(height: 10.0),
               Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
                 child: TextFormField(
                   controller: countController,
                   minLines: 1,
                   maxLines: 5,
                   keyboardType: TextInputType.number,
                   validator: (value) {
-                    if(int.tryParse(value)!=null){
-                      totalUnits=int.tryParse(value);
+                    if (int.tryParse(value) != null) {
+                      totalUnits = int.tryParse(value);
                       return null;
-                    }else{
+                    } else {
                       return "Value must be a valid number";
                     }
-
-
                   },
                   style: style,
                   decoration: InputDecoration(
                     labelText: "Unit Count",
                     labelStyle:
-                    TextStyle(color: Color(0x50000000), fontSize: 18),
+                        TextStyle(color: Colors.black, fontSize: 18.0),
                     contentPadding:
-                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
                     focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black)),
+                        borderSide: BorderSide(color: theme.darkergreen)),
                   ),
                 ),
               ),
@@ -163,114 +202,112 @@ class _AddEventPageState extends State<AddEventPage> {
               processing
                   ? Center(child: CircularProgressIndicator())
                   : Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Material(
-                  elevation: 5.0,
-                  borderRadius: BorderRadius.circular(30.0),
-                  color: Color(0xFFD1C0B6),
-                  child: MaterialButton(
-                    onPressed: () async {
-                      if (_formKey.currentState.validate()) {
-                        setState(() {
-                          processing = true;
-                        });
-                        if(widget.fromPublic){
-                          var taskID = widget.calenderDocRef
-                              .collection('events')
-                              .document()
-                              .documentID;
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Material(
+                        elevation: 0.0,
+                        color: theme.green,//changed from Color(0xFFD1C0B6)
+                        child: MaterialButton(
+                          onPressed: () async {
+                            if (_formKey.currentState.validate()) {
+                              setState(() {
+                                processing = true;
+                              });
+                              if (widget.fromPublic) {
+                                var taskID = widget.calenderDocRef
+                                    .collection('events')
+                                    .document()
+                                    .documentID;
 
-                          widget.calenderDocRef
-                              .collection('events')
-                              .document(taskID)
-                              .setData(TaskEvent(
-                              taskCreatorID: currentUser.uid,
-                              taskID: taskID,
-                              time: chosenTime,
-                              quantityOfWork: totalUnits,
-                              taskName: _title.text,
-                              description: _description.text,
-                              dueDate: _eventDate)
-                              .toJson())
-                              .then((value) {
-                            Navigator.pop(context);
-                          });
-                        }else
-                        if (widget.mode == CalenderMode.PRIVATE) {
-                          var taskID = currentUserCalenderCollectionRef
-                              .document(widget.calenderId)
-                              .collection('events')
-                              .document()
-                              .documentID;
+                                widget.calenderDocRef
+                                    .collection('events')
+                                    .document(taskID)
+                                    .setData(TaskEvent(
+                                            taskCreatorID: currentUser.uid,
+                                            taskID: taskID,
+                                            time: chosenTime,
+                                            quantityOfWork: totalUnits,
+                                            taskName: _title.text,
+                                            description: _description.text,
+                                            dueDate: _eventDate)
+                                        .toJson())
+                                    .then((value) {
+                                  Navigator.pop(context);
+                                });
+                              } else if (widget.mode == CalenderMode.PRIVATE) {
+                                var taskID = currentUserCalenderCollectionRef
+                                    .document(widget.calenderId)
+                                    .collection('events')
+                                    .document()
+                                    .documentID;
 
-                          currentUserCalenderCollectionRef
-                              .document(widget.calenderId)
-                              .collection('events')
-                              .document(taskID)
-                              .setData(TaskEvent(
-                              taskCreatorID: currentUser.uid,
-                              taskID: taskID,
-                              time: chosenTime,
-                              quantityOfWork: totalUnits,
-                              taskName: _title.text,
-                              description: _description.text,
-                              dueDate: _eventDate)
-                              .toJson())
-                              .then((value) {
-                            Navigator.pop(context);
-                          });
-                        } else {
-                          var taskID = currentUserCalenderCollectionRef
-                              .document(widget.calenderId)
-                              .collection('events')
-                              .document()
-                              .documentID;
+                                currentUserCalenderCollectionRef
+                                    .document(widget.calenderId)
+                                    .collection('events')
+                                    .document(taskID)
+                                    .setData(TaskEvent(
+                                            taskCreatorID: currentUser.uid,
+                                            taskID: taskID,
+                                            time: chosenTime,
+                                            quantityOfWork: totalUnits,
+                                            taskName: _title.text,
+                                            description: _description.text,
+                                            dueDate: _eventDate)
+                                        .toJson())
+                                    .then((value) {
+                                  Navigator.pop(context);
+                                });
+                              } else {
+                                var taskID = currentUserCalenderCollectionRef
+                                    .document(widget.calenderId)
+                                    .collection('events')
+                                    .document()
+                                    .documentID;
 
-                          currentUserCalenderCollectionRef
-                              .document(widget.calenderId)
-                              .collection('events')
-                              .document(taskID)
-                              .setData(TaskEvent(
-                              taskCreatorID: currentUser.uid,
-                              taskID: taskID,
-                              time: chosenTime,
-                              taskName: _title.text,
-                              description: _description.text,
-                              dueDate: _eventDate)
-                              .toJson())
-                              .then((value) {
-                            Navigator.pop(context);
-                          });
-                        }
+                                currentUserCalenderCollectionRef
+                                    .document(widget.calenderId)
+                                    .collection('events')
+                                    .document(taskID)
+                                    .setData(TaskEvent(
+                                            taskCreatorID: currentUser.uid,
+                                            taskID: taskID,
+                                            time: chosenTime,
+                                            taskName: _title.text,
+                                            description: _description.text,
+                                            dueDate: _eventDate)
+                                        .toJson())
+                                    .then((value) {
+                                  Navigator.pop(context);
+                                });
+                              }
 
-                        // if (widget.note != null) {
-                        //   await eventDBS.updateData(widget.note.id, {
-                        //     "title": _title.text,
-                        //     "description": _description.text,
-                        //     "event_date": widget.note.eventDate
-                        //   });
-                        // } else {
-                        //   await eventDBS.createItem(EventModel(
-                        //       title: _title.text,
-                        //       description: _description.text,
-                        //       eventDate: _eventDate));
-                        // }
-                        if (mounted) {
-                          setState(() {
-                            processing = false;
-                          });
-                        }
-                      }
-                    },
-                    child: Text(
-                      "Save",
-                      style: style.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
+                              // if (widget.note != null) {
+                              //   await eventDBS.updateData(widget.note.id, {
+                              //     "title": _title.text,
+                              //     "description": _description.text,
+                              //     "event_date": widget.note.eventDate
+                              //   });
+                              // } else {
+                              //   await eventDBS.createItem(EventModel(
+                              //       title: _title.text,
+                              //       description: _description.text,
+                              //       eventDate: _eventDate));
+                              // }
+                              if (mounted) {
+                                setState(() {
+                                  processing = false;
+                                });
+                              }
+                            }
+                          },
+                          child: Text(
+                            "Save",
+                            style: style.copyWith(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),

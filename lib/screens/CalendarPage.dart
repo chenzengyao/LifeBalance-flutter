@@ -6,6 +6,7 @@ import 'package:lifebalance/auth/authService.dart';
 import 'package:lifebalance/auth/signIn.dart';
 import 'package:lifebalance/screens/TaskPage.dart';
 import 'package:lifebalance/screens/view_event.dart';
+import 'package:lifebalance/theme/colors/light_colors.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:paginate_firestore/paginate_firestore.dart';
 import 'package:lifebalance/screens/event.dart';
@@ -22,7 +23,7 @@ CollectionReference currentUserCalenderCollectionRef = Firestore.instance
     .document(currentUser.uid)
     .collection('userCalenders');
 
-enum CalenderMode { PRIVATE, SHARED }
+enum CalenderMode { PRIVATE, SHARED } //special data type enum to preset our calendar having 2 constants/modes: private and public
 
 class _HomePageState extends State<CalendarPage> {
   CalendarController _controller;
@@ -31,6 +32,7 @@ class _HomePageState extends State<CalendarPage> {
   CalenderMode calenderMode = CalenderMode.PRIVATE;
   List<dynamic> _selectedSharedEvents = [];
   int calendersReloader;
+
   @override
   void initState() {
     super.initState();
@@ -68,10 +70,9 @@ class _HomePageState extends State<CalendarPage> {
               context,
               MaterialPageRoute(
                 builder: (context) => AddEventPage(
-
                   mode: calenderMode,
                   calenderId: calenderMode == CalenderMode.PRIVATE ||
-                      selectedCalender == null
+                          selectedCalender == null
                       ? currentUser.myPrivateCalenderID
                       : selectedCalender.calenderID,
                 ),
@@ -86,68 +87,95 @@ class _HomePageState extends State<CalendarPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  RaisedButton(
-                    child: Text("Start new calender"),
-                    onPressed: () {
-                      TextEditingController name = new TextEditingController();
-                      TextEditingController description =
-                      new TextEditingController();
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (context) => Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Calender Title"),
-                              TextFormField(
-                                controller: name,
-                                decoration: InputDecoration(
-                                    hintText: "Calender title..."),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text("Short Description"),
-                              TextFormField(
-                                controller: description,
-                                maxLines: null,
-                                decoration: InputDecoration(
-                                    hintText: "What is this about.."),
-                              ),
-                              Center(
-                                child: RaisedButton(
-                                  color: myPink,
-                                  onPressed: () {
-                                    var docId = currentUserCalenderCollectionRef
-                                        .document()
-                                        .documentID;
-                                    currentUserCalenderCollectionRef
-                                        .document(docId)
-                                        .setData(CalenderObject(
-                                      calenderTitle: name.text,
-                                      calenderDescription: description.text,
-                                      creatorID: currentUser.uid,
-                                      isPrivate: false,
-                                      calenderID: docId,
-                                    ).toJson())
-                                        .then((value) {
-                                      Navigator.of(context).pop();
-                                    });
-                                  },
-                                  child: Text(
-                                    "Create Calender",
-                                    style: TextStyle(
-                                      color: Colors.white,
+                  Container(
+                    margin: const EdgeInsets.only(top: 10, left: 8),
+                    child: RaisedButton.icon(
+                      icon: Icon(Icons.calendar_today),
+                      label: Text("New Calender"),
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      highlightColor: Colors.orange[300],
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      onPressed: () {
+                        TextEditingController name =
+                            new TextEditingController();
+                        TextEditingController description =
+                            new TextEditingController();
+                        showModalBottomSheet(
+                          backgroundColor: theme.blue,
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) => SingleChildScrollView(
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      MediaQuery.of(context).viewInsets.bottom),
+                              child: Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Calender Title",
+                                        style: TextStyle(fontSize: 18)),
+                                    TextFormField(
+                                      controller: name,
+                                      decoration: InputDecoration(
+                                          hintText: "Calender title..."),
+                                      style: TextStyle(
+                                          fontStyle: FontStyle.italic),
                                     ),
-                                  ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Text(
+                                      "Short Description",
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    TextFormField(
+                                      controller: description,
+                                      maxLines: null,
+                                      decoration: InputDecoration(
+                                          hintText: "What is this about.."),
+                                      style: TextStyle(
+                                          fontStyle: FontStyle.italic),
+                                    ),
+                                    SizedBox(height: 6),
+                                    Center(
+                                      child: RaisedButton(
+                                        onPressed: () {
+                                          var docId =
+                                              currentUserCalenderCollectionRef
+                                                  .document()
+                                                  .documentID;
+                                          currentUserCalenderCollectionRef
+                                              .document(docId)
+                                              .setData(CalenderObject(
+                                                calenderTitle: name.text,
+                                                calenderDescription:
+                                                    description.text,
+                                                creatorID: currentUser.uid,
+                                                isPrivate: false,
+                                                calenderID: docId,
+                                              ).toJson())
+                                              .then((value) {
+                                            Navigator.of(context).pop();
+                                          });
+                                        },
+                                        child: Text(
+                                          "Create Calender",
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                   Spacer(),
                   Text("Private Mode"),
@@ -157,7 +185,7 @@ class _HomePageState extends State<CalendarPage> {
                     onChanged: (value) {
                       setState(() {
                         isPrivate = value;
-                        _selectedSharedEvents=[];
+                        _selectedSharedEvents = [];
                         calenderMode = isPrivate
                             ? CalenderMode.PRIVATE
                             : CalenderMode.SHARED;
@@ -187,6 +215,7 @@ class _HomePageState extends State<CalendarPage> {
 
   Widget getHeader() {
     return TopContainerFlat(
+        
         height: 70,
         width: MediaQuery.of(context).size.width,
         child: Stack(
@@ -241,10 +270,10 @@ class _HomePageState extends State<CalendarPage> {
                 currentUser.name,
                 textAlign: TextAlign.start,
                 style: TextStyle(
-                  fontSize: 22.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w800,
-                ),
+                    fontSize: 22.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w800,
+                    fontFamily: 'Courgette'),
               ),
             ),
           ],
@@ -264,7 +293,8 @@ class _HomePageState extends State<CalendarPage> {
               if (eventsnapshot.hasData) {
                 return TableCalendar(
                   events: generateMapOfEventsFromFirestoreDocuments(
-                      eventsnapshot.data), //_events,
+                      eventsnapshot.data),
+                  //_events,
                   initialCalendarFormat: CalendarFormat.month,
                   calendarStyle: CalendarStyle(
                       canEventMarkersOverflow: true,
@@ -283,8 +313,8 @@ class _HomePageState extends State<CalendarPage> {
                     formatButtonTextStyle: TextStyle(color: Colors.white),
                     formatButtonShowsNext: false,
                   ),
-                  startingDayOfWeek: StartingDayOfWeek.monday,
-                  onDaySelected: (date, events,_) {
+                  startingDayOfWeek: StartingDayOfWeek.sunday,
+                  onDaySelected: (date, events, _) {
                     setState(() {
                       _selectedSharedEvents = events;
                     });
@@ -322,26 +352,28 @@ class _HomePageState extends State<CalendarPage> {
               }
             }),
         ..._selectedSharedEvents.map(
-              (event) => calenderMode==CalenderMode.PRIVATE? ListTile(
-            title: Text(event.taskName),
-            subtitle: Text(event.description),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => TaskEventDetails(
-                    event: event,
-                    taskDocRef: currentUserCalenderCollectionRef
-                        .document(currentUser.myPrivateCalenderID)
-                        .collection('events')
-                        .document(event.taskID),
-                  ),
-                ),
-              ).then((value) {
-                setState(() {});
-              });
-            },
-          ):Container(),
+          (event) => calenderMode == CalenderMode.PRIVATE
+              ? ListTile(
+                  title: Text(event.taskName),
+                  subtitle: Text(event.description),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => TaskEventDetails(
+                          event: event,
+                          taskDocRef: currentUserCalenderCollectionRef
+                              .document(currentUser.myPrivateCalenderID)
+                              .collection('events')
+                              .document(event.taskID),
+                        ),
+                      ),
+                    ).then((value) {
+                      setState(() {});
+                    });
+                  },
+                )
+              : Container(),
         ),
       ],
     );
@@ -367,7 +399,8 @@ class _HomePageState extends State<CalendarPage> {
                       if (eventsnapshot.hasData) {
                         return TableCalendar(
                           events: generateMapOfEventsFromFirestoreDocuments(
-                              eventsnapshot.data), //_events,
+                              eventsnapshot.data),
+                          //_events,
                           initialCalendarFormat: CalendarFormat.month,
                           calendarStyle: CalendarStyle(
                               canEventMarkersOverflow: true,
@@ -384,11 +417,11 @@ class _HomePageState extends State<CalendarPage> {
                               borderRadius: BorderRadius.circular(20.0),
                             ),
                             formatButtonTextStyle:
-                            TextStyle(color: Colors.white),
+                                TextStyle(color: Colors.white),
                             formatButtonShowsNext: false,
                           ),
-                          startingDayOfWeek: StartingDayOfWeek.monday,
-                          onDaySelected: (date, events,_) {
+                          startingDayOfWeek: StartingDayOfWeek.sunday,
+                          onDaySelected: (date, events, _) {
                             setState(() {
                               _selectedSharedEvents = events;
                             });
@@ -401,7 +434,7 @@ class _HomePageState extends State<CalendarPage> {
                                     decoration: BoxDecoration(
                                         color: theme.orange,
                                         borderRadius:
-                                        BorderRadius.circular(30.0)),
+                                            BorderRadius.circular(30.0)),
                                     child: Text(
                                       date.day.toString(),
                                       style: TextStyle(color: Colors.white),
@@ -413,7 +446,7 @@ class _HomePageState extends State<CalendarPage> {
                                     decoration: BoxDecoration(
                                         color: Colors.orange,
                                         borderRadius:
-                                        BorderRadius.circular(30.0)),
+                                            BorderRadius.circular(30.0)),
                                     child: Text(
                                       date.day.toString(),
                                       style: TextStyle(color: Colors.white),
@@ -433,28 +466,29 @@ class _HomePageState extends State<CalendarPage> {
             }
           },
         ),
-
         ..._selectedSharedEvents.map(
-              (event) => _selectedSharedEvents.length>0? ListTile(
-            title: Text(event.taskName),
-            subtitle: Text(event.description),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => TaskEventDetails(
-                    event: event,
-                    taskDocRef: currentUserCalenderCollectionRef
-                        .document(selectedCalender.calenderID)
-                        .collection('events')
-                        .document(event.taskID),
-                  ),
-                ),
-              ).then((value) {
-                setState(() {});
-              });
-            },
-          ):Container(),
+          (event) => _selectedSharedEvents.length > 0
+              ? ListTile(
+                  title: Text(event.taskName),
+                  subtitle: Text(event.description),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => TaskEventDetails(
+                          event: event,
+                          taskDocRef: currentUserCalenderCollectionRef
+                              .document(selectedCalender.calenderID)
+                              .collection('events')
+                              .document(event.taskID),
+                        ),
+                      ),
+                    ).then((value) {
+                      setState(() {});
+                    });
+                  },
+                )
+              : Container(),
         ),
         Divider(
           indent: 20,

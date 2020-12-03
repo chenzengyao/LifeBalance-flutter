@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:lifebalance/Chat/message.dart';
 import 'package:lifebalance/auth/authService.dart';
 import 'package:lifebalance/auth/signIn.dart';
+import 'package:lifebalance/widgets/gradient_appbar.dart';
+import 'package:lifebalance/widgets/theme.dart';
 
 import 'chatTile.dart';
 
@@ -16,9 +18,13 @@ class _ChatRoomState extends State<ChatRoom> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: myPink,
-          iconTheme: IconThemeData(color: Colors.white),
+        appBar: GradientAppBar(
+          gradientBegin: theme.green,
+          gradientEnd: theme.darkergreen,
+          title: 'Messages'//AppBar(
+          //backgroundColor: myPink,
+          //title: Text("Messages"),
+          //iconTheme: IconThemeData(color: Colors.white),
         ),
         body: Container(
             padding: EdgeInsets.fromLTRB(0, 0, 0, 0),

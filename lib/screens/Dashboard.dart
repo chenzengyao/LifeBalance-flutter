@@ -7,6 +7,8 @@ import 'package:lifebalance/screens/Community.dart';
 import 'package:lifebalance/screens/message_page.dart';
 import 'package:lifebalance/screens/notification_page.dart';
 import 'package:lifebalance/screens/profile_page.dart';
+import 'package:lifebalance/theme/colors/light_colors.dart';
+import 'package:lifebalance/widgets/theme.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -47,6 +49,8 @@ class _DashboardState extends State<Dashboard> {
 
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: LightColors.darkergreen,
+        unselectedItemColor: Colors.grey,
         onTap: onTappedBar,
         currentIndex: _currentIndex,
         type: BottomNavigationBarType.fixed,
