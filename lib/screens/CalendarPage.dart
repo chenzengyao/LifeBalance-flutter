@@ -23,7 +23,7 @@ CollectionReference currentUserCalenderCollectionRef = Firestore.instance
     .document(currentUser.uid)
     .collection('userCalenders');
 
-enum CalenderMode { PRIVATE, SHARED }
+enum CalenderMode { PRIVATE, SHARED } //special data type enum to preset our calendar having 2 constants/modes: private and public
 
 class _HomePageState extends State<CalendarPage> {
   CalendarController _controller;
@@ -216,6 +216,7 @@ class _HomePageState extends State<CalendarPage> {
 
   Widget getHeader() {
     return TopContainerFlat(
+        
         height: 70,
         width: MediaQuery.of(context).size.width,
         child: Stack(

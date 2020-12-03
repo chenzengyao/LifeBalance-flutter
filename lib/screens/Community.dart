@@ -6,49 +6,71 @@ import 'package:lifebalance/Objects/user.dart';
 import 'package:lifebalance/auth/authService.dart';
 import 'package:lifebalance/auth/signIn.dart';
 import 'package:lifebalance/screens/CalenderExpandedView.dart';
+import 'package:lifebalance/screens/friends_page.dart';
 import 'package:paginate_firestore/paginate_firestore.dart';
+import 'package:lifebalance/theme/colors/light_colors.dart';
+import 'package:lifebalance/widgets/gradient_appbar.dart';
+import 'package:lifebalance/widgets/theme.dart';
 
 class CommunityPage extends StatefulWidget {
   @override
   CommunityPageState createState() => CommunityPageState();
 }
 
-class CommunityPageState extends State<CommunityPage> {
+class CommunityPageState extends State<CommunityPage> with SingleTickerProviderStateMixin {
+  TabController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = new TabController(length: 3, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      /// we have the default tab bar view whcih creates a tabbed page for us, we have to give it the count of tabs we want and then we provide it
-      /// that many widgets to display, on this case we set the length to 3 and provide three widgets.
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          //Changed colour of the top bar to myPink = kGreen
-          backgroundColor: myPink,
-          title: Text("Community"),
-          bottom: TabBar(tabs: [
-            Tab(
-              text: "Calenders",
-            ),
-            Tab(
-              text: "Friends",
-            ),
-            Tab(
-              text: "People",
-            ),
-          ]),
-        ),
-        body: TabBarView(
-          children: [
-            // these are the three widgets provided
-            AllCalenders(),
-            AllFriends(),
-            AllUsers(),
-          ],
-        ),
+    return new Scaffold(
+      appBar: new GradientAppBar(
+        title: 'Community',
+        gradientBegin: theme.green,
+        gradientEnd: theme.darkergreen,
       ),
+      body: new Column(
+        children: <Widget>[
+          new Container(
+            decoration: new BoxDecoration(
+              color: theme.green),
+            child: new TabBar(
+              controller: _controller,
+              labelColor: LightColors.kDarkYellow,
+              unselectedLabelColor: Colors.white,
+              indicatorColor: LightColors.test4,
+              tabs: [
+              new Tab(
+                text: "Calenders",
+              ),
+              new Tab(
+                text: "Friends",
+              ),
+              new Tab(
+                text: "People",
+              ),
+              ],
+            )
+          ),
+          new Expanded(
+            
+            child: new TabBarView(
+              controller: _controller,
+              children: [
+                AllCalenders(),
+              AllFriends(),
+              AllUsers(),
+              ]
+              )
+          )
+        ],),
     );
-  }
-}
+}}
 
 class AllUsers extends StatefulWidget {
   @override
@@ -80,6 +102,10 @@ class _AllUsersState extends State<AllUsers> {
             subtitle: Text(friend.email),
             trailing: currentUser.uid != friend.uid
                 ? FlatButton(
+                    padding: EdgeInsets.all(8.0),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: BorderSide(color: Colors.lightGreen[300])),
                     onPressed: () async {
                       if (currentUser.friendList.contains(friend.uid)) {
                         await doc.reference.setData({
@@ -100,12 +126,12 @@ class _AllUsersState extends State<AllUsers> {
                         setState(() {});
                       }
                     },
-                    child: Text(
-                      currentUser.friendList.contains(friend.uid)
-                          ? "Remove"
-                          : "Add",
-                    ),
-                  )
+                    child: currentUser.friendList.contains(friend.uid)
+                        ? Text("Remove",
+                            style: TextStyle(
+                                color: Color(0xFFB71C1C).withOpacity(0.6)))
+                        : Text("Add",
+                            style: TextStyle(color: Color(0xFF558B2F))))
                 : null,
           );
         },
@@ -138,9 +164,9 @@ class _AllCalendersState extends State<AllCalenders> {
               itemBuilder: (index, context, doc) {
                 var calenderObj = CalenderObject.fromJson(doc.data);
                 return SizedBox(
-                  height:145,
-
-                  child: Card(color: Color(0xFFD9E6DC),
+                  height: 145,
+                  child: Card(
+                    color: Color(0xFFD9E6DC),
                     child: ListTile(
                       onTap: () {
                         Navigator.push(
@@ -152,9 +178,14 @@ class _AllCalendersState extends State<AllCalenders> {
                         );
                       },
                       title: Text(calenderObj.calenderTitle,
-                                  style: TextStyle(height: 2, fontSize: 19, color: Color(0xFF3A5B41))),
+                          style: TextStyle(
+                              height: 2,
+                              fontSize: 19,
+                              color: Color(0xFF3A5B41))),
                       subtitle: Text(calenderObj.calenderDescription,
-                                  style: TextStyle(fontSize: 13, color: Color(0xFF5E7A6C).withOpacity(0.6))),
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: Color(0xFF5E7A6C).withOpacity(0.6))),
                       trailing: calenderObj.creatorID != currentUser.uid
                           ? MaterialButton(
                               minWidth: 0,
@@ -162,12 +193,17 @@ class _AllCalendersState extends State<AllCalenders> {
                               padding: EdgeInsets.all(8.0),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                 side: BorderSide(color: Colors.lightGreen[300])),
-                        child:
-                             currentUser.joinedCalenderPaths.contains(doc.reference.path)
-                                ? Text( "Leave",style:TextStyle(color:Color(0xFFB71C1C).withOpacity(0.6)))
-                                : Text("Join",style:TextStyle(color:Color(0xFF558B2F))),
-
+                                  side: BorderSide(
+                                      color: Colors.lightGreen[300])),
+                              child: currentUser.joinedCalenderPaths
+                                      .contains(doc.reference.path)
+                                  ? Text("Leave",
+                                      style: TextStyle(
+                                          color: Color(0xFFB71C1C)
+                                              .withOpacity(0.6)))
+                                  : Text("Join",
+                                      style:
+                                          TextStyle(color: Color(0xFF558B2F))),
                               onPressed: () {
                                 if (!currentUser.joinedCalenderPaths
                                     .contains(doc.reference.path)) {
@@ -193,8 +229,9 @@ class _AllCalendersState extends State<AllCalenders> {
                                   writeBatch.setData(
                                       doc.reference,
                                       {
-                                        'participantList': FieldValue.arrayUnion(
-                                            [currentUser.uid])
+                                        'participantList':
+                                            FieldValue.arrayUnion(
+                                                [currentUser.uid])
                                       },
                                       merge: true);
                                   writeBatch.commit().then((value) {
@@ -223,8 +260,9 @@ class _AllCalendersState extends State<AllCalenders> {
                                   writeBatch.setData(
                                       doc.reference,
                                       {
-                                        'participantList': FieldValue.arrayRemove(
-                                            [currentUser.uid])
+                                        'participantList':
+                                            FieldValue.arrayRemove(
+                                                [currentUser.uid])
                                       },
                                       merge: true);
                                   writeBatch.commit().then((value) {
