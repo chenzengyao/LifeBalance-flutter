@@ -74,7 +74,7 @@ class _notification_pageState extends State<notification_page> {
                             Row(
                               children: <Widget>[
                                 Container(
-                                  width: 170,
+                                  width: 200,
                                   height: 30,
                                   child: chat.unread
                                       ?Text(
@@ -124,7 +124,7 @@ class _notification_pageState extends State<notification_page> {
                             children: <Widget>[
                               Container(
                                 alignment: Alignment.topLeft,
-                                width:200,
+                                width:210,
                                 height: 30,
                                 child:
                                 chat.unread
