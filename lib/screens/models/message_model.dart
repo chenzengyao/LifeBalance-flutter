@@ -8,6 +8,7 @@ class Message {
   time; // Would usually be type DateTime or Firebase Timestamp in production apps
   final String text;
   final bool unread;
+  static bool searching = false;
 
   Message({
     this.sender,

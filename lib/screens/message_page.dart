@@ -9,6 +9,7 @@ class message_page extends StatefulWidget {
 }
 
 class _message_pageState extends State<message_page> {
+  var isSearching = Message.searching;
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -22,18 +23,45 @@ class _message_pageState extends State<message_page> {
           color: Colors.white,
           onPressed: () {},
         ),
-        title: Text(
+        title: !isSearching
+        ?Text(
           'Messages',
           style: TextStyle(
             color: Colors.white,
           ),
+        )
+        :TextField(
+            style: TextStyle(
+              color: Colors.white,
+            ),
+            decoration: InputDecoration(
+                hintText: "Search user here",
+                hintStyle: TextStyle(
+                  color: Colors.white,
+                )
+            )
         ),
         actions: <Widget>[
-          IconButton(
+          isSearching
+          ?IconButton(
+            icon: Icon(Icons.cancel),
+            color: Colors.white,
+            onPressed: () {
+              setState((){
+                this.isSearching = !this.isSearching;
+              });
+            },
+          )
+          :IconButton(
             icon: Icon(Icons.search),
             color: Colors.white,
-            onPressed: () {},
-          ),
+            onPressed: () {
+              setState((){
+                this.isSearching = !this.isSearching;
+              });
+            },
+          )
+
         ],
       ),
       body: ListView.builder(
