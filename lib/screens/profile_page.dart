@@ -37,7 +37,11 @@ class _profile_pageState extends State<profile_page> {
         child: Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
-        title: Text('Life Balance'),
+        title: Text('The Friendly Planner',style: TextStyle(
+          fontFamily: 'Roboto Italic',
+          fontSize: 20,
+          letterSpacing: 1.5),),
+
         backgroundColor: LightColors.kGreen,
         elevation: 0.0,
         actions: <Widget>[
@@ -61,6 +65,7 @@ class _profile_pageState extends State<profile_page> {
           //physics: NeverScrollableScrollPhysics(),
           children: <Widget>[
             TopContainer(
+              
               width: width,
               // height: 100,
               child: Padding(

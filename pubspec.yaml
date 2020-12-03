@@ -93,6 +93,11 @@ flutter:
       fonts:
         - asset: assets/fonts/Courgette-Regular.ttf
           weight: 300
+
+    - family: Roboto Italic
+      fonts:
+      - asset: assets/fonts/Roboto/Roboto-Italic.ttf
+
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

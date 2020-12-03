@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:lifebalance/theme/colors/light_colors.dart';
 import 'package:lifebalance/screens/models/notification_model.dart';
 import 'package:lifebalance/screens/chat_screen.dart';
+import 'package:lifebalance/widgets/gradient_appbar.dart';
+import 'package:lifebalance/widgets/theme.dart';
 
 class notification_page extends StatefulWidget {
   @override
@@ -16,11 +18,16 @@ class _notification_pageState extends State<notification_page> {
   Widget build(BuildContext context) {
     return new Scaffold(
       backgroundColor: Colors.white,
-      appBar: new AppBar(
-          title: new Text("Notification Page"),
-          backgroundColor: LightColors.kGreen
+      appBar: GradientAppBar(
+        title: 'Notifications',
+        gradientBegin: theme.green,
+        gradientEnd: theme.darkergreen
+      ), 
+      //new AppBar(
+          //title: new Text("Notifications"),
+          //backgroundColor: LightColors.kGreen
 
-      ),
+      
       body: ListView.builder(
         itemCount: chats.length,
         itemBuilder: (BuildContext context, int index){
@@ -74,7 +81,7 @@ class _notification_pageState extends State<notification_page> {
                             Row(
                               children: <Widget>[
                                 Container(
-                                  width: 170,
+                                  width: 210,
                                   height: 30,
                                   child: chat.unread
                                       ?Text(
