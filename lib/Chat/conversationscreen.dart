@@ -8,6 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:lifebalance/Chat/message.dart';
 import 'package:lifebalance/auth/authService.dart';
 import 'package:lifebalance/auth/signIn.dart';
+import 'package:lifebalance/widgets/theme.dart';
+import 'package:lifebalance/widgets/theme.dart';
 
 
 import 'messagewiget.dart';
@@ -97,10 +99,10 @@ class _ConverstationScreenState extends State<ConverstationScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
-          backgroundColor: myPink,
-          iconTheme: IconThemeData(
-            color: Colors.white,
-          ),
+          backgroundColor: theme.darkergreen,
+          //iconTheme: IconThemeData(
+            //color: Colors.white,
+          //),
 
           title: Text(
             widget.name.isNotEmpty ? widget.name : "Anonymous",
@@ -144,7 +146,17 @@ class _ConverstationScreenState extends State<ConverstationScreen> {
           reverse: true,
           controller: msgScrollController,
           child: Container(
+            //added this bg image part(boxdecoration), can remove if need because abit broken, but for now we can use it to show
+            decoration: BoxDecoration(
+              color: theme.kLightGreen,
+              image: new DecorationImage(
+                fit: BoxFit.cover,
+                colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
+                image: new AssetImage("assets/images/bg1.jpg")
+                )
+            ),
             child: Column(
+              //mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 StreamBuilder<QuerySnapshot>(
                   stream: Firestore.instance
@@ -183,6 +195,9 @@ class _ConverstationScreenState extends State<ConverstationScreen> {
                         final message = ConversationMessage.message(
                             snapshot.data.documents[index]);
                         return Container(
+                          //decoration: BoxDecoration(
+                          //  color: Colors.orange
+                          //),
                           width: MediaQuery.of(context).size.width,
                           child: Message(
                             message: message,
@@ -193,7 +208,8 @@ class _ConverstationScreenState extends State<ConverstationScreen> {
                   },
                 ),
                 SizedBox(
-                  height: 40,
+                  height: 450, //original val = 40
+                  
                 )
               ],
             ),

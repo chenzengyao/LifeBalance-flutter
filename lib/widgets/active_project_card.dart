@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lifebalance/Objects/task.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:lifebalance/widgets/theme.dart';
+import 'package:lifebalance/theme/colors/light_colors.dart';
 
 class ActiveProjectsCard extends StatelessWidget {
   final TaskEvent task;
@@ -28,9 +30,15 @@ class ActiveProjectsCard extends StatelessWidget {
           new BoxShadow(
             color: Colors.black54,
             blurRadius: 2.0,
+            //offset: Offset(2,0)
           ),
         ],
-        color: cardColor,
+        gradient: LinearGradient(
+          begin: Alignment.bottomRight,
+          end: Alignment.topLeft,
+          colors: [cardColor, LightColors.test1 ]
+          ),
+        //color: cardColor,
         borderRadius: BorderRadius.circular(40.0),
       ),
       child: Column(
