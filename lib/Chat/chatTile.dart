@@ -1,3 +1,6 @@
+//individual chat tile that the chatroom screen calls to render the user, last message, 
+//profile pic and date time
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

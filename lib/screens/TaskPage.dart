@@ -134,7 +134,7 @@ class _AddEventPageState extends State<AddEventPage> {
                         return Theme(
                           data: ThemeData.dark().copyWith(
                             colorScheme: ColorScheme.dark(
-                              primary: Colors.deepPurple,
+                              primary: theme.green,
                               onPrimary: Colors.white,
                               surface: theme.darkergreen,
                               onSurface: LightColors.kLightYellow2,
@@ -151,7 +151,7 @@ class _AddEventPageState extends State<AddEventPage> {
                         return Theme(
                           data: ThemeData.dark().copyWith(
                             colorScheme: ColorScheme.dark(
-                              primary: Colors.deepPurple,
+                              primary: theme.darkergreen,
                               onPrimary: Colors.white,
                               surface: LightColors.kDarkBlue,
                               onSurface: LightColors.kLightYellow2,

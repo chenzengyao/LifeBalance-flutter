@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:lifebalance/screens/models/message_model.dart';
 import 'package:lifebalance/screens/chat_screen.dart';
 import 'package:lifebalance/theme/colors/light_colors.dart';
@@ -188,3 +188,4 @@ class _message_pageState extends State<message_page> {
     );
   }
 }
+*/

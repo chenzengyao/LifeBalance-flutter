@@ -1,3 +1,5 @@
+//indiv message that user sends
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ConversationMessage {

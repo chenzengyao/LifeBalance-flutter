@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyBottomNavigationBar extends StatefulWidget {
+/*class MyBottomNavigationBar extends StatefulWidget {
   @override
   _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
 }
@@ -80,3 +80,4 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
     );
   }
 }
+*/

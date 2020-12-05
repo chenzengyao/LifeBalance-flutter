@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:lifebalance/Objects/user.dart';
 import 'package:lifebalance/auth/authService.dart';
 import 'package:lifebalance/screens/models/message_model.dart';
@@ -251,3 +251,4 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 }
+*/
