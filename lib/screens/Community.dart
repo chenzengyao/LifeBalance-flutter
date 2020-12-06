@@ -47,7 +47,7 @@ class CommunityPageState extends State<CommunityPage> with SingleTickerProviderS
               indicatorColor: LightColors.test4,
               tabs: [
               new Tab(
-                text: "Calenders",
+                text: "Calendars",
               ),
               new Tab(
                 text: "Friends",

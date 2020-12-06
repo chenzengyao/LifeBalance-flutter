@@ -264,6 +264,9 @@ class _profile_pageState extends State<profile_page> {
                                                                           height:
                                                                               5),
                                                                       RaisedButton(
+                                                                        shape: RoundedRectangleBorder(
+                                                                            borderRadius: BorderRadius.circular(20)),
+                                                                        highlightColor: Colors.orange[300],
                                                                         onPressed:
                                                                             () {
                                                                           doc.reference.updateData({
