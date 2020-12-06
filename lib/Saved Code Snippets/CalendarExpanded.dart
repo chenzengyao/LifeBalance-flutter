@@ -1,12 +1,11 @@
 //class to display public calendar in the community calendars
-import 'package:cloud_firestore/cloud_firestore.dart';
+/*import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lifebalance/Objects/calender.dart';
 import 'package:lifebalance/Objects/task.dart';
 import 'package:lifebalance/auth/authService.dart';
 import 'package:lifebalance/auth/signIn.dart';
 import 'package:lifebalance/screens/CalendarPage.dart';
-import 'package:lifebalance/screens/ParticipantList.dart';
 import 'package:lifebalance/screens/TaskPage.dart';
 import 'package:lifebalance/screens/view_event.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -47,49 +46,51 @@ class _CalenderExpandedViewState extends State<CalenderExpandedView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: selectedCalender != null
-          ? (selectedCalender.creatorID == currentUser.uid ||
-          currentUser.joinedCalenderPaths
-              .contains(widget.calenderDocRef.path))
-          ? FloatingActionButton(
-        child: Icon(Icons.add),
-        backgroundColor: myPink,
-        onPressed: () async {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AddEventPage(
-                fromPublic: true,
-                mode: CalenderMode.SHARED,
-                calenderId: widget.calenderDocRef.documentID,
-                calenderDocRef: widget.calenderDocRef,
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+
+        children: [
+          Container(
+            height: 50,
+            width: 50,
+            child: FloatingActionButton(
+              child: Icon(
+                Icons.people
               ),
-            ),
-          );
-        },
-      )
-          : null
-          : null,
+              backgroundColor: myPink,
+              onPressed: ()=>{/*ParticipantList()*/},
+              ),
+          ),
+            SizedBox(height:10),
+          selectedCalender != null
+              ? (selectedCalender.creatorID == currentUser.uid ||
+              currentUser.joinedCalenderPaths
+                  .contains(widget.calenderDocRef.path))
+              ? FloatingActionButton(
+            child: Icon(Icons.add),
+            backgroundColor: theme.darkergreen,
+            onPressed: () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AddEventPage(
+                    fromPublic: true,
+                    mode: CalenderMode.SHARED,
+                    calenderId: widget.calenderDocRef.documentID,
+                    calenderDocRef: widget.calenderDocRef,
+                  ),
+                ),
+              );
+            },
+          )
+              : null
+              : null,
+          
+        ],
+      ),
       appBar: AppBar(
         title: Text(selectedCalender.calenderTitle),
         backgroundColor: myPink,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.people,
-            ),
-            onPressed: () async {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => (
-                ParticipantList()
-              ),
-            ),
-          );
-        },
-          )
-        ]
       ),
       body: SingleChildScrollView(
           child: Column(
@@ -182,144 +183,7 @@ class _CalenderExpandedViewState extends State<CalenderExpandedView> {
           )),
     );
   }
-}
-/*class ParticipantList extends StatefulWidget {
-  final DocumentReference calenderDocRef;
-
-  const ParticipantList({Key key, this.calenderDocRef}) : super(key: key);
-  @override
-  _ParticipantListState createState() => _ParticipantListState();
-}
-
-class _ParticipantListState extends State<ParticipantList> {
-  CalenderObject selectedCalender;
-  CalendarController _controller;
-  Map<DateTime, List<dynamic>> _events;
-  List<dynamic> _selectedEvents;
-  CalenderMode calenderMode = CalenderMode.PRIVATE;
-  List<dynamic> _selectedSharedEvents = [];
-  int calendersReloader;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _controller = CalendarController();
-    _events = {};
-    _selectedEvents = [];
-    widget.calenderDocRef.get().then((value) {
-      selectedCalender = CalenderObject.fromJson(value.data);
-      setState(() {});
-    });
-    print(widget.calenderDocRef.path);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: Firestore.instance
-        .collection('/calendars')
-        .document(currentUser.uid)
-        .snapshots(),
-      builder: 
-        (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
-          if (snapshot.hasData){
-            return Scaffold(
-              appBar: AppBar(
-                title: Text(
-                  "Participant List"),
-                  backgroundColor: theme.darkergreen),
-                body: SingleChildScrollView(
-                                child: ListView.builder(
-                    itemBuilder: (BuildContext context, int index){
-                      return StreamBuilder<DocumentSnapshot>(
-                        stream: Firestore.instance
-                          .collection('/calendars')
-                          .document(selectedCalender.participantList[index])
-                          .snapshots(),
-                          builder: (context, participantsnapshot){
-                            if (participantsnapshot.hasData &&
-                              participantsnapshot.data.exists){
-                                var participant = User.fromJson(participantsnapshot.data.data);
-                                return ListTile(
-                                  leading: participant.imageUrl.isNotEmpty
-                                  ? ClipOval(
-                                    child: Image.network(
-                                    participant.imageUrl,
-                                    height: 50,
-                                    width: 50,
-                                    fit: BoxFit.cover,
-                                  ))
-                                  : CircleAvatar(
-                                    backgroundColor: theme.darkergreen,
-                                    child: Text(participant.name[0].toUpperCase()),
-                                    ),
-                                  );
-                              }
-                          },
-                      );
-                    }),
-                ),
-              ); 
-            
-          }
-        },
-      
-    );
-  }
 }*/
-
-/*
-class ParticipantList extends StatefulWidget {
-  final DocumentReference calenderDocRef;
-
-  const ParticipantList({Key key, this.calenderDocRef}) : super(key: key);
-  @override
-  _ParticipantListState createState() => _ParticipantListState();
-}
-
-class _ParticipantListState extends State<ParticipantList> {
-  CalenderObject selectedCalender;
-  CalendarController _controller;
-  Map<DateTime, List<dynamic>> _events;
-  List<dynamic> _selectedEvents;
-  CalenderMode calenderMode = CalenderMode.PRIVATE;
-  List<dynamic> _selectedSharedEvents = [];
-  int calendersReloader;
-
-Widget build(BuildContext context) {
-return AlertDialog(
-            contentPadding: EdgeInsets.only(left: 25, right: 25),
-            title: Center(child: Text("Information")),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20.0))),
-            content: Container(
-              height: 200,
-              width: 300,
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                        'Name of requestor: }'
-                    ),
-                    Text(
-                      'Description:' * 20,
-                    ),
-                    Text(
-                      'Help_Description',
-                    ),
-                    Text(
-                      'Type of help needed:Help_TypeNeeded',
-                    )
-                  ],
-                ),
-              ),
-            ),);}}
-            */
 /*
 class ParticipantList extends StatefulWidget {
   final DocumentReference calenderDocRef;
@@ -408,4 +272,5 @@ class _ParticipantListState extends State<ParticipantList> {
       
     );
   }
-}*/
+}
+*/
