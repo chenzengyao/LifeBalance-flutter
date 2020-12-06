@@ -188,7 +188,9 @@ class _AddEventPageState extends State<AddEventPage> {
                   },
                   style: style,
                   decoration: InputDecoration(
-                    labelText: "Unit Count",
+                    hintText: 'Enter the quantity of work you think this task will require in integers',
+                    hintStyle: TextStyle(fontWeight: FontWeight.w300, fontSize: 15),
+                    labelText: "Progress Count",
                     labelStyle:
                         TextStyle(color: Colors.black, fontSize: 18.0),
                     contentPadding:
