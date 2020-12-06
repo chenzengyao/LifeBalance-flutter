@@ -91,7 +91,7 @@ class _HomePageState extends State<CalendarPage> {
                     margin: const EdgeInsets.only(top: 10, left: 8),
                     child: RaisedButton.icon(
                       icon: Icon(Icons.calendar_today),
-                      label: Text("New Calender"),
+                      label: Text("New Calendar"),
                       elevation: 5,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
@@ -117,12 +117,12 @@ class _HomePageState extends State<CalendarPage> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Calender Title",
+                                    Text("Calendar Title",
                                         style: TextStyle(fontSize: 18)),
                                     TextFormField(
                                       controller: name,
                                       decoration: InputDecoration(
-                                          hintText: "Calender title..."),
+                                          hintText: "Calendar title..."),
                                       style: TextStyle(
                                           fontStyle: FontStyle.italic),
                                     ),
@@ -144,6 +144,9 @@ class _HomePageState extends State<CalendarPage> {
                                     SizedBox(height: 6),
                                     Center(
                                       child: RaisedButton(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(20)),
+                                        highlightColor: Colors.orange[300],
                                         onPressed: () {
                                           var docId =
                                               currentUserCalenderCollectionRef
@@ -164,7 +167,7 @@ class _HomePageState extends State<CalendarPage> {
                                           });
                                         },
                                         child: Text(
-                                          "Create Calender",
+                                          "Create Calendar",
                                         ),
                                       ),
                                     ),

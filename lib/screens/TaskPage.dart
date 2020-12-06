@@ -86,7 +86,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   decoration: InputDecoration(
                       labelText: "Title",
                       labelStyle:
-                          TextStyle(color: Colors.black, fontSize: 18.0),
+                          TextStyle(color: Colors.grey, fontSize: 18.0),
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
                       focusedBorder: UnderlineInputBorder(
@@ -106,7 +106,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   decoration: InputDecoration(
                     labelText: "Description",
                     labelStyle:
-                        TextStyle(color: Colors.black, fontSize: 18.0),
+                        TextStyle(color: Colors.grey, fontSize: 18.0),
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
                     focusedBorder: UnderlineInputBorder(
@@ -190,9 +190,9 @@ class _AddEventPageState extends State<AddEventPage> {
                   decoration: InputDecoration(
                     hintText: 'Enter the quantity of work you think this task will require in integers',
                     hintStyle: TextStyle(fontWeight: FontWeight.w300, fontSize: 15),
-                    labelText: "Progress Count",
+                    labelText: "Workload",
                     labelStyle:
-                        TextStyle(color: Colors.black, fontSize: 18.0),
+                        TextStyle(color: Colors.grey, fontSize: 18.0),
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
                     focusedBorder: UnderlineInputBorder(
