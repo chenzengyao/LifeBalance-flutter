@@ -86,7 +86,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   decoration: InputDecoration(
                       labelText: "Title",
                       labelStyle:
-                          TextStyle(color: Colors.black, fontSize: 18.0),
+                          TextStyle(color: Colors.grey, fontSize: 18.0),
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
                       focusedBorder: UnderlineInputBorder(
@@ -106,7 +106,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   decoration: InputDecoration(
                     labelText: "Description",
                     labelStyle:
-                        TextStyle(color: Colors.black, fontSize: 18.0),
+                        TextStyle(color: Colors.grey, fontSize: 18.0),
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
                     focusedBorder: UnderlineInputBorder(
@@ -188,9 +188,9 @@ class _AddEventPageState extends State<AddEventPage> {
                   },
                   style: style,
                   decoration: InputDecoration(
-                    labelText: "Unit Count",
+                    labelText: "Workload",
                     labelStyle:
-                        TextStyle(color: Colors.black, fontSize: 18.0),
+                        TextStyle(color: Colors.grey, fontSize: 18.0),
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
                     focusedBorder: UnderlineInputBorder(
