@@ -188,6 +188,8 @@ class _AddEventPageState extends State<AddEventPage> {
                   },
                   style: style,
                   decoration: InputDecoration(
+                    hintText: 'Enter the quantity of work you think this task will require in integers',
+                    hintStyle: TextStyle(fontWeight: FontWeight.w300, fontSize: 15),
                     labelText: "Workload",
                     labelStyle:
                         TextStyle(color: Colors.grey, fontSize: 18.0),

@@ -12,6 +12,8 @@ import 'package:lifebalance/auth/signIn.dart';
 import 'package:lifebalance/widgets/theme.dart';
 import 'package:lifebalance/widgets/theme.dart';
 
+import 'package:lifebalance/screens/popupConstants.dart';
+
 
 import 'messagewiget.dart';
 
@@ -90,6 +92,40 @@ class _ConverstationScreenState extends State<ConverstationScreen> {
 
     }
   }
+  
+  createAlertDialog(){
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: Container(
+            height: 200,
+            child: Padding(
+              padding: EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center ,
+                children: <Widget>[
+                  TextField(
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red, width: 5.0),
+                      ),
+                      hintText: 'Input Date, Time, Location etc...',
+                    ),
+                  ),
+                  SizedBox(
+                    width: 320.0,
+                    child: RaisedButton(
+                      color: theme.darkergreen,
+                      onPressed: (){},
+                      child: Text("Confirm"),
+                    ))
+                ],)),
+            ),
+          );
+      }
+
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +152,50 @@ class _ConverstationScreenState extends State<ConverstationScreen> {
               fontSize: 18,
             ),
           ),
+          actions: <Widget>[
+            PopupMenuButton<String>(
+              onSelected: (choice) {
+                return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: Container(
+            height: 200,
+            child: Padding(
+              padding: EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center ,
+                children: <Widget>[
+                  TextField(
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red, width: 5.0),
+                      ),
+                      hintText: 'Input Date, Time, Location etc...',
+                    ),
+                  ),
+                  SizedBox(
+                    width: 320.0,
+                    child: RaisedButton(
+                      color: theme.darkergreen,
+                      onPressed: (){},
+                      child: Text("Confirm"),
+                    ))
+                ],)),
+            ),
+          );
+              },
+              itemBuilder: (BuildContext context){
+                return Constants.choices.map((String choice){
+                  return PopupMenuItem<String>(
+                    value: choice,
+                    child: Text(choice),
+                  );
+                }).toList();
+              }
+            )
+          ]
 
           //^[a-zA-Z0-9~!@#$%^&*()`\[\]{};':,./<>?| ]*$
         ),
@@ -218,5 +298,13 @@ class _ConverstationScreenState extends State<ConverstationScreen> {
         ),
       ),
     );
+  }
+  
+  choiceAction(String choice){
+    if (choice == Constants.physical){
+      print ('hello');
+      return createAlertDialog();
+
+    }
   }
 }
