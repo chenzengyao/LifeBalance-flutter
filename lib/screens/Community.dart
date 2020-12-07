@@ -130,7 +130,8 @@ class _AllUsersState extends State<AllUsers> {
                     child: currentUser.friendList.contains(friend.uid)
                         ? Text("Remove",
                             style: TextStyle(
-                                color: Color(0xFFB71C1C).withOpacity(0.6)))
+                                color: Color(0xFF800000).withOpacity(0.6)))
+                    //original: 0xFFB71C1C
                         : Text("Add",
                             style: TextStyle(color: Color(0xFF558B2F))))
                 : null,
@@ -193,20 +194,34 @@ class _AllCalendersState extends State<AllCalenders> {
                                   fontSize: 13,
                                   color: Color(0xFF431D1D).withOpacity(0.6))),
                           trailing: calenderObj.creatorID != currentUser.uid
-                              ? MaterialButton(
-                                  minWidth: 0,
-                                  height: 0,
-                                  padding: EdgeInsets.all(8.0),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      side: BorderSide(
-                                          width: 2, color: LightColors.kGreen)),
+
+                          //  padding: EdgeInsets.all(8.0),
+                        //  shape: RoundedRectangleBorder(
+                           //   borderRadius: BorderRadius.circular(10),
+                           //   side: BorderSide(color: Colors.lightGreen[300])),
+
+                              ? FlatButton(
+                              padding: EdgeInsets.all(8.0),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  side: BorderSide(color: LightColors.kGreen)),
+
+                         //     ? MaterialButton(
+                         //         minWidth: 0,
+                         //         height: 0,
+                          //        padding: EdgeInsets.all(8.0),
+                          //        shape: RoundedRectangleBorder(
+                           //           borderRadius: BorderRadius.circular(10),
+                            //          side: BorderSide(
+                           //                color: LightColors.kGreen)),
                                   child: currentUser.joinedCalenderPaths
                                           .contains(doc.reference.path)
                                       ? Text("Leave",
                                           style: TextStyle(
-                                              color: Color(0xFF963B20)
-                                                  .withOpacity(1)))
+                                         //     color: Color(0xFF963B20)
+                                         //         .withOpacity(1)))
+                                                color: Color(0xFF800000)
+                                                    .withOpacity(0.6)))
                                       : Text("Join",
                                           style: TextStyle(
                                               color: Color(0xFF3A5B41))),
