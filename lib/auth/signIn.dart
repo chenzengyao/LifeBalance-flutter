@@ -59,29 +59,36 @@ class _SignInState extends State<SignIn> {
                     SizedBox(
                       height: height * 0.1,
                     ),
-                    CircleAvatar(
+                    /*CircleAvatar(
                       radius: height * 0.1,
                       backgroundColor: myPink,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          FaIcon(
-                            FontAwesomeIcons.pagelines,
-                            size: 50,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            "Life Balance",
-                            style: TextStyle(
-                              color: Colors.white,
-                              letterSpacing: 2,
+                        children: [*/
+                          Container (
+                            margin: EdgeInsets.all(20),
+                            width: 200,
+                            height: 170,
+                            decoration: BoxDecoration(
+                              //shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: new AssetImage("assets/images/newlogo.png"),
+                                fit: BoxFit.fitHeight
+                                )
                             ),
                           ),
-                        ],
-                      ),
-                    ),
+                          /*Text(
+                            "The Friendly Planner",
+                            style: TextStyle(
+                              color: Colors.green,
+                              letterSpacing: 2,
+                            ),
+                          ),*/
+                        //],
+                      //),
+                    //),
                     SizedBox(
-                      height: height * 0.1,
+                      height: height * 0.05,
                     ),
                     //Spacer(),
                     // TextFormField(
