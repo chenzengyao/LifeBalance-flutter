@@ -1,4 +1,6 @@
-## Life Balance (Flutter)
+# Please Refer to "Final Submission" Folder for Group Report/Video/Poster/Website Showcase
+
+## The Friendly Planner (Flutter)
 
 Schedule Planner App
 
