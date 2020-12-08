@@ -38,6 +38,15 @@
     ·
     <a href="https://github.com/ChenZengYao/LifeBalance-flutter/blob/master/Final%20Submission/Popplet.pdf">Popplet Planning</a>
     <br /> 
+    
+    <br />
+    <a href="https://www.figma.com/file/OZeh1JpiZXfskH2jvwC9sY/Planner?node-id=724%3A6926">Figma Planner</a>
+    ·
+    <a href="https://www.figma.com/proto/OZeh1JpiZXfskH2jvwC9sY/Planner?node-id=724%3A6972&scaling=min-zoom">Initial Prototype UI</a>
+   
+    <br />   
+    
+    
   </p>
 </p>
 
