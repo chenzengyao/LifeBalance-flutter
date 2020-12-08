@@ -1,3 +1,5 @@
+![Demo Gif](Demo.gif)
+
 # Please Refer to "Final Submission" Folder for Group Report/Video/Poster/Website Showcase
 
 ## The Friendly Planner (Flutter)
