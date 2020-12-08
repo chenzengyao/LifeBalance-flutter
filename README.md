@@ -1,4 +1,4 @@
-# The Friendly Planner (Flutter)
+# The Friendly Planner
 ## Stay Organised. Declutter Your Life.
 
 <!-- PROJECT LOGO -->
