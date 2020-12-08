@@ -25,7 +25,7 @@
     <a href="https://isorandom95.wixsite.com/dipgrp6">Website Showcase</a>
     <br />
   <br />
-    <a href="https://isorandom95.wixsite.com/dipgrp6">Presentation Slides</a>
+    <a href="https://github.com/ChenZengYao/LifeBalance-flutter/blob/master/Final%20Submission/The%20Friendly%20Planner%20Presentation%20Slides%20pdf.pdf">Presentation Slides</a>
     ·
     <a href="https://github.com/ChenZengYao/LifeBalance-flutter/blob/master/Final%20Submission/UserGuide.pdf">User Guide</a>
     ·
