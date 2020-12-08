@@ -1,20 +1,6 @@
-![Demo Gif](Demo.gif)
+# The Friendly Planner (Flutter)
+## Stay Organised. Declutter Your Life.
 
-# Please Refer to "Final Submission" Folder for Group Report/Video/Poster/Website Showcase
+<p align="center"><img src="Demo.gif" width="300" height="500"/></p>
 
-## The Friendly Planner (Flutter)
-
-Schedule Planner App
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Please Refer to "Final Submission" Folder for Group Report/Video/Poster/Website Showcase
