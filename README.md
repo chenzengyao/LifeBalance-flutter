@@ -21,11 +21,11 @@
     <a href="https://www.youtube.com/watch?v=WgHod7sdYPU&ab_channel=MarcusToo">Video Showcase</a>
     ·
     <a href="https://isorandom95.wixsite.com/dipgrp6">Website Showcase</a>
+    ·
+    <a href="https://github.com/ChenZengYao/LifeBalance-flutter/blob/master/Final%20Submission/DIP%20Group%206%20Poster.pdf">View Poster</a>
     <br />
   
   <br />
-    <a href="https://github.com/ChenZengYao/LifeBalance-flutter/blob/master/Final%20Submission/DIP%20Group%206%20Poster.pdf">View Poster</a>
-    ·
     <a href="https://github.com/ChenZengYao/LifeBalance-flutter/blob/master/Final%20Submission/The%20Friendly%20Planner%20Presentation%20Slides%20pdf.pdf">Presentation Slides</a>
     ·
     <a href="https://github.com/ChenZengYao/LifeBalance-flutter/blob/master/Final%20Submission/UserGuide.pdf">User Guide</a>
