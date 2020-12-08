@@ -1,6 +1,27 @@
 # The Friendly Planner (Flutter)
 ## Stay Organised. Declutter Your Life.
 
-<p align="center"><img src="Demo.gif" width="300" height="500"/></p>
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="https://github.com/ChenZengYao/LifeBalance-flutter">
+    <img src="Logo.png" alt="Logo" width="80" height="80">
+  </a>
 
-## Please Refer to "Final Submission" Folder for Group Report/Video/Poster/Website Showcase
+  <h3 align="center">The Friendly Planner</h3>
+
+  <p align="center">
+    A Flutter project done by an awesome group of 10!
+    <br />
+    <a href="https://github.com/ChenZengYao/LifeBalance-flutter/tree/master/Final%20Submission"><strong>Final Submission »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/ChenZengYao/LifeBalance-flutter/blob/master/Final%20Submission/DIP%20Group%206%20Poster.pdf">View Poster</a>
+    ·
+    <a href="https://www.youtube.com/watch?v=WgHod7sdYPU&ab_channel=MarcusToo">View Video Showcase</a>
+    ·
+    <a href="https://isorandom95.wixsite.com/dipgrp6">View Website Showcase</a>
+  </p>
+</p>
+
+<p align="center"><img src="Demo.gif" width="300" height="500"/></p>
