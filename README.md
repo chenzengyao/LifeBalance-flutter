@@ -49,7 +49,7 @@
   </p>
 </p>
 
-<p align="center"><img src="Demo.gif" width="300" height="500"/></p>
+<p align="center"><img src="https://github.com/ChenZengYao/LifeBalance-flutter/blob/master/DemoNew.gif" width="300" height="500"/></p>
 
 ## About The Project
 Our group decided to work on a social calendar application with the aim of helping users to improve on collaboration with each other,
